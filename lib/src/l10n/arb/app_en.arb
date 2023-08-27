@@ -1,0 +1,11 @@
+{
+ "@@locale": "en",
+ "dashboard":"Dashboard",
+ "items":"Items",
+ "history":"History",
+ "setting":"Setting",
+ "dark":"Dark Mode",
+ "language":"Change language",
+ "hindi":"Hindi",
+ "english":"English"
+}
