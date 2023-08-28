@@ -13,6 +13,7 @@ class HomeScreen extends StatelessWidget {
     return AutoTabsRouter(
       routes: const [
         DashboardRoute(),
+        HistoryRoute(),
         SettingsRoute(),
       ],
       builder: (context, child) {
@@ -33,10 +34,10 @@ class HomeScreen extends StatelessWidget {
                 icon: const Icon(Icons.dashboard),
                 label: l10n.dashboard,
               ),
-              NavigationDestination(
-                icon: const Icon(Icons.shopping_cart),
-                label: l10n.items,
-              ),
+              // NavigationDestination(
+              //   icon: const Icon(Icons.shopping_cart),
+              //   label: l10n.items,
+              // ),
               NavigationDestination(
                 icon: const Icon(Icons.history),
                 label: l10n.history,
