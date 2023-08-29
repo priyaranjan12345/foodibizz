@@ -17,7 +17,7 @@ class AppRouter extends $AppRouter {
           AutoRoute(page: HistoryRoute.page, path: 'historyRoute', children: [
             AutoRoute(
               page: HistoryDetailsRoute.page,
-              path: 'historyRoute/historyDetailsRoute',
+              path: 'historyDetailsRoute',
             )
           ]),
           AutoRoute(
