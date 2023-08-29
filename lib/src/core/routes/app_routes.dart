@@ -34,6 +34,10 @@ class AppRouter extends $AppRouter {
           page: SettingsRoute.page,
           path: 'settingsRoute',
         ),
+        AutoRoute(
+          page: ItemsRoute.page,
+          path: 'itemsRoute',
+        ),
       ],
     ),
   ];

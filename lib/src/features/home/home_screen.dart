@@ -13,6 +13,7 @@ class HomeScreen extends StatelessWidget {
     return AutoTabsScaffold(
       routes: const [
         DashboardRoute(),
+        ItemsRoute(),
         HistoryRoute(),
         SettingsRoute(),
       ],
@@ -20,7 +21,6 @@ class HomeScreen extends StatelessWidget {
         final tabsRouter = AutoTabsRouter.of(context);
 
         return NavigationBar(
-         
           labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
           selectedIndex: tabsRouter.activeIndex,
           onDestinationSelected: (int index) {
@@ -31,10 +31,10 @@ class HomeScreen extends StatelessWidget {
               icon: const Icon(Icons.dashboard),
               label: l10n.dashboard,
             ),
-            // NavigationDestination(
-            //   icon: const Icon(Icons.shopping_cart),
-            //   label: l10n.items,
-            // ),
+            NavigationDestination(
+              icon: const Icon(Icons.list),
+              label: l10n.items,
+            ),
             NavigationDestination(
               icon: const Icon(Icons.history),
               label: l10n.history,
