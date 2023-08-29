@@ -28,7 +28,7 @@ class HomeScreen extends StatelessWidget {
           },
           destinations: [
             NavigationDestination(
-              icon: const Icon(Icons.dashboard),
+              icon: const Icon(Icons.dashboard_outlined),
               label: l10n.dashboard,
             ),
             NavigationDestination(

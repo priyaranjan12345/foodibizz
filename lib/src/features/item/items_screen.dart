@@ -7,6 +7,12 @@ class ItemsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Items"),
+        centerTitle: true,
+      ),
+      body: ListView(),
+    );
   }
 }
