@@ -6,24 +6,35 @@ class AppRouter extends $AppRouter {
   @override
   late final List<AutoRoute> routes = [
     AutoRoute(
-        page: HomeRoute.page,
-        path: '/homeRoute',
-        initial: true,
-        children: [
-          AutoRoute(
-            page: DashboardRoute.page,
-            path: 'dashboardRoute',
-          ),
-          AutoRoute(page: HistoryRoute.page, path: 'historyRoute', children: [
+      page: HomeRoute.page,
+      path: '/',
+      initial: true,
+      children: [
+        AutoRoute(
+          page: DashboardRoute.page,
+          path: 'dashboardRoute',
+          initial: true,
+        ),
+        AutoRoute(
+          page: HistoryRoute.page,
+          path: 'historyRoute',
+          children: [
             AutoRoute(
-              page: HistoryDetailsRoute.page,
-              path: 'historyRoute/historyDetailsRoute',
-            )
-          ]),
-          AutoRoute(
-            page: SettingsRoute.page,
-            path: 'settingsRoute',
-          ),
-        ]),
+              page: AllOrdersRoute.page,
+              path: 'allOrdersRoute',
+              initial: true,
+            ),
+            AutoRoute(
+              page: OrderDetailsRoute.page,
+              path: 'orderDetailsRoute',
+            ),
+          ],
+        ),
+        AutoRoute(
+          page: SettingsRoute.page,
+          path: 'settingsRoute',
+        ),
+      ],
+    ),
   ];
 }
