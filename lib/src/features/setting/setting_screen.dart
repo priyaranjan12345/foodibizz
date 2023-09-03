@@ -19,10 +19,11 @@ class SettingScreen extends ConsumerWidget {
         centerTitle: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.all(10),
         child: ListView(
           children: [
             ListTile(
+              leading: const Icon(Icons.light_mode_outlined),
               title: Text(l10n.dark),
               trailing: Switch(
                 value: themeController == ThemeMode.dark,
@@ -34,7 +35,9 @@ class SettingScreen extends ConsumerWidget {
                 },
               ),
             ),
+            const Divider(),
             ListTile(
+              leading: const Icon(Icons.translate),
               title: Text(l10n.language),
               trailing: PopupMenuButton<String>(
                 onSelected: (value) {
