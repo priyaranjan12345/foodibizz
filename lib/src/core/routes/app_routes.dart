@@ -19,7 +19,7 @@ class AppRouter extends $AppRouter {
         ),
         AutoRoute(
           page: OrderDetailsRoute.page,
-          path: 'historyRoute/historyDetailsRoute',
+          path: 'orderDetailsRoute',
         )
       ]),
       AutoRoute(
