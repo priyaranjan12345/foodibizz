@@ -1,16 +1,23 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foodibizz/data/model/dashboard_model/all_food_items_response.dart';
 import 'package:foodibizz/data/repository/dashboard/dashboard_repository_pod.dart';
+import 'package:foodibizz/global/riverpod_ext/cache_ext.dart';
+import 'package:foodibizz/global/riverpod_ext/cancel_ext.dart';
 
 final dashboardProvider = FutureProvider.autoDispose<AllFoodItemResponse>(
   (ref) async {
-    final result = await ref.watch(dashboardRepositoryProvider).getAllItems();
+    final token = ref.cancelToken();
+    final link = ref.cacheFor();
+    final result = await ref
+        .watch(dashboardRepositoryProvider)
+        .getAllItems(cancelToken: token);
 
     return result.when(
       (allFoodItems) {
         return allFoodItems;
       },
       (error) {
+        link.close();
         throw error;
       },
     );

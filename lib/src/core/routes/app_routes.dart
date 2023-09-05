@@ -5,40 +5,27 @@ import 'app_routes.gr.dart';
 class AppRouter extends $AppRouter {
   @override
   late final List<AutoRoute> routes = [
-    AutoRoute(
-      page: HomeRoute.page,
-      path: '/',
-      initial: true,
-      children: [
+    AutoRoute(page: HomeRoute.page, path: '/', initial: true, children: [
+      AutoRoute(
+        page: DashboardRoute.page,
+        path: 'dashboardRoute',
+        initial: true,
+      ),
+      AutoRoute(page: HistoryRoute.page, path: 'historyRoute', children: [
         AutoRoute(
-          page: DashboardRoute.page,
-          path: 'dashboardRoute',
+          page: AllOrdersRoute.page,
+          path: 'allOrdersRoute',
           initial: true,
         ),
         AutoRoute(
-          page: HistoryRoute.page,
-          path: 'historyRoute',
-          children: [
-            AutoRoute(
-              page: AllOrdersRoute.page,
-              path: 'allOrdersRoute',
-              initial: true,
-            ),
-            AutoRoute(
-              page: OrderDetailsRoute.page,
-              path: 'orderDetailsRoute',
-            ),
-          ],
-        ),
-        AutoRoute(
-          page: SettingsRoute.page,
-          path: 'settingsRoute',
-        ),
-        AutoRoute(
-          page: ItemsRoute.page,
-          path: 'itemsRoute',
-        ),
-      ],
-    ),
+          page: OrderDetailsRoute.page,
+          path: 'orderDetailsRoute',
+        )
+      ]),
+      AutoRoute(
+        page: SettingsRoute.page,
+        path: 'settingsRoute',
+      ),
+    ]),
   ];
 }

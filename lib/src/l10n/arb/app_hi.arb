@@ -1,11 +1,15 @@
 {
   "@@locale": "hi",
   "dashboard": "डैशबोर्ड",
-  "items":"सामान",
+  "recipes":"व्यंजनों",
   "history":"इतिहास",
   "setting":"सेटिंग",
   "dark":"डार्क मोड",
   "language":"भाषा बदलें",
   "hindi":"हिंदी",
-  "english":"अंग्रेज़ी"
+  "english":"अंग्रेज़ी",
+  "buy":"क्रय",
+  "edit":"संपादन",
+  "delete":"मिटाना"
+
 }

@@ -1,6 +1,9 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:foodibizz/global/riverpod_ext/asyncvalue_easy_when.dart';
+import 'package:foodibizz/src/core/localization/l10n.dart';
 import 'package:foodibizz/src/features/dashboard/controller/dashboard_provider.dart';
 
 @RoutePage(deferredLoading: true, name: "DashboardRoute")
@@ -9,9 +12,10 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Dashboard"),
+        title: Text(l10n.dashboard),
         actions: [
           IconButton(
             onPressed: () {
@@ -28,32 +32,112 @@ class DashboardScreen extends StatelessWidget {
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(Icons.add),
+      ),
       body: SafeArea(
         child: Consumer(
           builder: (context, ref, child) {
             final itemsState = ref.watch(dashboardProvider);
-            return itemsState.when(
-              data: (data) {
+            return itemsState.easyWhen(
+              onRetry: () {
+                ref.invalidate(dashboardProvider);
+              },
+              data: (value) {
                 return RefreshIndicator(
                   onRefresh: () async {
                     ref.invalidate(dashboardProvider);
                   },
                   child: ListView.builder(
-                    padding: const EdgeInsets.all(10),
-                    itemCount: data.foodItems.length,
-                    itemBuilder: (context, index) => Card(
-                      child: Column(
-                        children: [
-                          Text(data.foodItems[index].name),
-                          Text(data.foodItems[index].desc),
-                        ],
-                      ),
-                    ),
-                  ),
+                      padding: const EdgeInsets.all(10),
+                      itemCount: value.foodItems.length,
+                      itemBuilder: (context, index) {
+                        final data = value.foodItems[index];
+                        return Card(
+                          elevation: 5.0,
+                          child: Column(
+                            children: [
+                              Stack(
+                                children: [
+                                  CachedNetworkImage(
+                                    imageUrl:
+                                        "http://3.27.90.34:8000/${data.image}",
+                                    errorWidget: (context, url, error) =>
+                                        const Center(child: Icon(Icons.error)),
+                                    placeholder: (context, url) => const Center(
+                                        child: CircularProgressIndicator()),
+                                    fit: BoxFit.cover,
+                                  ),
+                                  Align(
+                                      alignment: Alignment.topRight,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: CircleAvatar(
+                                            radius: 15,
+                                            backgroundColor: Theme.of(context)
+                                                .cardColor
+                                                .withOpacity(0.4),
+                                            child: PopupMenuButton<String>(
+                                              padding: EdgeInsets.zero,
+                                              elevation: 5.0,
+                                              constraints:
+                                                  const BoxConstraints(),
+                                              color: Colors.white,
+                                              itemBuilder:
+                                                  (BuildContext context) =>
+                                                      <PopupMenuEntry<String>>[
+                                                PopupMenuItem<String>(
+                                                  child: ListTile(
+                                                    contentPadding:
+                                                        EdgeInsets.zero,
+                                                    onTap: () {},
+                                                    leading:
+                                                        const Icon(Icons.edit),
+                                                    title: Text(l10n.edit),
+                                                  ),
+                                                ),
+                                                PopupMenuItem<String>(
+                                                    child: ListTile(
+                                                  contentPadding:
+                                                      EdgeInsets.zero,
+                                                  onTap: () {},
+                                                  leading:
+                                                      const Icon(Icons.delete),
+                                                  title: Text(l10n.delete),
+                                                )),
+                                              ],
+                                            )),
+                                      ))
+                                ],
+                              ),
+                              ListTile(
+                                title: Text(
+                                  data.name,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                subtitle: Text(data.desc),
+                              ),
+                              ListTile(
+                                leading: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        elevation: 5.0),
+                                    onPressed: () {},
+                                    child: Text(l10n.buy)),
+                                trailing: Text(
+                                  "\u{20B9} ${data.price}",
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15),
+                                ),
+                              )
+                            ],
+                          ),
+                        );
+                      }),
                 );
               },
-              error: (error, stackTrace) => const Text("error"),
-              loading: () => const CircularProgressIndicator(),
             );
           },
         ),
