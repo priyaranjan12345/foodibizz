@@ -1,0 +1,5 @@
+class AppColours {
+  AppColours._();
+
+  
+}

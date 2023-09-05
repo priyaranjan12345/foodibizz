@@ -1,0 +1,14 @@
+{
+ "@@locale": "en",
+ "dashboard":"Dashboard",
+ "recipes":"Recipes",
+ "history":"History",
+ "setting":"Setting",
+ "dark":"Dark Mode",
+ "language":"Change language",
+ "hindi":"Hindi",
+ "buy":"Buy",
+ "english":"English",
+ "edit":"Edit",
+ "delete":"Delete"
+}
