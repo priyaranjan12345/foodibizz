@@ -6,7 +6,7 @@ import 'package:foodibizz/global/riverpod_ext/asyncvalue_easy_when.dart';
 import 'package:foodibizz/global/widgets/elevated_button_widget.dart';
 import 'package:foodibizz/src/core/localization/l10n.dart';
 import 'package:foodibizz/src/core/routes/app_routes.gr.dart';
-import 'package:foodibizz/src/features/dashboard/controller/dashboard_provider.dart';
+import 'package:foodibizz/src/features/dashboard/application/providers/dashboard_provider.dart';
 
 @RoutePage(deferredLoading: true, name: "DashboardRoute")
 class DashboardScreen extends StatelessWidget {
