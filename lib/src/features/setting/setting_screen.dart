@@ -15,7 +15,7 @@ class SettingScreen extends ConsumerWidget {
     final l10n = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Settings"),
+        title: Text(l10n.setting),
         centerTitle: true,
       ),
       body: Padding(

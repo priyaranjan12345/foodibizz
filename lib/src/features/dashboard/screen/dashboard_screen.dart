@@ -3,8 +3,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foodibizz/global/riverpod_ext/asyncvalue_easy_when.dart';
+import 'package:foodibizz/global/widgets/elevated_button_widget.dart';
 import 'package:foodibizz/src/core/localization/l10n.dart';
-import 'package:foodibizz/src/features/dashboard/controller/dashboard_provider.dart';
+import 'package:foodibizz/src/core/routes/app_routes.gr.dart';
+import 'package:foodibizz/src/features/dashboard/application/providers/dashboard_provider.dart';
 
 @RoutePage(deferredLoading: true, name: "DashboardRoute")
 class DashboardScreen extends StatelessWidget {
@@ -33,7 +35,9 @@ class DashboardScreen extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          context.navigateTo(const AddUpdateRoute());
+        },
         child: const Icon(Icons.add),
       ),
       body: SafeArea(
@@ -83,7 +87,6 @@ class DashboardScreen extends StatelessWidget {
                                               elevation: 5.0,
                                               constraints:
                                                   const BoxConstraints(),
-                                              color: Colors.white,
                                               itemBuilder:
                                                   (BuildContext context) =>
                                                       <PopupMenuEntry<String>>[
@@ -120,11 +123,8 @@ class DashboardScreen extends StatelessWidget {
                                 subtitle: Text(data.desc),
                               ),
                               ListTile(
-                                leading: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                        elevation: 5.0),
-                                    onPressed: () {},
-                                    child: Text(l10n.buy)),
+                                leading: ElevatedButtonWidget(
+                                    onPressed: () {}, buttonName: l10n.buy),
                                 trailing: Text(
                                   "\u{20B9} ${data.price}",
                                   style: const TextStyle(

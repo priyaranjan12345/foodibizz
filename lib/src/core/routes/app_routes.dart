@@ -7,10 +7,17 @@ class AppRouter extends $AppRouter {
   late final List<AutoRoute> routes = [
     AutoRoute(page: HomeRoute.page, path: '/', initial: true, children: [
       AutoRoute(
-        page: DashboardRoute.page,
-        path: 'dashboardRoute',
-        initial: true,
-      ),
+          page: DashboardTabRoute.page,
+          path: 'dashboardTabRoute',
+          initial: true,
+          children: [
+            AutoRoute(
+              page: DashboardRoute.page,
+              path: 'dashboardRoute',
+              initial: true,
+            ),
+            AutoRoute(page: AddUpdateRoute.page, path: 'addUpdateRoute')
+          ]),
       AutoRoute(page: HistoryRoute.page, path: 'historyRoute', children: [
         AutoRoute(
           page: AllOrdersRoute.page,

@@ -6,7 +6,7 @@ import 'package:dio_smart_retry/dio_smart_retry.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:talker_dio_logger/talker_dio_logger.dart';
 
-import '../../global/helper/app_talker.dart';
+import '../helper/app_talker.dart';
 import 'dio_interceptor.dart';
 
 final dioProvider = Provider(
