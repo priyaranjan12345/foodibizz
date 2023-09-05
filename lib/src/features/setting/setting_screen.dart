@@ -15,14 +15,15 @@ class SettingScreen extends ConsumerWidget {
     final l10n = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: const Text("FoodiBizz"),
+        title: const Text("Settings"),
         centerTitle: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.all(10),
         child: ListView(
           children: [
             ListTile(
+              leading: const Icon(Icons.light_mode_outlined),
               title: Text(l10n.dark),
               trailing: Switch(
                 value: themeController == ThemeMode.dark,
@@ -34,7 +35,9 @@ class SettingScreen extends ConsumerWidget {
                 },
               ),
             ),
+            const Divider(),
             ListTile(
+              leading: const Icon(Icons.translate),
               title: Text(l10n.language),
               trailing: PopupMenuButton<String>(
                 onSelected: (value) {
