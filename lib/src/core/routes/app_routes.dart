@@ -1,12 +1,17 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
 import 'app_routes.gr.dart';
 
 @AutoRouterConfig()
 class AppRouter extends $AppRouter {
   @override
   late final List<AutoRoute> routes = [
-    AutoRoute(page: HomeRoute.page, path: '/', initial: true, children: [
-      AutoRoute(
+    AutoRoute(
+      page: HomeRoute.page,
+      path: '/',
+      initial: true,
+      children: [
+        AutoRoute(
           page: DashboardTabRoute.page,
           path: 'dashboardTabRoute',
           initial: true,
@@ -16,23 +21,43 @@ class AppRouter extends $AppRouter {
               path: 'dashboardRoute',
               initial: true,
             ),
-            AutoRoute(page: AddUpdateRoute.page, path: 'addUpdateRoute')
-          ]),
-      AutoRoute(page: HistoryRoute.page, path: 'historyRoute', children: [
-        AutoRoute(
-          page: AllOrdersRoute.page,
-          path: 'allOrdersRoute',
-          initial: true,
+            AutoRoute(
+              page: AddUpdateRoute.page,
+              path: 'addUpdateRoute',
+            ),
+            CustomRoute(
+              page: FilePickerBottomSheetRoute.page,
+              path: 'filePickerBottomSheetRoute',
+              customRouteBuilder: <T>(context, child, AutoRoutePage<T> page) {
+                return DialogRoute(
+                  context: context,
+                  settings: page,
+                  builder: (_) => child,
+                );
+              },
+            ),
+          ],
         ),
         AutoRoute(
-          page: OrderDetailsRoute.page,
-          path: 'orderDetailsRoute',
-        )
-      ]),
-      AutoRoute(
-        page: SettingsRoute.page,
-        path: 'settingsRoute',
-      ),
-    ]),
+          page: HistoryRoute.page,
+          path: 'historyRoute',
+          children: [
+            AutoRoute(
+              page: AllOrdersRoute.page,
+              path: 'allOrdersRoute',
+              initial: true,
+            ),
+            AutoRoute(
+              page: OrderDetailsRoute.page,
+              path: 'orderDetailsRoute',
+            )
+          ],
+        ),
+        AutoRoute(
+          page: SettingsRoute.page,
+          path: 'settingsRoute',
+        ),
+      ],
+    ),
   ];
 }

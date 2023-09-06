@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../client/dio_client_pod.dart';
+import '../../../../../global/api_client/dio_client_pod.dart';
 import 'dashboard_api.dart';
 import 'i_dashboard_api.dart';
 

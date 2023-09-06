@@ -25,6 +25,10 @@ dependencies:
   fluttertoast: ^8.2.1
   multiple_result: ^5.1.0
   cached_network_image: ^3.2.3
+  dotted_border: ^2.0.0+3
+  image_picker: ^1.0.4
+  image_cropper: ^5.0.0
+  flutter_image_compress: ^2.0.4
 
 dev_dependencies:
   auto_route_generator: ^7.1.1
