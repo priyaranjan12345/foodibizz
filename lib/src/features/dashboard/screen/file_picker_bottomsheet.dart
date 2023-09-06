@@ -1,5 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:foodibizz/src/features/dashboard/application/providers/image_picker_provider.dart';
 import 'package:image_picker/image_picker.dart';
 
 @RoutePage(deferredLoading: true, name: "FilePickerBottomSheetRoute")
@@ -25,34 +27,48 @@ class FilePickerBottomSheet extends StatelessWidget {
               Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  IconButton(
-                    onPressed: () {
-                      final ImagePicker picker = ImagePicker();
-                      picker.pickImage(source: ImageSource.camera);
-                    },
-                    icon: const Icon(
-                      Icons.camera,
-                      size: 40,
-                    ),
-                    color: Theme.of(context).primaryColor,
-                  ),
+                  Consumer(builder: (context, ref, _) {
+                    return IconButton(
+                      onPressed: () async {
+                        final ImagePicker picker = ImagePicker();
+                        final file =
+                            await picker.pickImage(source: ImageSource.camera);
+                        ref
+                            .read(imagePickerProvider.notifier)
+                            .update((state) => file);
+                        if (context.mounted) context.back();
+                      },
+                      icon: const Icon(
+                        Icons.camera,
+                        size: 40,
+                      ),
+                      color: Theme.of(context).primaryColor,
+                    );
+                  }),
                   const Text("Camera"),
                 ],
               ),
               Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  IconButton(
-                    onPressed: () {
-                      final ImagePicker picker = ImagePicker();
-                      picker.pickImage(source: ImageSource.gallery);
-                    },
-                    icon: const Icon(
-                      Icons.image,
-                      size: 40,
-                    ),
-                    color: Theme.of(context).primaryColor,
-                  ),
+                  Consumer(builder: (context, ref, _) {
+                    return IconButton(
+                      onPressed: () async {
+                        final ImagePicker picker = ImagePicker();
+                        final file =
+                            await picker.pickImage(source: ImageSource.gallery);
+                        ref
+                            .read(imagePickerProvider.notifier)
+                            .update((state) => file);
+                        if (context.mounted) context.back();
+                      },
+                      icon: const Icon(
+                        Icons.image,
+                        size: 40,
+                      ),
+                      color: Theme.of(context).primaryColor,
+                    );
+                  }),
                   const Text("Gallery"),
                 ],
               ),

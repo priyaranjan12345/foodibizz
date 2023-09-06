@@ -36,7 +36,9 @@ class DashboardScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          context.navigateTo(const AddUpdateRoute());
+          context.navigateTo(
+            const AddUpdateRoute(),
+          );
         },
         child: const Icon(Icons.add),
       ),

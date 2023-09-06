@@ -36,19 +36,24 @@ class _MyAppState extends ConsumerState<MyApp> {
     final approuter = ref.watch(autorouterProvider);
     final currentTheme = ref.watch(themecontrollerProvider);
     final currentLocale = ref.watch(localePod);
-    return MaterialApp.router(
-      title: 'FoodiBizz',
-      locale: currentLocale,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      themeMode: currentTheme,
-      darkTheme: AppThemes.darkTheme,
-      theme: AppThemes.lightTheme,
-      debugShowCheckedModeBanner: false,
-      routerConfig: approuter.config(
-        navigatorObservers: () => [
-          RouterObserver(),
-        ],
+    return GestureDetector(
+      onTap: () {
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: MaterialApp.router(
+        title: 'FoodiBizz',
+        locale: currentLocale,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        themeMode: currentTheme,
+        darkTheme: AppThemes.darkTheme,
+        theme: AppThemes.lightTheme,
+        debugShowCheckedModeBanner: false,
+        routerConfig: approuter.config(
+          navigatorObservers: () => [
+            RouterObserver(),
+          ],
+        ),
       ),
     );
   }
