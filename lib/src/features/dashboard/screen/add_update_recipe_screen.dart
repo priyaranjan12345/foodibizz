@@ -27,7 +27,7 @@ class _AddUpdateRecipeScreenState extends State<AddUpdateRecipeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Recipe"),
+        title: const Text("Add & Update Recipe"),
       ),
       body: Form(
         child: ListView(
