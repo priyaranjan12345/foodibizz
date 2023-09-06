@@ -1,10 +1,16 @@
+import 'dart:io';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foodibizz/global/extensions/focus_node_ext.dart';
 import 'package:foodibizz/global/widgets/elevated_button_widget.dart';
 import 'package:foodibizz/global/widgets/text_field_widget.dart';
 import 'package:foodibizz/src/core/routes/app_routes.gr.dart';
+import 'package:foodibizz/src/features/dashboard/application/providers/image_picker_provider.dart';
+
+import '../../../core/constants/gaps.dart';
 
 @RoutePage(deferredLoading: true, name: "AddUpdateRoute")
 class AddUpdateRecipeScreen extends StatefulWidget {
@@ -35,38 +41,62 @@ class _AddUpdateRecipeScreenState extends State<AddUpdateRecipeScreen> {
           children: [
             DottedBorder(
               borderType: BorderType.RRect,
-              color: Theme.of(context).dividerColor,
+              color: Theme.of(context).primaryColor,
               radius: const Radius.circular(12),
               padding: const EdgeInsets.all(6),
               dashPattern: const <double>[3, 3],
               child: ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(12)),
-                child: Container(
-                  height: 200,
-                  color: Theme.of(context).focusColor,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Center(
-                        child: ElevatedButton.icon(
-                          onPressed: () {
-                            context
-                                .navigateTo(const FilePickerBottomSheetRoute());
-                          },
-                          icon: const Icon(Icons.image),
-                          label: const Text(
-                            "Select Image",
-                            textAlign: TextAlign.center,
+                child: Consumer(builder: (context, ref, _) {
+                  final imagePickerState = ref.watch(imagePickerProvider);
+                  return imagePickerState == null
+                      ? Container(
+                          height: 200,
+                          color: Theme.of(context).focusColor,
+                          child: Center(
+                            child: ElevatedButton.icon(
+                              onPressed: () {
+                                context.navigateTo(
+                                    const FilePickerBottomSheetRoute());
+                              },
+                              icon: const Icon(Icons.image),
+                              label: const Text(
+                                "Select Image",
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                        )
+                      : Stack(
+                          children: [
+                            SizedBox(
+                              height: 200,
+                              width: double.infinity,
+                              child: Image.file(
+                                File(imagePickerState.path),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            Consumer(builder: (context, ref, _) {
+                              return Align(
+                                alignment: Alignment.topRight,
+                                child: CircleAvatar(
+                                  child: IconButton(
+                                      onPressed: () {
+                                        ref
+                                            .read(imagePickerProvider.notifier)
+                                            .update((state) => null);
+                                      },
+                                      icon: const Icon(Icons.close)),
+                                ),
+                              );
+                            })
+                          ],
+                        );
+                }),
               ),
             ),
-            const SizedBox(height: 20),
+            gapH20,
             TextFieldWidget(
               controller: nameController,
               focusNode: nameFocusNode,
@@ -76,9 +106,7 @@ class _AddUpdateRecipeScreenState extends State<AddUpdateRecipeScreen> {
                 context.changeFocus(nameFocusNode, descFocusNode);
               },
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            gapH20,
             TextFieldWidget(
               controller: descController,
               focusNode: descFocusNode,
@@ -88,9 +116,7 @@ class _AddUpdateRecipeScreenState extends State<AddUpdateRecipeScreen> {
                 context.changeFocus(descFocusNode, priceFocusNode);
               },
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            gapH20,
             TextFieldWidget(
               controller: priceController,
               focusNode: priceFocusNode,
@@ -98,9 +124,7 @@ class _AddUpdateRecipeScreenState extends State<AddUpdateRecipeScreen> {
               hint: "Enter recipe price",
               keyboardKey: TextInputType.number,
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            gapH20,
             ElevatedButtonWidget(buttonName: "submit", onPressed: () {})
           ],
         ),

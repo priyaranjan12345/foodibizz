@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:foodibizz/src/features/dashboard/data/services/dashboard_api_pod.dart';
+import 'package:foodibizz/src/features/dashboard/data/services/dashboard/dashboard_api_pod.dart';
 
 import 'dashboard_repository.dart';
 import 'i_dashboard_repository.dart';

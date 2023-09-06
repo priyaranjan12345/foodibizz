@@ -5,6 +5,7 @@ class TextFieldWidget extends StatelessWidget {
   final String? hint;
   final TextEditingController? controller;
   final TextInputType? keyboardKey;
+  final TextInputAction? textInputAction;
   final FocusNode? focusNode;
   final Function(String? value)? onChanged;
   final Function(String? value)? onFieldSubmitted;
@@ -14,6 +15,7 @@ class TextFieldWidget extends StatelessWidget {
       this.hint,
       this.controller,
       this.keyboardKey,
+      this.textInputAction,
       this.focusNode,
       this.onChanged,
       this.onFieldSubmitted})
@@ -24,6 +26,7 @@ class TextFieldWidget extends StatelessWidget {
     return TextFormField(
       controller: controller,
       keyboardType: keyboardKey,
+      textInputAction: textInputAction,
       focusNode: focusNode,
       onChanged: onChanged,
       onFieldSubmitted: onFieldSubmitted,
@@ -32,11 +35,24 @@ class TextFieldWidget extends StatelessWidget {
         hintStyle: const TextStyle(fontSize: 10),
         labelText: label,
         labelStyle: const TextStyle(fontSize: 12),
-        fillColor: Colors.transparent,
-        disabledBorder: const OutlineInputBorder(),
-        errorBorder: const OutlineInputBorder(),
-        focusedBorder: const OutlineInputBorder(),
-        enabledBorder: const OutlineInputBorder(),
+        fillColor: Theme.of(context).focusColor,
+        disabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(
+            color: Theme.of(context).dividerColor,
+          ),
+        ),
+        errorBorder:
+            OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: Theme.of(context).dividerColor),
+        ),
+        enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Theme.of(context).dividerColor,
+            ),
+            borderRadius: BorderRadius.circular(12)),
       ),
     );
   }
