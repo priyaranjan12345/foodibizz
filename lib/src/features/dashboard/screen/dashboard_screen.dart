@@ -3,10 +3,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foodibizz/global/riverpod_ext/asyncvalue_easy_when.dart';
-import 'package:foodibizz/global/widgets/elevated_button_widget.dart';
 import 'package:foodibizz/src/core/localization/l10n.dart';
-import 'package:foodibizz/src/core/routes/app_routes.gr.dart';
 import 'package:foodibizz/src/features/dashboard/application/providers/dashboard_provider.dart';
+
+import '../../../core/routes/app_routes.gr.dart';
 
 @RoutePage(deferredLoading: true, name: "DashboardRoute")
 class DashboardScreen extends StatelessWidget {
@@ -54,88 +54,89 @@ class DashboardScreen extends StatelessWidget {
                     ref.invalidate(dashboardProvider);
                   },
                   child: ListView.builder(
-                      padding: const EdgeInsets.all(10),
-                      itemCount: value.foodItems.length,
-                      itemBuilder: (context, index) {
-                        final data = value.foodItems[index];
-                        return Card(
-                          elevation: 5.0,
-                          child: Column(
-                            children: [
-                              Stack(
-                                children: [
-                                  CachedNetworkImage(
-                                    imageUrl:
-                                        "http://3.27.90.34:8000/${data.image}",
-                                    errorWidget: (context, url, error) =>
-                                        const Center(child: Icon(Icons.error)),
-                                    placeholder: (context, url) => const Center(
-                                        child: CircularProgressIndicator()),
-                                    fit: BoxFit.cover,
+                    padding: const EdgeInsets.all(10),
+                    itemCount: value.foodItems.length,
+                    itemBuilder: (context, index) {
+                      final data = value.foodItems[index];
+                      return Card(
+                        elevation: 5.0,
+                        child: Column(
+                          children: [
+                            Stack(
+                              children: [
+                                CachedNetworkImage(
+                                  imageUrl:
+                                      "http://3.27.90.34:8000/${data.image}",
+                                  errorWidget: (context, url, error) =>
+                                      const Center(child: Icon(Icons.error)),
+                                  placeholder: (context, url) => const Center(
+                                      child: CircularProgressIndicator()),
+                                  fit: BoxFit.cover,
+                                ),
+                                Align(
+                                  alignment: Alignment.topRight,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: CircleAvatar(
+                                      radius: 15,
+                                      backgroundColor: Theme.of(context)
+                                          .cardColor
+                                          .withOpacity(0.4),
+                                      child: PopupMenuButton<String>(
+                                        padding: EdgeInsets.zero,
+                                        elevation: 5.0,
+                                        constraints: const BoxConstraints(),
+                                        color: Colors.white,
+                                        itemBuilder: (BuildContext context) =>
+                                            <PopupMenuEntry<String>>[
+                                          PopupMenuItem<String>(
+                                            child: ListTile(
+                                              contentPadding: EdgeInsets.zero,
+                                              onTap: () {},
+                                              leading: const Icon(Icons.edit),
+                                              title: Text(l10n.edit),
+                                            ),
+                                          ),
+                                          PopupMenuItem<String>(
+                                            child: ListTile(
+                                              contentPadding: EdgeInsets.zero,
+                                              onTap: () {},
+                                              leading: const Icon(Icons.delete),
+                                              title: Text(l10n.delete),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ),
-                                  Align(
-                                      alignment: Alignment.topRight,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: CircleAvatar(
-                                            radius: 15,
-                                            backgroundColor: Theme.of(context)
-                                                .cardColor
-                                                .withOpacity(0.4),
-                                            child: PopupMenuButton<String>(
-                                              padding: EdgeInsets.zero,
-                                              elevation: 5.0,
-                                              constraints:
-                                                  const BoxConstraints(),
-                                              itemBuilder:
-                                                  (BuildContext context) =>
-                                                      <PopupMenuEntry<String>>[
-                                                PopupMenuItem<String>(
-                                                  child: ListTile(
-                                                    contentPadding:
-                                                        EdgeInsets.zero,
-                                                    onTap: () {},
-                                                    leading:
-                                                        const Icon(Icons.edit),
-                                                    title: Text(l10n.edit),
-                                                  ),
-                                                ),
-                                                PopupMenuItem<String>(
-                                                    child: ListTile(
-                                                  contentPadding:
-                                                      EdgeInsets.zero,
-                                                  onTap: () {},
-                                                  leading:
-                                                      const Icon(Icons.delete),
-                                                  title: Text(l10n.delete),
-                                                )),
-                                              ],
-                                            )),
-                                      ))
-                                ],
+                                )
+                              ],
+                            ),
+                            ListTile(
+                              title: Text(
+                                data.name,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold),
                               ),
-                              ListTile(
-                                title: Text(
-                                  data.name,
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                subtitle: Text(data.desc),
+                              subtitle: Text(data.desc),
+                            ),
+                            ListTile(
+                              leading: ElevatedButton(
+                                  style:
+                                      ElevatedButton.styleFrom(elevation: 5.0),
+                                  onPressed: () {},
+                                  child: Text(l10n.buy)),
+                              trailing: Text(
+                                "\u{20B9} ${data.price}",
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 15),
                               ),
-                              ListTile(
-                                leading: ElevatedButtonWidget(
-                                    onPressed: () {}, buttonName: l10n.buy),
-                                trailing: Text(
-                                  "\u{20B9} ${data.price}",
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15),
-                                ),
-                              )
-                            ],
-                          ),
-                        );
-                      }),
+                            )
+                          ],
+                        ),
+                      );
+                    },
+                  ),
                 );
               },
             );
@@ -220,21 +221,3 @@ class CustomSearch extends SearchDelegate {
     );
   }
 }
-
-// SearchBar(
-//               padding: MaterialStateProperty.all(
-//                 const EdgeInsets.symmetric(horizontal: 10),
-//               ),
-//               elevation: MaterialStateProperty.all(1),
-//               leading: const Icon(Icons.menu),
-//               trailing: [
-//                 IconButton(
-//                   onPressed: () {},
-//                   icon: const Icon(Icons.search),
-//                 ),
-//                 IconButton(
-//                   onPressed: () {},
-//                   icon: const Icon(Icons.shopping_cart_outlined),
-//                 ),
-//               ],
-//             ),
