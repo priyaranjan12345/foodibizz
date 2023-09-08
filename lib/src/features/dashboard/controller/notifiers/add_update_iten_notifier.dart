@@ -2,15 +2,17 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:foodibizz/src/features/dashboard/controller/states/add_update_item_state.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../data/repository/add_update_recipe/add_update_item_repository_pod.dart';
+import '../states/addupdate_item_state.dart';
 
-class AddUpdateItemNotifier extends AutoDisposeNotifier<AddUpdateItemState> {
+class AddUpdateItemNotifier
+    extends AutoDisposeAsyncNotifier<AddUpdateItemState> {
   @override
-  AddUpdateItemState build() {
-    return AddUpdateItemInitial();
+  FutureOr<AddUpdateItemState> build() {
+    state = AsyncData(AddUpdateItemInitial());
+    return future;
   }
 
   Future<void> addRecipe({
@@ -19,7 +21,7 @@ class AddUpdateItemNotifier extends AutoDisposeNotifier<AddUpdateItemState> {
     required String desc,
     required double price,
   }) async {
-    state = AddUpdateItemLoading();
+    state = const AsyncLoading();
     final result = await ref.watch(addUpdateItemRepositoryProvider).addItem(
           name: name,
           desc: desc,
@@ -30,10 +32,10 @@ class AddUpdateItemNotifier extends AutoDisposeNotifier<AddUpdateItemState> {
 
     result.when(
       (foodItem) {
-        state = AddUpdateItemLoaded();
+        state = AsyncData(AddUpdateItemLoaded());
       },
       (error) {
-        state = AddUpdateItemError(message: error.message);
+        state = AsyncError(error, StackTrace.current);
       },
     );
   }
