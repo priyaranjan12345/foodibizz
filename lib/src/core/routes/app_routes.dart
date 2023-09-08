@@ -22,8 +22,8 @@ class AppRouter extends $AppRouter {
               initial: true,
             ),
             AutoRoute(
-              page: AddUpdateRoute.page,
-              path: 'addUpdateRoute',
+              page: AddUpdateItemRoute.page,
+              path: 'addUpdateItemRoute',
             ),
             CustomRoute(
               page: FilePickerBottomSheetRoute.page,
@@ -58,6 +58,17 @@ class AppRouter extends $AppRouter {
           path: 'settingsRoute',
         ),
       ],
+    ),
+    CustomRoute(
+      page: LoadingDialogRoute.page,
+      path: '/loadingDialogRoute',
+      customRouteBuilder: <T>(context, child, AutoRoutePage<T> page) {
+        return DialogRoute(
+          context: context,
+          settings: page,
+          builder: (_) => child,
+        );
+      },
     ),
   ];
 }

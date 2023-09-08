@@ -13,8 +13,9 @@ class DashboardRepository extends IDashboardRepository {
   DashboardRepository({required this.iDashboardApi});
 
   @override
-  Future<Result<AllFoodItemResponse, BaseException>> getAllItems(
-      {CancelToken? cancelToken}) async {
+  Future<Result<AllFoodItemResponse, BaseException>> getAllItems({
+    CancelToken? cancelToken,
+  }) async {
     final response = await iDashboardApi.getAllItems(cancelToken: cancelToken);
 
     if (response.statusCode == 200 || response.statusCode == 201) {

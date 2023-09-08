@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:foodibizz/src/features/dashboard/application/providers/image_picker_provider.dart';
+import 'package:foodibizz/src/features/dashboard/controller/providers/image_picker_provider.dart';
 import 'package:image_picker/image_picker.dart';
 
 @RoutePage(deferredLoading: true, name: "FilePickerBottomSheetRoute")
