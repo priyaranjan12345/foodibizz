@@ -8,6 +8,7 @@ final dashboardProvider = FutureProvider.autoDispose<AllFoodItemResponse>(
   (ref) async {
     final token = ref.cancelToken();
     final link = ref.cacheFor();
+
     final result = await ref
         .watch(dashboardRepositoryProvider)
         .getAllItems(cancelToken: token);

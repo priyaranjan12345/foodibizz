@@ -36,6 +36,7 @@ class AppRouter extends $AppRouter {
                 );
               },
             ),
+            AutoRoute(page: CartRecipesRoute.page, path: 'cartRecipesRoute')
           ],
         ),
         AutoRoute(

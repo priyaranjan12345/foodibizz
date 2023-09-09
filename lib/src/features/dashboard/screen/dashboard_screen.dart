@@ -29,7 +29,9 @@ class DashboardScreen extends StatelessWidget {
             icon: const Icon(Icons.search),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              context.navigateTo(const CartRecipesRoute());
+            },
             icon: const Icon(Icons.shopping_cart_outlined),
           ),
         ],
