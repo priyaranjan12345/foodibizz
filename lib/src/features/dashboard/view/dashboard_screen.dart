@@ -1,13 +1,13 @@
-import 'package:auto_route/auto_route.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:foodibizz/global/extensions/snackbar_ext.dart';
-import 'package:foodibizz/global/riverpod_ext/asyncvalue_easy_when.dart';
-import 'package:foodibizz/src/core/localization/l10n.dart';
-import 'package:foodibizz/src/features/dashboard/controller/providers/dashboard_provider.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
+import '../controller/providers/dashboard_provider.dart';
 import '../../../core/routes/app_routes.gr.dart';
+import '../../../core/localization/l10n.dart';
+import '../../../../global/extensions/snackbar_ext.dart';
+import '../../../../global/riverpod_ext/asyncvalue_easy_when.dart';
 
 @RoutePage(deferredLoading: true, name: "DashboardRoute")
 class DashboardScreen extends ConsumerWidget {
@@ -18,25 +18,33 @@ class DashboardScreen extends ConsumerWidget {
     final l10n = context.l10n;
     final itemsState = ref.watch(dashboardProvider);
 
+    /// listen deleteItemProvider
     ref.listen(
       deleteItemProvider,
       (previous, next) {
         next.when(
           data: (_) {
             /// on success hide loading dialog
-            if (context.router.current.name == "LoadingDialogRoute") {
-              context.back();
-            }
-            ref.invalidate(dashboardProvider);
-          },
-          error: (e, _) {
-            /// on error hide loading dialog
+            /// need to complete the flow
             if (context.router.current.name == "LoadingDialogRoute") {
               context.back();
             }
 
-            /// clear all snackbars
+            /// on success refresh list
+            /// to get updated items list
+            ref.invalidate(dashboardProvider);
+          },
+          error: (e, _) {
+            /// on error hide loading dialog
+            /// need to complete the flow
+            if (context.router.current.name == "LoadingDialogRoute") {
+              context.back();
+            }
+
+            /// clear all previous snackbars
             context.clearSnackBar();
+
+            /// error snackbar
             final snackBar = SnackBar(
               content: const Text("Failed to delete item"),
               action: SnackBarAction(
@@ -47,7 +55,7 @@ class DashboardScreen extends ConsumerWidget {
               ),
             );
 
-            /// on error show snackbar
+            /// show error snackbar
             context.showSnackBar(snackBar);
           },
           loading: () {
