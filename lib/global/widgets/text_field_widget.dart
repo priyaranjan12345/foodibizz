@@ -1,29 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class TextFieldWidget extends StatelessWidget {
   final String? label;
   final String? hint;
+  final String? Function(String?)? validator;
+  final List<TextInputFormatter>? inputFormatters;
   final TextEditingController? controller;
   final TextInputType? keyboardKey;
   final TextInputAction? textInputAction;
   final FocusNode? focusNode;
   final Function(String? value)? onChanged;
   final Function(String? value)? onFieldSubmitted;
-  const TextFieldWidget(
-      {Key? key,
-      this.label,
-      this.hint,
-      this.controller,
-      this.keyboardKey,
-      this.textInputAction,
-      this.focusNode,
-      this.onChanged,
-      this.onFieldSubmitted})
-      : super(key: key);
+  
+
+  const TextFieldWidget({
+    Key? key,
+    this.label,
+    this.hint,
+    this.validator,
+    this.inputFormatters,
+    this.controller,
+    this.keyboardKey,
+    this.textInputAction,
+    this.focusNode,
+    this.onChanged,
+    this.onFieldSubmitted,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       controller: controller,
       keyboardType: keyboardKey,
       textInputAction: textInputAction,
@@ -54,6 +62,9 @@ class TextFieldWidget extends StatelessWidget {
             ),
             borderRadius: BorderRadius.circular(12)),
       ),
+      validator: validator,
+      inputFormatters: inputFormatters,
+      
     );
   }
 }

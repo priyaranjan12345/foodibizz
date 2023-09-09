@@ -2,21 +2,20 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:image_picker/image_picker.dart';
 
 import '../../data/repository/add_update_recipe/add_update_item_repository_pod.dart';
-import '../states/addupdate_item_state.dart';
+import '../states/add_update_item_state.dart';
 
 class AddUpdateItemNotifier
     extends AutoDisposeAsyncNotifier<AddUpdateItemState> {
   @override
   FutureOr<AddUpdateItemState> build() {
-    state = AsyncData(AddUpdateItemInitial());
+    state = const AsyncData(AddUpdateItemInitial());
     return future;
   }
 
   Future<void> addRecipe({
-    required XFile img,
+    required File img,
     required String name,
     required String desc,
     required double price,
@@ -27,21 +26,21 @@ class AddUpdateItemNotifier
           desc: desc,
           price: price,
           dateTime: DateTime.now().toString(),
-          image: File(img.path),
+          image: img,
         );
 
     result.when(
       (foodItem) {
-        state = AsyncData(AddUpdateItemLoaded());
+        state = const AsyncData(AddUpdateItemLoaded());
       },
       (error) {
-        state = AsyncError(error, StackTrace.current);
+        state = AsyncError(error.message, StackTrace.current);
       },
     );
   }
 
   Future<void> updateRecipe({
-    required XFile img,
+    required File img,
     required String name,
     required String desc,
     required double price,

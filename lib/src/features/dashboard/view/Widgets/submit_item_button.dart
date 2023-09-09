@@ -1,13 +1,18 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foodibizz/global/extensions/snackbar_ext.dart';
 import 'package:foodibizz/global/riverpod_ext/asyncvalue_easy_when.dart';
 import '../../controller/providers/add_update_item_provider.dart';
 import '../../controller/states/add_update_item_state.dart';
-import '../../controller/states/addupdate_item_state.dart';
 
 class SubmitItemButton extends ConsumerWidget {
-  const SubmitItemButton({super.key});
+  const SubmitItemButton({
+    super.key,
+    required this.onSubmit,
+  });
+
+  final VoidCallback onSubmit;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -20,7 +25,7 @@ class SubmitItemButton extends ConsumerWidget {
           data: (data) => switch (data) {
             AddUpdateItemInitial() => null,
             AddUpdateItemLoading() => null,
-            AddUpdateItemLoaded() => null,
+            AddUpdateItemLoaded() => context.back(),
           },
           error: (e, _) {
             /// show error snackbar
@@ -38,7 +43,7 @@ class SubmitItemButton extends ConsumerWidget {
       data: (data) {
         return switch (data) {
           AddUpdateItemInitial() => ElevatedButton(
-              onPressed: () {},
+              onPressed: onSubmit,
               child: const Text("Submit"),
             ),
           AddUpdateItemLoading() => const ElevatedButton(
@@ -51,6 +56,14 @@ class SubmitItemButton extends ConsumerWidget {
             ),
         };
       },
+      errorWidget: (error, stackTrace) => ElevatedButton(
+        onPressed: onSubmit,
+        child: const Text("Retry"),
+      ),
+      loadingWidget: () => const ElevatedButton(
+        onPressed: null,
+        child: CircularProgressIndicator(),
+      ),
     );
   }
 }

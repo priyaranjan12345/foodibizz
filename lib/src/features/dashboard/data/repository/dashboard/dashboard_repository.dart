@@ -18,7 +18,7 @@ class DashboardRepository extends IDashboardRepository {
   }) async {
     final response = await iDashboardApi.getAllItems(cancelToken: cancelToken);
 
-    if (response.statusCode == 200 || response.statusCode == 201) {
+    if (response.statusCode == 200) {
       try {
         return Success(AllFoodItemResponse.fromMap(response.data));
       } catch (e) {
@@ -28,6 +28,34 @@ class DashboardRepository extends IDashboardRepository {
       return Error(BaseException(message: response.data.toString()));
     } else {
       final details = response.data['message'];
+      if (details == 'No Internet') {
+        throw NoInternetException();
+      } else {
+        return Error(BaseException(message: details.toString()));
+      }
+    }
+  }
+
+  @override
+  Future<Result<String, BaseException>> deleteItems({
+    required String id,
+    CancelToken? cancelToken,
+  }) async {
+    final response = await iDashboardApi.deleteItems(
+      id: id,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 204) {
+      try {
+        return const Success("Delete success");
+      } catch (e) {
+        return Error(BaseException(message: e.toString()));
+      }
+    } else if (response.statusCode == 401) {
+      return Error(BaseException(message: response.data.toString()));
+    } else {
+      final details = response.data['detail'];
       if (details == 'No Internet') {
         throw NoInternetException();
       } else {

@@ -3,24 +3,30 @@ import 'dart:io';
 import 'package:auto_route/auto_route.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:foodibizz/global/extensions/focus_node_ext.dart';
-import 'package:foodibizz/global/widgets/elevated_button_widget.dart';
-import 'package:foodibizz/global/widgets/text_field_widget.dart';
-import 'package:foodibizz/src/core/routes/app_routes.gr.dart';
-import 'package:foodibizz/src/features/dashboard/controller/providers/image_picker_provider.dart';
 
+import '../controller/providers/image_picker_provider.dart';
 import '../../../core/constants/gaps.dart';
+import '../../../core/routes/app_routes.gr.dart';
+import '../../../../global/extensions/focus_node_ext.dart';
+import '../../../../global/extensions/snackbar_ext.dart';
+import '../../../../global/widgets/text_field_widget.dart';
+import '../controller/providers/add_update_item_provider.dart';
+import 'Widgets/submit_item_button.dart';
 
 @RoutePage(deferredLoading: true, name: "AddUpdateItemRoute")
-class AddUpdateItemScreen extends StatefulWidget {
+class AddUpdateItemScreen extends ConsumerStatefulWidget {
   const AddUpdateItemScreen({super.key});
 
   @override
-  State<AddUpdateItemScreen> createState() => _AddUpdateItemScreenState();
+  ConsumerState<AddUpdateItemScreen> createState() =>
+      _AddUpdateItemScreenConsumerState();
 }
 
-class _AddUpdateItemScreenState extends State<AddUpdateItemScreen> {
+class _AddUpdateItemScreenConsumerState
+    extends ConsumerState<AddUpdateItemScreen> {
+  final formKey = GlobalKey<FormState>();
   TextEditingController nameController = TextEditingController();
   TextEditingController descController = TextEditingController();
   TextEditingController priceController = TextEditingController();
@@ -36,6 +42,7 @@ class _AddUpdateItemScreenState extends State<AddUpdateItemScreen> {
         title: const Text("Add & Update Recipe"),
       ),
       body: Form(
+        key: formKey,
         child: ListView(
           padding: const EdgeInsets.all(20),
           children: [
@@ -58,7 +65,8 @@ class _AddUpdateItemScreenState extends State<AddUpdateItemScreen> {
                               child: ElevatedButton.icon(
                                 onPressed: () {
                                   context.navigateTo(
-                                      const FilePickerBottomSheetRoute());
+                                    const FilePickerBottomSheetRoute(),
+                                  );
                                 },
                                 icon: const Icon(Icons.image),
                                 label: const Text(
@@ -78,21 +86,23 @@ class _AddUpdateItemScreenState extends State<AddUpdateItemScreen> {
                                   fit: BoxFit.cover,
                                 ),
                               ),
-                              Consumer(builder: (context, ref, _) {
-                                return Align(
-                                  alignment: Alignment.topRight,
-                                  child: CircleAvatar(
-                                    child: IconButton(
-                                        onPressed: () {
-                                          ref
-                                              .read(
-                                                  imagePickerProvider.notifier)
-                                              .update((state) => null);
-                                        },
-                                        icon: const Icon(Icons.close)),
-                                  ),
-                                );
-                              })
+                              Consumer(
+                                builder: (context, ref, _) {
+                                  return Align(
+                                    alignment: Alignment.topRight,
+                                    child: CircleAvatar(
+                                      child: IconButton(
+                                          onPressed: () {
+                                            ref
+                                                .read(imagePickerProvider
+                                                    .notifier)
+                                                .update((state) => null);
+                                          },
+                                          icon: const Icon(Icons.close)),
+                                    ),
+                                  );
+                                },
+                              )
                             ],
                           );
                   },
@@ -108,6 +118,13 @@ class _AddUpdateItemScreenState extends State<AddUpdateItemScreen> {
               onFieldSubmitted: (value) {
                 context.changeFocus(nameFocusNode, descFocusNode);
               },
+              validator: (p0) {
+                if (p0 != null && p0.isNotEmpty) {
+                  return null;
+                }
+
+                return "Name required";
+              },
             ),
             gapH20,
             TextFieldWidget(
@@ -118,6 +135,13 @@ class _AddUpdateItemScreenState extends State<AddUpdateItemScreen> {
               onFieldSubmitted: (value) {
                 context.changeFocus(descFocusNode, priceFocusNode);
               },
+              validator: (p0) {
+                if (p0 != null && p0.isNotEmpty) {
+                  return null;
+                }
+
+                return "Description required";
+              },
             ),
             gapH20,
             TextFieldWidget(
@@ -126,13 +150,44 @@ class _AddUpdateItemScreenState extends State<AddUpdateItemScreen> {
               label: "Price",
               hint: "Enter recipe price",
               keyboardKey: TextInputType.number,
+              validator: (p0) {
+                if (p0 != null && p0.isNotEmpty) {
+                  return null;
+                }
+
+                return "Price required";
+              },
+              inputFormatters: <TextInputFormatter>[
+                // FilteringTextInputFormatter.digitsOnly,
+                FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
+              ],
             ),
             gapH20,
-            ElevatedButtonWidget(
-              buttonName: "submit",
-              onPressed: () {
-                context.navigateTo(const LoadingDialogRoute());
-              },
+            Center(
+              child: SubmitItemButton(
+                onSubmit: () {
+                  if (!formKey.currentState!.validate()) return;
+
+                  final imageXFile = ref.read(imagePickerProvider);
+                  if (imageXFile != null) {
+                    ref.read(addUpdateItemProvider.notifier).addRecipe(
+                          img: File(imageXFile.path),
+                          name: nameController.text,
+                          desc: descController.text,
+                          price: double.parse(priceController.text),
+                        );
+                  } else {
+                    final snakBar = SnackBar(
+                      content: const Text("Please select item image"),
+                      action: SnackBarAction(
+                        label: "Cancel",
+                        onPressed: () => context.clearSnackBar(),
+                      ),
+                    );
+                    context.showSnackBar(snakBar);
+                  }
+                },
+              ),
             )
           ],
         ),

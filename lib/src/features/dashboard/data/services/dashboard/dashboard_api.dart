@@ -14,4 +14,12 @@ class DashboardApi extends IDashboardApi {
       cancelToken: cancelToken,
     );
   }
+
+  @override
+  Future<Response> deleteItems({
+    required String id,
+    CancelToken? cancelToken,
+  }) async {
+    return await dio.delete('/item/delete-fooditem/$id');
+  }
 }
