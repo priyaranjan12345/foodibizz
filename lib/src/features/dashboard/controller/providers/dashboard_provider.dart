@@ -4,6 +4,8 @@ import 'package:foodibizz/global/riverpod_ext/cache_ext.dart';
 import 'package:foodibizz/global/riverpod_ext/cancel_ext.dart';
 import 'package:foodibizz/src/features/dashboard/model/all_food_items_response.dart';
 
+import '../notifiers/delete_item_notifier.dart';
+
 final dashboardProvider = FutureProvider.autoDispose<AllFoodItemResponse>(
   (ref) async {
     final token = ref.cancelToken();
@@ -23,4 +25,9 @@ final dashboardProvider = FutureProvider.autoDispose<AllFoodItemResponse>(
     );
   },
   name: "dashboardProvider",
+);
+
+final deleteItemProvider = AutoDisposeAsyncNotifierProvider<DeleteItemNotifier, void>(
+  () => DeleteItemNotifier(),
+  name: "deleteItemProvider",
 );
