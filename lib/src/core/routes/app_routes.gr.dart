@@ -8,154 +8,141 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i12;
-<<<<<<< HEAD
-import 'package:foodibizz/src/features/cart/screen/cart_recipes_screen.dart'
-    deferred as _i3;
-import 'package:foodibizz/src/features/dashboard/screen/add_update_recipe_screen.dart'
-    deferred as _i1;
-import 'package:foodibizz/src/features/dashboard/screen/dashboard_screen.dart'
-    deferred as _i4;
-import 'package:foodibizz/src/features/dashboard/screen/dashboard_tab.dart'
-    deferred as _i5;
-import 'package:foodibizz/src/features/dashboard/screen/file_picker_bottomsheet.dart'
-=======
+import 'package:auto_route/auto_route.dart' as _i13;
 import 'package:foodibizz/global/helper/app_loading_dialog.dart'
     deferred as _i3;
+import 'package:foodibizz/src/features/cart/screen/cart_recipes_screen.dart'
+    deferred as _i4;
 import 'package:foodibizz/src/features/dashboard/view/add_update_item_screen.dart'
     deferred as _i1;
 import 'package:foodibizz/src/features/dashboard/view/dashboard_screen.dart'
-    deferred as _i4;
-import 'package:foodibizz/src/features/dashboard/view/dashboard_tab.dart'
     deferred as _i5;
-import 'package:foodibizz/src/features/dashboard/view/file_picker_bottomsheet.dart'
->>>>>>> a539aa913a0464a1ade246e6e23b07cd97508ba9
+import 'package:foodibizz/src/features/dashboard/view/dashboard_tab.dart'
     deferred as _i6;
+import 'package:foodibizz/src/features/dashboard/view/file_picker_bottomsheet.dart'
+    deferred as _i7;
 import 'package:foodibizz/src/features/history/screen/all_orders_screen.dart'
     deferred as _i2;
 import 'package:foodibizz/src/features/history/screen/history_screen.dart'
-    deferred as _i7;
+    deferred as _i8;
 import 'package:foodibizz/src/features/history/screen/order_details_screen.dart'
-    deferred as _i9;
-import 'package:foodibizz/src/features/home/home_screen.dart' deferred as _i8;
-import 'package:foodibizz/src/features/setting/setting_screen.dart'
     deferred as _i10;
-import 'package:foodibizz/src/features/splash/splash_screen.dart'
+import 'package:foodibizz/src/features/home/home_screen.dart' deferred as _i9;
+import 'package:foodibizz/src/features/setting/setting_screen.dart'
     deferred as _i11;
+import 'package:foodibizz/src/features/splash/splash_screen.dart'
+    deferred as _i12;
 
-abstract class $AppRouter extends _i12.RootStackRouter {
+abstract class $AppRouter extends _i13.RootStackRouter {
   $AppRouter({super.navigatorKey});
 
   @override
-  final Map<String, _i12.PageFactory> pagesMap = {
-<<<<<<< HEAD
-    AddUpdateRoute.name: (routeData) {
-=======
+  final Map<String, _i13.PageFactory> pagesMap = {
     AddUpdateItemRoute.name: (routeData) {
->>>>>>> a539aa913a0464a1ade246e6e23b07cd97508ba9
-      return _i12.AutoRoutePage<dynamic>(
+      return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i12.DeferredWidget(
+        child: _i13.DeferredWidget(
           _i1.loadLibrary,
           () => _i1.AddUpdateItemScreen(),
         ),
       );
     },
     AllOrdersRoute.name: (routeData) {
-      return _i12.AutoRoutePage<dynamic>(
+      return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i12.DeferredWidget(
+        child: _i13.DeferredWidget(
           _i2.loadLibrary,
           () => _i2.AllOrdersScreen(),
         ),
       );
     },
-<<<<<<< HEAD
-    CartRecipesRoute.name: (routeData) {
-=======
     LoadingDialogRoute.name: (routeData) {
->>>>>>> a539aa913a0464a1ade246e6e23b07cd97508ba9
-      return _i12.AutoRoutePage<dynamic>(
+      return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i12.DeferredWidget(
+        child: _i13.DeferredWidget(
           _i3.loadLibrary,
-<<<<<<< HEAD
-          () => _i3.CartRecipesScreen(),
-=======
           () => _i3.AppLoadingDialog(),
->>>>>>> a539aa913a0464a1ade246e6e23b07cd97508ba9
+        ),
+      );
+    },
+    CartRecipesRoute.name: (routeData) {
+      return _i13.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: _i13.DeferredWidget(
+          _i4.loadLibrary,
+          () => _i4.CartRecipesScreen(),
         ),
       );
     },
     DashboardRoute.name: (routeData) {
-      return _i12.AutoRoutePage<dynamic>(
+      return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i12.DeferredWidget(
-          _i4.loadLibrary,
-          () => _i4.DashboardScreen(),
+        child: _i13.DeferredWidget(
+          _i5.loadLibrary,
+          () => _i5.DashboardScreen(),
         ),
       );
     },
     DashboardTabRoute.name: (routeData) {
-      return _i12.AutoRoutePage<dynamic>(
+      return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i12.DeferredWidget(
-          _i5.loadLibrary,
-          () => _i5.DashboardTab(),
+        child: _i13.DeferredWidget(
+          _i6.loadLibrary,
+          () => _i6.DashboardTab(),
         ),
       );
     },
     FilePickerBottomSheetRoute.name: (routeData) {
-      return _i12.AutoRoutePage<dynamic>(
+      return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i12.DeferredWidget(
-          _i6.loadLibrary,
-          () => _i6.FilePickerBottomSheet(),
+        child: _i13.DeferredWidget(
+          _i7.loadLibrary,
+          () => _i7.FilePickerBottomSheet(),
         ),
       );
     },
     HistoryRoute.name: (routeData) {
-      return _i12.AutoRoutePage<dynamic>(
+      return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i12.DeferredWidget(
-          _i7.loadLibrary,
-          () => _i7.HistoryScreen(),
+        child: _i13.DeferredWidget(
+          _i8.loadLibrary,
+          () => _i8.HistoryScreen(),
         ),
       );
     },
     HomeRoute.name: (routeData) {
-      return _i12.AutoRoutePage<dynamic>(
+      return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i12.DeferredWidget(
-          _i8.loadLibrary,
-          () => _i8.HomeScreen(),
+        child: _i13.DeferredWidget(
+          _i9.loadLibrary,
+          () => _i9.HomeScreen(),
         ),
       );
     },
     OrderDetailsRoute.name: (routeData) {
-      return _i12.AutoRoutePage<dynamic>(
+      return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i12.DeferredWidget(
-          _i9.loadLibrary,
-          () => _i9.OrderDetailsScreen(),
+        child: _i13.DeferredWidget(
+          _i10.loadLibrary,
+          () => _i10.OrderDetailsScreen(),
         ),
       );
     },
     SettingsRoute.name: (routeData) {
-      return _i12.AutoRoutePage<dynamic>(
+      return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i12.DeferredWidget(
-          _i10.loadLibrary,
-          () => _i10.SettingScreen(),
+        child: _i13.DeferredWidget(
+          _i11.loadLibrary,
+          () => _i11.SettingScreen(),
         ),
       );
     },
     SplashRoute.name: (routeData) {
-      return _i12.AutoRoutePage<dynamic>(
+      return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i12.DeferredWidget(
-          _i11.loadLibrary,
-          () => _i11.SplashScreen(),
+        child: _i13.DeferredWidget(
+          _i12.loadLibrary,
+          () => _i12.SplashScreen(),
         ),
       );
     },
@@ -163,15 +150,9 @@ abstract class $AppRouter extends _i12.RootStackRouter {
 }
 
 /// generated route for
-<<<<<<< HEAD
-/// [_i1.AddUpdateRecipeScreen]
-class AddUpdateRoute extends _i12.PageRouteInfo<void> {
-  const AddUpdateRoute({List<_i12.PageRouteInfo>? children})
-=======
 /// [_i1.AddUpdateItemScreen]
-class AddUpdateItemRoute extends _i12.PageRouteInfo<void> {
-  const AddUpdateItemRoute({List<_i12.PageRouteInfo>? children})
->>>>>>> a539aa913a0464a1ade246e6e23b07cd97508ba9
+class AddUpdateItemRoute extends _i13.PageRouteInfo<void> {
+  const AddUpdateItemRoute({List<_i13.PageRouteInfo>? children})
       : super(
           AddUpdateItemRoute.name,
           initialChildren: children,
@@ -179,13 +160,13 @@ class AddUpdateItemRoute extends _i12.PageRouteInfo<void> {
 
   static const String name = 'AddUpdateItemRoute';
 
-  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
+  static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
 }
 
 /// generated route for
 /// [_i2.AllOrdersScreen]
-class AllOrdersRoute extends _i12.PageRouteInfo<void> {
-  const AllOrdersRoute({List<_i12.PageRouteInfo>? children})
+class AllOrdersRoute extends _i13.PageRouteInfo<void> {
+  const AllOrdersRoute({List<_i13.PageRouteInfo>? children})
       : super(
           AllOrdersRoute.name,
           initialChildren: children,
@@ -193,39 +174,41 @@ class AllOrdersRoute extends _i12.PageRouteInfo<void> {
 
   static const String name = 'AllOrdersRoute';
 
-  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
+  static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
 }
 
 /// generated route for
-<<<<<<< HEAD
-/// [_i3.CartRecipesScreen]
-class CartRecipesRoute extends _i12.PageRouteInfo<void> {
-  const CartRecipesRoute({List<_i12.PageRouteInfo>? children})
-      : super(
-          CartRecipesRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'CartRecipesRoute';
-=======
 /// [_i3.AppLoadingDialog]
-class LoadingDialogRoute extends _i12.PageRouteInfo<void> {
-  const LoadingDialogRoute({List<_i12.PageRouteInfo>? children})
+class LoadingDialogRoute extends _i13.PageRouteInfo<void> {
+  const LoadingDialogRoute({List<_i13.PageRouteInfo>? children})
       : super(
           LoadingDialogRoute.name,
           initialChildren: children,
         );
 
   static const String name = 'LoadingDialogRoute';
->>>>>>> a539aa913a0464a1ade246e6e23b07cd97508ba9
 
-  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
+  static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i4.DashboardScreen]
-class DashboardRoute extends _i12.PageRouteInfo<void> {
-  const DashboardRoute({List<_i12.PageRouteInfo>? children})
+/// [_i4.CartRecipesScreen]
+class CartRecipesRoute extends _i13.PageRouteInfo<void> {
+  const CartRecipesRoute({List<_i13.PageRouteInfo>? children})
+      : super(
+          CartRecipesRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'CartRecipesRoute';
+
+  static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
+}
+
+/// generated route for
+/// [_i5.DashboardScreen]
+class DashboardRoute extends _i13.PageRouteInfo<void> {
+  const DashboardRoute({List<_i13.PageRouteInfo>? children})
       : super(
           DashboardRoute.name,
           initialChildren: children,
@@ -233,13 +216,13 @@ class DashboardRoute extends _i12.PageRouteInfo<void> {
 
   static const String name = 'DashboardRoute';
 
-  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
+  static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i5.DashboardTab]
-class DashboardTabRoute extends _i12.PageRouteInfo<void> {
-  const DashboardTabRoute({List<_i12.PageRouteInfo>? children})
+/// [_i6.DashboardTab]
+class DashboardTabRoute extends _i13.PageRouteInfo<void> {
+  const DashboardTabRoute({List<_i13.PageRouteInfo>? children})
       : super(
           DashboardTabRoute.name,
           initialChildren: children,
@@ -247,13 +230,13 @@ class DashboardTabRoute extends _i12.PageRouteInfo<void> {
 
   static const String name = 'DashboardTabRoute';
 
-  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
+  static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i6.FilePickerBottomSheet]
-class FilePickerBottomSheetRoute extends _i12.PageRouteInfo<void> {
-  const FilePickerBottomSheetRoute({List<_i12.PageRouteInfo>? children})
+/// [_i7.FilePickerBottomSheet]
+class FilePickerBottomSheetRoute extends _i13.PageRouteInfo<void> {
+  const FilePickerBottomSheetRoute({List<_i13.PageRouteInfo>? children})
       : super(
           FilePickerBottomSheetRoute.name,
           initialChildren: children,
@@ -261,13 +244,13 @@ class FilePickerBottomSheetRoute extends _i12.PageRouteInfo<void> {
 
   static const String name = 'FilePickerBottomSheetRoute';
 
-  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
+  static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i7.HistoryScreen]
-class HistoryRoute extends _i12.PageRouteInfo<void> {
-  const HistoryRoute({List<_i12.PageRouteInfo>? children})
+/// [_i8.HistoryScreen]
+class HistoryRoute extends _i13.PageRouteInfo<void> {
+  const HistoryRoute({List<_i13.PageRouteInfo>? children})
       : super(
           HistoryRoute.name,
           initialChildren: children,
@@ -275,13 +258,13 @@ class HistoryRoute extends _i12.PageRouteInfo<void> {
 
   static const String name = 'HistoryRoute';
 
-  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
+  static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i8.HomeScreen]
-class HomeRoute extends _i12.PageRouteInfo<void> {
-  const HomeRoute({List<_i12.PageRouteInfo>? children})
+/// [_i9.HomeScreen]
+class HomeRoute extends _i13.PageRouteInfo<void> {
+  const HomeRoute({List<_i13.PageRouteInfo>? children})
       : super(
           HomeRoute.name,
           initialChildren: children,
@@ -289,13 +272,13 @@ class HomeRoute extends _i12.PageRouteInfo<void> {
 
   static const String name = 'HomeRoute';
 
-  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
+  static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i9.OrderDetailsScreen]
-class OrderDetailsRoute extends _i12.PageRouteInfo<void> {
-  const OrderDetailsRoute({List<_i12.PageRouteInfo>? children})
+/// [_i10.OrderDetailsScreen]
+class OrderDetailsRoute extends _i13.PageRouteInfo<void> {
+  const OrderDetailsRoute({List<_i13.PageRouteInfo>? children})
       : super(
           OrderDetailsRoute.name,
           initialChildren: children,
@@ -303,13 +286,13 @@ class OrderDetailsRoute extends _i12.PageRouteInfo<void> {
 
   static const String name = 'OrderDetailsRoute';
 
-  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
+  static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i10.SettingScreen]
-class SettingsRoute extends _i12.PageRouteInfo<void> {
-  const SettingsRoute({List<_i12.PageRouteInfo>? children})
+/// [_i11.SettingScreen]
+class SettingsRoute extends _i13.PageRouteInfo<void> {
+  const SettingsRoute({List<_i13.PageRouteInfo>? children})
       : super(
           SettingsRoute.name,
           initialChildren: children,
@@ -317,13 +300,13 @@ class SettingsRoute extends _i12.PageRouteInfo<void> {
 
   static const String name = 'SettingsRoute';
 
-  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
+  static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i11.SplashScreen]
-class SplashRoute extends _i12.PageRouteInfo<void> {
-  const SplashRoute({List<_i12.PageRouteInfo>? children})
+/// [_i12.SplashScreen]
+class SplashRoute extends _i13.PageRouteInfo<void> {
+  const SplashRoute({List<_i13.PageRouteInfo>? children})
       : super(
           SplashRoute.name,
           initialChildren: children,
@@ -331,5 +314,5 @@ class SplashRoute extends _i12.PageRouteInfo<void> {
 
   static const String name = 'SplashRoute';
 
-  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
+  static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
 }

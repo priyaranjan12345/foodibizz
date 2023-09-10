@@ -12,7 +12,6 @@ class TextFieldWidget extends StatelessWidget {
   final FocusNode? focusNode;
   final Function(String? value)? onChanged;
   final Function(String? value)? onFieldSubmitted;
-  
 
   const TextFieldWidget({
     Key? key,
@@ -64,7 +63,6 @@ class TextFieldWidget extends StatelessWidget {
       ),
       validator: validator,
       inputFormatters: inputFormatters,
-      
     );
   }
 }

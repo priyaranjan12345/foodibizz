@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foodibizz/global/riverpod_ext/asyncvalue_easy_when.dart';
 import 'package:foodibizz/src/core/localization/l10n.dart';
+import 'package:foodibizz/src/features/dashboard/controller/providers/dashboard_provider.dart';
 
 import '../../../core/routes/app_routes.gr.dart';
 
@@ -38,7 +39,7 @@ class DashboardScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           context.navigateTo(
-            const AddUpdateRoute(),
+            const AddUpdateItemRoute(),
           );
         },
         child: const Icon(Icons.add),
