@@ -9,8 +9,11 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i12;
-import 'package:foodibizz/global/helper/app_loading_dialog.dart'
+import 'package:flutter/material.dart' as _i13;
+import 'package:foodibizz/src/features/dashboard/view/app_loading_dialog.dart'
     deferred as _i3;
+import 'package:foodibizz/src/features/dashboard/model/all_food_items_response.dart'
+    as _i14;
 import 'package:foodibizz/src/features/dashboard/view/add_update_item_screen.dart'
     deferred as _i1;
 import 'package:foodibizz/src/features/dashboard/view/dashboard_screen.dart'
@@ -37,11 +40,16 @@ abstract class $AppRouter extends _i12.RootStackRouter {
   @override
   final Map<String, _i12.PageFactory> pagesMap = {
     AddUpdateItemRoute.name: (routeData) {
+      final args = routeData.argsAs<AddUpdateItemRouteArgs>(
+          orElse: () => const AddUpdateItemRouteArgs());
       return _i12.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i12.DeferredWidget(
           _i1.loadLibrary,
-          () => _i1.AddUpdateItemScreen(),
+          () => _i1.AddUpdateItemScreen(
+            key: args.key,
+            item: args.item,
+          ),
         ),
       );
     },
@@ -140,16 +148,40 @@ abstract class $AppRouter extends _i12.RootStackRouter {
 
 /// generated route for
 /// [_i1.AddUpdateItemScreen]
-class AddUpdateItemRoute extends _i12.PageRouteInfo<void> {
-  const AddUpdateItemRoute({List<_i12.PageRouteInfo>? children})
-      : super(
+class AddUpdateItemRoute extends _i12.PageRouteInfo<AddUpdateItemRouteArgs> {
+  AddUpdateItemRoute({
+    _i13.Key? key,
+    _i14.FoodItem? item,
+    List<_i12.PageRouteInfo>? children,
+  }) : super(
           AddUpdateItemRoute.name,
+          args: AddUpdateItemRouteArgs(
+            key: key,
+            item: item,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'AddUpdateItemRoute';
 
-  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
+  static const _i12.PageInfo<AddUpdateItemRouteArgs> page =
+      _i12.PageInfo<AddUpdateItemRouteArgs>(name);
+}
+
+class AddUpdateItemRouteArgs {
+  const AddUpdateItemRouteArgs({
+    this.key,
+    this.item,
+  });
+
+  final _i13.Key? key;
+
+  final _i14.FoodItem? item;
+
+  @override
+  String toString() {
+    return 'AddUpdateItemRouteArgs{key: $key, item: $item}';
+  }
 }
 
 /// generated route for

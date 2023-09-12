@@ -47,4 +47,39 @@ class AddUpdateItemRepository implements IAddUpdateItemRepository {
       }
     }
   }
+
+  @override
+  Future<Result<String, BaseException>> updateItem({
+    required String name,
+    required String desc,
+    required double price,
+    required String dateTime,
+    required File? image,
+    CancelToken? cancelToken,
+  }) async {
+    var response = await iAddUpdateItemApi.addItem(
+      name: name,
+      desc: desc,
+      price: price,
+      dateTime: dateTime,
+      image: image,
+    );
+
+    if (response.statusCode == 202) {
+      try {
+        return const Success("Item updated successfully");
+      } catch (e) {
+        return Error(BaseException(message: e.toString()));
+      }
+    } else if (response.statusCode == 401) {
+      return Error(BaseException(message: response.data.toString()));
+    } else {
+      final details = response.data['message'];
+      if (details == 'No Internet') {
+        throw NoInternetException();
+      } else {
+        return Error(BaseException(message: details.toString()));
+      }
+    }
+  }
 }

@@ -23,7 +23,7 @@ class DeleteItemNotifier extends AutoDisposeAsyncNotifier<void> {
 
     result.when(
       (success) {
-        state = AsyncData(success);
+        state = const AsyncData(null);
       },
       (error) {
         link.close();
