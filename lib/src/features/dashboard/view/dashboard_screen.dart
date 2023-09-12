@@ -88,7 +88,7 @@ class DashboardScreen extends ConsumerWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           context.navigateTo(
-            const AddUpdateItemRoute(),
+            AddUpdateItemRoute(),
           );
         },
         child: const Icon(Icons.add),
@@ -130,7 +130,7 @@ class DashboardScreen extends ConsumerWidget {
                                   radius: 15,
                                   backgroundColor: Theme.of(context)
                                       .cardColor
-                                      .withOpacity(0.4),
+                                      .withOpacity(0.6),
                                   child: PopupMenuButton<String>(
                                     padding: EdgeInsets.zero,
                                     elevation: 5.0,
@@ -142,6 +142,8 @@ class DashboardScreen extends ConsumerWidget {
                                           contentPadding: EdgeInsets.zero,
                                           onTap: () {
                                             Navigator.pop(ctx);
+                                            context.navigateTo(
+                                                AddUpdateItemRoute(item: item));
                                           },
                                           leading: const Icon(Icons.edit),
                                           title: Text(l10n.edit),
