@@ -12,10 +12,7 @@ class TextFieldWidget extends StatelessWidget {
   final FocusNode? focusNode;
   final Function(String? value)? onChanged;
   final Function(String? value)? onFieldSubmitted;
-<<<<<<< HEAD
-=======
   final int? maxLines;
->>>>>>> 2b649b9f21ccd13f3c394017ed578b54f613fea5
 
   const TextFieldWidget({
     Key? key,
@@ -69,10 +66,7 @@ class TextFieldWidget extends StatelessWidget {
       ),
       validator: validator,
       inputFormatters: inputFormatters,
-<<<<<<< HEAD
-=======
       maxLines: maxLines,
->>>>>>> 2b649b9f21ccd13f3c394017ed578b54f613fea5
     );
   }
 }
