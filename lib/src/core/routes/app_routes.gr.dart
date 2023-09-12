@@ -9,19 +9,11 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i12;
-<<<<<<< HEAD
-import 'package:foodibizz/src/features/cart/screen/cart_recipes_screen.dart'
+import 'package:flutter/material.dart' as _i13;
+import 'package:foodibizz/src/features/dashboard/view/app_loading_dialog.dart'
     deferred as _i3;
-import 'package:foodibizz/src/features/dashboard/screen/add_update_recipe_screen.dart'
-    deferred as _i1;
-import 'package:foodibizz/src/features/dashboard/screen/dashboard_screen.dart'
-    deferred as _i4;
-import 'package:foodibizz/src/features/dashboard/screen/dashboard_tab.dart'
-    deferred as _i5;
-import 'package:foodibizz/src/features/dashboard/screen/file_picker_bottomsheet.dart'
-=======
-import 'package:foodibizz/global/helper/app_loading_dialog.dart'
-    deferred as _i3;
+import 'package:foodibizz/src/features/dashboard/model/all_food_items_response.dart'
+    as _i14;
 import 'package:foodibizz/src/features/dashboard/view/add_update_item_screen.dart'
     deferred as _i1;
 import 'package:foodibizz/src/features/dashboard/view/dashboard_screen.dart'
@@ -29,7 +21,6 @@ import 'package:foodibizz/src/features/dashboard/view/dashboard_screen.dart'
 import 'package:foodibizz/src/features/dashboard/view/dashboard_tab.dart'
     deferred as _i5;
 import 'package:foodibizz/src/features/dashboard/view/file_picker_bottomsheet.dart'
->>>>>>> a539aa913a0464a1ade246e6e23b07cd97508ba9
     deferred as _i6;
 import 'package:foodibizz/src/features/history/screen/all_orders_screen.dart'
     deferred as _i2;
@@ -48,16 +39,17 @@ abstract class $AppRouter extends _i12.RootStackRouter {
 
   @override
   final Map<String, _i12.PageFactory> pagesMap = {
-<<<<<<< HEAD
-    AddUpdateRoute.name: (routeData) {
-=======
     AddUpdateItemRoute.name: (routeData) {
->>>>>>> a539aa913a0464a1ade246e6e23b07cd97508ba9
+      final args = routeData.argsAs<AddUpdateItemRouteArgs>(
+          orElse: () => const AddUpdateItemRouteArgs());
       return _i12.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i12.DeferredWidget(
           _i1.loadLibrary,
-          () => _i1.AddUpdateItemScreen(),
+          () => _i1.AddUpdateItemScreen(
+            key: args.key,
+            item: args.item,
+          ),
         ),
       );
     },
@@ -70,20 +62,12 @@ abstract class $AppRouter extends _i12.RootStackRouter {
         ),
       );
     },
-<<<<<<< HEAD
-    CartRecipesRoute.name: (routeData) {
-=======
     LoadingDialogRoute.name: (routeData) {
->>>>>>> a539aa913a0464a1ade246e6e23b07cd97508ba9
       return _i12.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i12.DeferredWidget(
           _i3.loadLibrary,
-<<<<<<< HEAD
-          () => _i3.CartRecipesScreen(),
-=======
           () => _i3.AppLoadingDialog(),
->>>>>>> a539aa913a0464a1ade246e6e23b07cd97508ba9
         ),
       );
     },
@@ -163,23 +147,41 @@ abstract class $AppRouter extends _i12.RootStackRouter {
 }
 
 /// generated route for
-<<<<<<< HEAD
-/// [_i1.AddUpdateRecipeScreen]
-class AddUpdateRoute extends _i12.PageRouteInfo<void> {
-  const AddUpdateRoute({List<_i12.PageRouteInfo>? children})
-=======
 /// [_i1.AddUpdateItemScreen]
-class AddUpdateItemRoute extends _i12.PageRouteInfo<void> {
-  const AddUpdateItemRoute({List<_i12.PageRouteInfo>? children})
->>>>>>> a539aa913a0464a1ade246e6e23b07cd97508ba9
-      : super(
+class AddUpdateItemRoute extends _i12.PageRouteInfo<AddUpdateItemRouteArgs> {
+  AddUpdateItemRoute({
+    _i13.Key? key,
+    _i14.FoodItem? item,
+    List<_i12.PageRouteInfo>? children,
+  }) : super(
           AddUpdateItemRoute.name,
+          args: AddUpdateItemRouteArgs(
+            key: key,
+            item: item,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'AddUpdateItemRoute';
 
-  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
+  static const _i12.PageInfo<AddUpdateItemRouteArgs> page =
+      _i12.PageInfo<AddUpdateItemRouteArgs>(name);
+}
+
+class AddUpdateItemRouteArgs {
+  const AddUpdateItemRouteArgs({
+    this.key,
+    this.item,
+  });
+
+  final _i13.Key? key;
+
+  final _i14.FoodItem? item;
+
+  @override
+  String toString() {
+    return 'AddUpdateItemRouteArgs{key: $key, item: $item}';
+  }
 }
 
 /// generated route for
@@ -197,17 +199,6 @@ class AllOrdersRoute extends _i12.PageRouteInfo<void> {
 }
 
 /// generated route for
-<<<<<<< HEAD
-/// [_i3.CartRecipesScreen]
-class CartRecipesRoute extends _i12.PageRouteInfo<void> {
-  const CartRecipesRoute({List<_i12.PageRouteInfo>? children})
-      : super(
-          CartRecipesRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'CartRecipesRoute';
-=======
 /// [_i3.AppLoadingDialog]
 class LoadingDialogRoute extends _i12.PageRouteInfo<void> {
   const LoadingDialogRoute({List<_i12.PageRouteInfo>? children})
@@ -217,7 +208,6 @@ class LoadingDialogRoute extends _i12.PageRouteInfo<void> {
         );
 
   static const String name = 'LoadingDialogRoute';
->>>>>>> a539aa913a0464a1ade246e6e23b07cd97508ba9
 
   static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
 }

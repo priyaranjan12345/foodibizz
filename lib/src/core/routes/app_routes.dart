@@ -36,6 +36,17 @@ class AppRouter extends $AppRouter {
                 );
               },
             ),
+            CustomRoute(
+              page: LoadingDialogRoute.page,
+              path: 'loadingDialogRoute',
+              customRouteBuilder: <T>(context, child, AutoRoutePage<T> page) {
+                return DialogRoute(
+                  context: context,
+                  settings: page,
+                  builder: (_) => child,
+                );
+              },
+            ),
             AutoRoute(page: CartRecipesRoute.page, path: 'cartRecipesRoute')
           ],
         ),
@@ -59,17 +70,6 @@ class AppRouter extends $AppRouter {
           path: 'settingsRoute',
         ),
       ],
-    ),
-    CustomRoute(
-      page: LoadingDialogRoute.page,
-      path: '/loadingDialogRoute',
-      customRouteBuilder: <T>(context, child, AutoRoutePage<T> page) {
-        return DialogRoute(
-          context: context,
-          settings: page,
-          builder: (_) => child,
-        );
-      },
     ),
   ];
 }

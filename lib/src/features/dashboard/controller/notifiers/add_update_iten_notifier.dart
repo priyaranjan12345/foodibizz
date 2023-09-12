@@ -44,5 +44,23 @@ class AddUpdateItemNotifier
     required String name,
     required String desc,
     required double price,
-  }) async {}
+  }) async {
+    state = const AsyncLoading();
+    final result = await ref.watch(addUpdateItemRepositoryProvider).updateItem(
+          name: name,
+          desc: desc,
+          price: price,
+          dateTime: DateTime.now().toString(),
+          image: img,
+        );
+
+    result.when(
+      (foodItem) {
+        state = const AsyncData(AddUpdateItemLoaded());
+      },
+      (error) {
+        state = AsyncError(error.message, StackTrace.current);
+      },
+    );
+  }
 }

@@ -1,10 +1,12 @@
 import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:foodibizz/src/features/dashboard/model/all_food_items_response.dart';
 
 import '../controller/providers/image_picker_provider.dart';
 import '../../../core/constants/gaps.dart';
@@ -17,7 +19,12 @@ import 'Widgets/submit_item_button.dart';
 
 @RoutePage(deferredLoading: true, name: "AddUpdateItemRoute")
 class AddUpdateItemScreen extends ConsumerStatefulWidget {
-  const AddUpdateItemScreen({super.key});
+  const AddUpdateItemScreen({
+    super.key,
+    this.item,
+  });
+
+  final FoodItem? item;
 
   @override
   ConsumerState<AddUpdateItemScreen> createState() =>
@@ -34,6 +41,42 @@ class _AddUpdateItemScreenConsumerState
   FocusNode nameFocusNode = FocusNode();
   FocusNode descFocusNode = FocusNode();
   FocusNode priceFocusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.item != null) {
+      nameController.text = widget.item?.name ?? '';
+      descController.text = widget.item?.desc ?? '';
+      priceController.text = (widget.item?.price ?? 0).toString();
+    }
+  }
+
+  void addItem(WidgetRef ref) {
+    if (!formKey.currentState!.validate()) return;
+
+    final imageXFile = ref.read(imagePickerProvider);
+    if (imageXFile != null) {
+      ref.read(addUpdateItemProvider.notifier).addRecipe(
+            img: File(imageXFile.path),
+            name: nameController.text,
+            desc: descController.text,
+            price: double.parse(priceController.text),
+          );
+    } else {
+      final snakBar = SnackBar(
+        content: const Text("Please select item image"),
+        action: SnackBarAction(
+          label: "Cancel",
+          onPressed: () => context.clearSnackBar(),
+        ),
+      );
+      context.showSnackBar(snakBar);
+    }
+  }
+
+  void updateItem() {}
 
   @override
   Widget build(BuildContext context) {
@@ -58,24 +101,34 @@ class _AddUpdateItemScreenConsumerState
                   builder: (context, ref, _) {
                     final imagePickerState = ref.watch(imagePickerProvider);
                     return imagePickerState == null
-                        ? Container(
-                            height: 200,
-                            color: Theme.of(context).focusColor,
-                            child: Center(
-                              child: ElevatedButton.icon(
-                                onPressed: () {
-                                  context.navigateTo(
-                                    const FilePickerBottomSheetRoute(),
-                                  );
-                                },
-                                icon: const Icon(Icons.image),
-                                label: const Text(
-                                  "Select Image",
-                                  textAlign: TextAlign.center,
+                        ? widget.item == null
+                            ? Container(
+                                height: 200,
+                                color: Theme.of(context).focusColor,
+                                child: Center(
+                                  child: ElevatedButton.icon(
+                                    onPressed: () {
+                                      context.navigateTo(
+                                        const FilePickerBottomSheetRoute(),
+                                      );
+                                    },
+                                    icon: const Icon(Icons.image),
+                                    label: const Text(
+                                      "Select Image",
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          )
+                              )
+                            : CachedNetworkImage(
+                                imageUrl:
+                                    "http://3.27.90.34:8000/${widget.item?.image}",
+                                errorWidget: (context, url, error) =>
+                                    Image.asset('nope-not-here.webp'),
+                                placeholder: (context, url) =>
+                                    Image.asset('assets/no-image.jpg'),
+                                fit: BoxFit.cover,
+                              )
                         : Stack(
                             children: [
                               SizedBox(
@@ -86,22 +139,23 @@ class _AddUpdateItemScreenConsumerState
                                   fit: BoxFit.cover,
                                 ),
                               ),
-                              Consumer(
-                                builder: (context, ref, _) {
-                                  return Align(
-                                    alignment: Alignment.topRight,
-                                    child: CircleAvatar(
-                                      child: IconButton(
-                                          onPressed: () {
-                                            ref
-                                                .read(imagePickerProvider
-                                                    .notifier)
-                                                .update((state) => null);
-                                          },
-                                          icon: const Icon(Icons.close)),
-                                    ),
-                                  );
-                                },
+                              Align(
+                                alignment: Alignment.topRight,
+                                child: CircleAvatar(
+                                  radius: 15,
+                                  backgroundColor: Theme.of(context)
+                                      .cardColor
+                                      .withOpacity(0.6),
+                                  child: IconButton(
+                                    padding: EdgeInsets.zero,
+                                    onPressed: () {
+                                      ref
+                                          .read(imagePickerProvider.notifier)
+                                          .update((state) => null);
+                                    },
+                                    icon: const Icon(Icons.close),
+                                  ),
+                                ),
                               )
                             ],
                           );
@@ -122,7 +176,6 @@ class _AddUpdateItemScreenConsumerState
                 if (p0 != null && p0.isNotEmpty) {
                   return null;
                 }
-
                 return "Name required";
               },
             ),
@@ -132,6 +185,7 @@ class _AddUpdateItemScreenConsumerState
               focusNode: descFocusNode,
               label: "Description",
               hint: "Enter recipe description",
+              maxLines: 4,
               onFieldSubmitted: (value) {
                 context.changeFocus(descFocusNode, priceFocusNode);
               },
@@ -139,7 +193,6 @@ class _AddUpdateItemScreenConsumerState
                 if (p0 != null && p0.isNotEmpty) {
                   return null;
                 }
-
                 return "Description required";
               },
             ),
@@ -154,7 +207,6 @@ class _AddUpdateItemScreenConsumerState
                 if (p0 != null && p0.isNotEmpty) {
                   return null;
                 }
-
                 return "Price required";
               },
               inputFormatters: <TextInputFormatter>[
@@ -166,25 +218,10 @@ class _AddUpdateItemScreenConsumerState
             Center(
               child: SubmitItemButton(
                 onSubmit: () {
-                  if (!formKey.currentState!.validate()) return;
-
-                  final imageXFile = ref.read(imagePickerProvider);
-                  if (imageXFile != null) {
-                    ref.read(addUpdateItemProvider.notifier).addRecipe(
-                          img: File(imageXFile.path),
-                          name: nameController.text,
-                          desc: descController.text,
-                          price: double.parse(priceController.text),
-                        );
+                  if (widget.item == null) {
+                    addItem(ref);
                   } else {
-                    final snakBar = SnackBar(
-                      content: const Text("Please select item image"),
-                      action: SnackBarAction(
-                        label: "Cancel",
-                        onPressed: () => context.clearSnackBar(),
-                      ),
-                    );
-                    context.showSnackBar(snakBar);
+                    updateItem();
                   }
                 },
               ),
