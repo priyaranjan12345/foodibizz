@@ -14,4 +14,13 @@ abstract class IAddUpdateItemRepository {
     required File? image,
     CancelToken? cancelToken,
   });
+
+  Future<Result<String, BaseException>> updateItem({
+    required String name,
+    required String desc,
+    required double price,
+    required String dateTime,
+    required File? image,
+    CancelToken? cancelToken,
+  });
 }

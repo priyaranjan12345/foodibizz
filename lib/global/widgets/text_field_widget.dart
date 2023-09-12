@@ -12,7 +12,7 @@ class TextFieldWidget extends StatelessWidget {
   final FocusNode? focusNode;
   final Function(String? value)? onChanged;
   final Function(String? value)? onFieldSubmitted;
-
+  final int? maxLines;
   const TextFieldWidget({
     Key? key,
     this.label,
@@ -25,12 +25,14 @@ class TextFieldWidget extends StatelessWidget {
     this.focusNode,
     this.onChanged,
     this.onFieldSubmitted,
+    this.maxLines,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       autovalidateMode: AutovalidateMode.onUserInteraction,
+      textCapitalization: TextCapitalization.words,
       controller: controller,
       keyboardType: keyboardKey,
       textInputAction: textInputAction,
@@ -63,6 +65,7 @@ class TextFieldWidget extends StatelessWidget {
       ),
       validator: validator,
       inputFormatters: inputFormatters,
+      maxLines: maxLines,
     );
   }
 }

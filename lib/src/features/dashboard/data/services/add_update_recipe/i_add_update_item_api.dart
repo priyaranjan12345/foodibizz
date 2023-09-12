@@ -11,4 +11,14 @@ abstract class IAddUpdateItemApi {
     required File? image,
     CancelToken? cancelToken,
   });
+
+  Future<Response> updateItem({
+    required String id,
+    required String name,
+    required String desc,
+    required double price,
+    required String dateTime,
+    required File? image,
+    CancelToken? cancelToken,
+  });
 }
