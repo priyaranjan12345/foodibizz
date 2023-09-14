@@ -20,7 +20,7 @@ abstract class IAddUpdateItemRepository {
     required String desc,
     required double price,
     required String dateTime,
-    required File? image,
+    File? image,
     CancelToken? cancelToken,
   });
 }

@@ -54,7 +54,7 @@ class AddUpdateItemRepository implements IAddUpdateItemRepository {
     required String desc,
     required double price,
     required String dateTime,
-    required File? image,
+     File? image,
     CancelToken? cancelToken,
   }) async {
     var response = await iAddUpdateItemApi.addItem(

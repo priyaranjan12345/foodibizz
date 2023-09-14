@@ -82,7 +82,9 @@ class _AddUpdateItemScreenConsumerState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Add & Update Recipe"),
+        title: Text(
+          widget.item != null ? "Update Item" : "Add Item",
+        ),
       ),
       body: Form(
         key: formKey,
@@ -95,72 +97,58 @@ class _AddUpdateItemScreenConsumerState
               radius: const Radius.circular(12),
               padding: const EdgeInsets.all(6),
               dashPattern: const <double>[3, 3],
-              child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(12)),
-                child: Consumer(
-                  builder: (context, ref, _) {
-                    final imagePickerState = ref.watch(imagePickerProvider);
-                    return imagePickerState == null
-                        ? widget.item == null
-                            ? Container(
-                                height: 200,
-                                color: Theme.of(context).focusColor,
-                                child: Center(
-                                  child: ElevatedButton.icon(
-                                    onPressed: () {
-                                      context.navigateTo(
-                                        const FilePickerBottomSheetRoute(),
-                                      );
-                                    },
-                                    icon: const Icon(Icons.image),
-                                    label: const Text(
-                                      "Select Image",
-                                      textAlign: TextAlign.center,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(12)),
+                    child: Consumer(
+                      builder: (context, ref, _) {
+                        final imagePickerState = ref.watch(imagePickerProvider);
+                        return imagePickerState == null
+                            ? widget.item == null
+                                ? Container(
+                                    height: 250,
+                                    color: Theme.of(context).focusColor,
+                                    child: const Center(
+                                      child: Icon(
+                                        Icons.image,
+                                        size: 60,
+                                      ),
                                     ),
-                                  ),
-                                ),
-                              )
-                            : CachedNetworkImage(
-                                imageUrl:
-                                    "http://3.27.90.34:8000/${widget.item?.image}",
-                                errorWidget: (context, url, error) =>
-                                    Image.asset('nope-not-here.webp'),
-                                placeholder: (context, url) =>
-                                    Image.asset('assets/no-image.jpg'),
-                                fit: BoxFit.cover,
-                              )
-                        : Stack(
-                            children: [
-                              SizedBox(
-                                height: 200,
+                                  )
+                                : CachedNetworkImage(
+                                    imageUrl:
+                                        "http://3.27.90.34:8000/${widget.item?.image}",
+                                    errorWidget: (context, url, error) =>
+                                        Image.asset('nope-not-here.webp'),
+                                    placeholder: (context, url) =>
+                                        Image.asset('assets/no-image.jpg'),
+                                    fit: BoxFit.cover,
+                                  )
+                            : SizedBox(
+                                height: 250,
                                 width: double.infinity,
                                 child: Image.file(
                                   File(imagePickerState.path),
                                   fit: BoxFit.cover,
                                 ),
-                              ),
-                              Align(
-                                alignment: Alignment.topRight,
-                                child: CircleAvatar(
-                                  radius: 15,
-                                  backgroundColor: Theme.of(context)
-                                      .cardColor
-                                      .withOpacity(0.6),
-                                  child: IconButton(
-                                    padding: EdgeInsets.zero,
-                                    onPressed: () {
-                                      ref
-                                          .read(imagePickerProvider.notifier)
-                                          .update((state) => null);
-                                    },
-                                    icon: const Icon(Icons.close),
-                                  ),
-                                ),
-                              )
-                            ],
-                          );
-                  },
-                ),
+                              );
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        context.navigateTo(
+                          const FilePickerBottomSheetRoute(),
+                        );
+                      },
+                      child: const Text("Choose Image"),
+                    ),
+                  ),
+                ],
               ),
             ),
             gapH20,

@@ -37,7 +37,7 @@ class AddUpdateItemApi extends IAddUpdateItemApi {
     required String desc,
     required double price,
     required String dateTime,
-    required File? image,
+    File? image,
     CancelToken? cancelToken,
   }) async {
     var formData = FormData.fromMap({
