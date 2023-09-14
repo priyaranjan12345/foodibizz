@@ -30,12 +30,9 @@ class FilePickerBottomSheet extends StatelessWidget {
                   Consumer(builder: (context, ref, _) {
                     return IconButton(
                       onPressed: () async {
-                        final ImagePicker picker = ImagePicker();
-                        final file =
-                            await picker.pickImage(source: ImageSource.camera);
                         ref
                             .read(imagePickerProvider.notifier)
-                            .update((state) => file);
+                            .pickAndCropImage(source: ImageSource.camera);
                         if (context.mounted) context.back();
                       },
                       icon: const Icon(
@@ -54,12 +51,9 @@ class FilePickerBottomSheet extends StatelessWidget {
                   Consumer(builder: (context, ref, _) {
                     return IconButton(
                       onPressed: () async {
-                        final ImagePicker picker = ImagePicker();
-                        final file =
-                            await picker.pickImage(source: ImageSource.gallery);
                         ref
                             .read(imagePickerProvider.notifier)
-                            .update((state) => file);
+                            .pickAndCropImage(source: ImageSource.gallery);
                         if (context.mounted) context.back();
                       },
                       icon: const Icon(
@@ -78,4 +72,6 @@ class FilePickerBottomSheet extends StatelessWidget {
       ),
     );
   }
+
+  // Future<File?> _cropImage({required File imageFile})
 }
