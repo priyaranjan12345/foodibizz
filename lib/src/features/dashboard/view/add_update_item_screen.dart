@@ -130,7 +130,7 @@ class _AddUpdateItemScreenConsumerState
                                 height: 250,
                                 width: double.infinity,
                                 child: Image.file(
-                                  File(imagePickerState.path),
+                                  imagePickerState,
                                   fit: BoxFit.cover,
                                 ),
                               );
