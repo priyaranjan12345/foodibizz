@@ -1,9 +1,7 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:foodibizz/global/extensions/snackbar_ext.dart';
 import 'package:foodibizz/src/core/constants/gaps.dart';
 
 @RoutePage(deferredLoading: true, name: "CartRecipesRoute")

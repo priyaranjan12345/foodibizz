@@ -135,7 +135,7 @@ class _AddUpdateItemScreenConsumerState
                                 height: 200,
                                 width: double.infinity,
                                 child: Image.file(
-                                  File(imagePickerState.path),
+                                  imagePickerState,
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -151,7 +151,7 @@ class _AddUpdateItemScreenConsumerState
                                     onPressed: () {
                                       ref
                                           .read(imagePickerProvider.notifier)
-                                          .update((state) => null);
+                                          .clearImage();
                                     },
                                     icon: const Icon(Icons.close),
                                   ),
@@ -163,6 +163,18 @@ class _AddUpdateItemScreenConsumerState
                 ),
               ),
             ),
+            // ElevatedButton.icon(
+            //   onPressed: () {
+            //     context.navigateTo(
+            //       const FilePickerBottomSheetRoute(),
+            //     );
+            //   },
+            //   icon: const Icon(Icons.image),
+            //   label: const Text(
+            //     "Select Image",
+            //     textAlign: TextAlign.center,
+            //   ),
+            // ),
             gapH20,
             TextFieldWidget(
               controller: nameController,

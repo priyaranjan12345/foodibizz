@@ -1,7 +1,9 @@
+import 'dart:io';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:foodibizz/src/features/dashboard/controller/notifiers/image_picker_notifier.dart';
 
-final imagePickerProvider = StateProvider.autoDispose<XFile?>(
-  (ref) => null,
+final imagePickerProvider =
+    StateNotifierProvider.autoDispose<ImagePickerNotifier, File?>(
+  (ref) => ImagePickerNotifier(),
   name: "imagePickerProvider",
 );

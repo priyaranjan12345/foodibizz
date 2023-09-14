@@ -65,7 +65,6 @@ class TextFieldWidget extends StatelessWidget {
       ),
       validator: validator,
       inputFormatters: inputFormatters,
-      maxLines: maxLines,
     );
   }
 }
