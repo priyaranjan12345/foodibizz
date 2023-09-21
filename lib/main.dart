@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:foodibizz/src/features/dashboard/controller/providers/cart_provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'global/api_client/base_url_pod.dart';
 import 'app.dart';
 import 'src/core/locale_storage/app_storage_pod.dart';
 import 'src/features/dashboard/model/cart_food_item_model.dart';
+import 'src/features/dashboard/controller/providers/cart_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
