@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:foodibizz/src/features/dashboard/controller/providers/cart_provider.dart';
+import 'package:foodibizz/src/features/dashboard/model/cart_food_item_model.dart';
 
 import '../controller/providers/dashboard_provider.dart';
 import '../../../core/routes/app_routes.gr.dart';
 import '../../../core/localization/l10n.dart';
 import '../../../../global/extensions/snackbar_ext.dart';
 import '../../../../global/riverpod_ext/asyncvalue_easy_when.dart';
+import '../model/all_food_items_response.dart';
+import 'Widgets/app_search_bar.dart';
 
 @RoutePage(deferredLoading: true, name: "DashboardRoute")
 class DashboardScreen extends ConsumerWidget {
@@ -33,6 +37,19 @@ class DashboardScreen extends ConsumerWidget {
             /// on success refresh list
             /// to get updated items list
             ref.invalidate(dashboardProvider);
+
+            final snackBar = SnackBar(
+              content: const Text("Item deleted"),
+              action: SnackBarAction(
+                label: "Cancel",
+                onPressed: () {
+                  context.hideSnackBar();
+                },
+              ),
+            );
+
+            /// show snackbar
+            context.showSnackBar(snackBar);
           },
           error: (e, _) {
             /// on error hide loading dialog
@@ -66,35 +83,40 @@ class DashboardScreen extends ConsumerWidget {
       },
     );
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.dashboard),
-        actions: [
-          IconButton(
-            onPressed: () {
-              showSearch(
-                context: context,
-                delegate: CustomSearch(),
-              );
-            },
-            icon: const Icon(Icons.search),
+    return SafeArea(
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: const Size(double.infinity, kToolbarHeight + 10),
+          child: Container(
+            color: Colors.transparent,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 10,
+                vertical: 4,
+              ),
+              child: MySearchBar(
+                onTapSearch: () {
+                  showSearch(
+                    context: context,
+                    delegate: CustomSearch(items: []),
+                  );
+                },
+                onTapCart: () {
+                  context.navigateTo(const CartRecipesRoute());
+                },
+              ),
+            ),
           ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.shopping_cart_outlined),
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          context.navigateTo(
-            AddUpdateItemRoute(),
-          );
-        },
-        child: const Icon(Icons.add),
-      ),
-      body: SafeArea(
-        child: itemsState.easyWhen(
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            context.navigateTo(
+              AddUpdateItemRoute(),
+            );
+          },
+          child: const Icon(Icons.add),
+        ),
+        body: itemsState.easyWhen(
           onRetry: () {
             ref.invalidate(dashboardProvider);
           },
@@ -105,9 +127,35 @@ class DashboardScreen extends ConsumerWidget {
               },
               child: ListView.builder(
                 padding: const EdgeInsets.all(10),
-                itemCount: value.foodItems.length,
+                itemCount: value.foodItems.length + 1,
                 itemBuilder: (_, index) {
-                  final item = value.foodItems[index];
+                  if (index == 0) {
+                    return Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Text(
+                              "Items",
+                              style: Theme.of(context).textTheme.displayMedium,
+                            ),
+                            const SizedBox(height: 10),
+                            const Text(
+                              "The display showcases all items the user can see, "
+                              "arranged in an organized and visually appealing manner.",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }
+                  final item = value.foodItems[index - 1];
                   return Card(
                     elevation: 5.0,
                     child: Column(
@@ -181,7 +229,21 @@ class DashboardScreen extends ConsumerWidget {
                         ListTile(
                           leading: ElevatedButton(
                             style: ElevatedButton.styleFrom(elevation: 5.0),
-                            onPressed: () {},
+                            onPressed: () {
+                              final cartItem = CartFoodItemModel()
+                                ..id = item.id
+                                ..name = item.name
+                                ..desc = item.desc
+                                ..image = item.image
+                                ..price = item.price
+                                ..creationDate = item.creationDate
+                                ..lastModifiedDate = item.lastModifiedDate;
+
+                              ref.read(cartStorageProvider).put(
+                                    key: "cart",
+                                    value: cartItem,
+                                  );
+                            },
                             child: Text(l10n.buy),
                           ),
                           trailing: Text(
@@ -206,16 +268,8 @@ class DashboardScreen extends ConsumerWidget {
 }
 
 class CustomSearch extends SearchDelegate {
-  List<String> fruitList = [
-    'Apple',
-    'Banana',
-    'Peach',
-    'Avocado',
-    'Orange',
-    'Pear',
-    'Watermelon',
-    'pineapple',
-  ];
+  CustomSearch({required this.items});
+  final List<FoodItem> items;
 
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -243,17 +297,20 @@ class CustomSearch extends SearchDelegate {
   Widget buildResults(BuildContext context) {
     List<String> matchQuery = [];
 
-    for (var fruit in fruitList) {
-      if (fruit.toLowerCase().contains(query.toLowerCase())) {
-        matchQuery.add(fruit);
+    for (var item in items) {
+      if (item.name.toLowerCase().contains(query.toLowerCase())) {
+        matchQuery.add(item.name);
       }
     }
 
-    return ListView.builder(
+    return ListView.separated(
       itemCount: matchQuery.length,
+      separatorBuilder: (_, __) => const Divider(),
       itemBuilder: (context, index) {
-        return ListTile(
-          title: Text(matchQuery[index]),
+        return Card(
+          child: ListTile(
+            title: Text(matchQuery[index]),
+          ),
         );
       },
     );
@@ -263,17 +320,20 @@ class CustomSearch extends SearchDelegate {
   Widget buildSuggestions(BuildContext context) {
     List<String> matchQuery = [];
 
-    for (var fruit in fruitList) {
-      if (fruit.toLowerCase().contains(query.toLowerCase())) {
-        matchQuery.add(fruit);
+    for (var item in items) {
+      if (item.name.toLowerCase().contains(query.toLowerCase())) {
+        matchQuery.add(item.name);
       }
     }
 
-    return ListView.builder(
+    return ListView.separated(
       itemCount: matchQuery.length,
+      separatorBuilder: (_, __) => const Divider(),
       itemBuilder: (context, index) {
-        return ListTile(
-          title: Text(matchQuery[index]),
+        return Card(
+          child: ListTile(
+            title: Text(matchQuery[index]),
+          ),
         );
       },
     );

@@ -4,7 +4,6 @@ import 'package:foodibizz/src/core/locale_storage/app_storage_pod.dart';
 
 ///This controller class used change theme and
 ///get the intial theme from storage if its available
-
 class ThemeModeController extends AutoDisposeNotifier<ThemeMode> {
   final _themeKey = "theme";
 
