@@ -56,7 +56,13 @@ class SettingScreen extends ConsumerWidget {
                   ),
                 ],
               ),
-            )
+            ),
+            const Divider(),
+            const ListTile(
+              leading: Icon(Icons.support_agent),
+              title: Text("Help"),
+            ),
+            const Divider(),
           ],
         ),
       ),

@@ -26,7 +26,7 @@ import 'package:foodibizz/src/features/dashboard/view/file_picker_bottomsheet.da
     deferred as _i7;
 import 'package:foodibizz/src/features/history/screen/all_orders_screen.dart'
     deferred as _i2;
-import 'package:foodibizz/src/features/history/screen/history_screen.dart'
+import 'package:foodibizz/src/features/history/screen/history_tab.dart'
     deferred as _i8;
 import 'package:foodibizz/src/features/history/screen/order_details_screen.dart'
     deferred as _i10;
