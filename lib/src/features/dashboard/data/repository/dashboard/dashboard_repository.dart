@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 
 import 'package:foodibizz/global/exceptions/no_internet_exception.dart';
-import 'package:foodibizz/src/features/dashboard/data/services/dashboard/i_dashboard_api.dart';
+import 'package:foodibizz/src/features/dashboard/data/apis/dashboard/i_dashboard_api.dart';
 import 'package:foodibizz/src/features/dashboard/model/all_food_items_response.dart';
 import 'package:multiple_result/multiple_result.dart';
 

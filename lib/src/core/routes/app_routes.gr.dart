@@ -10,14 +10,14 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i13;
 import 'package:flutter/material.dart' as _i14;
-import 'package:foodibizz/src/features/cart/screen/cart_recipes_screen.dart'
-    deferred as _i4;
 import 'package:foodibizz/src/features/dashboard/model/all_food_items_response.dart'
     as _i15;
 import 'package:foodibizz/src/features/dashboard/view/add_update_item_screen.dart'
     deferred as _i1;
 import 'package:foodibizz/src/features/dashboard/view/app_loading_dialog.dart'
     deferred as _i3;
+import 'package:foodibizz/src/features/dashboard/view/cart_recipes_screen.dart'
+    deferred as _i4;
 import 'package:foodibizz/src/features/dashboard/view/dashboard_screen.dart'
     deferred as _i5;
 import 'package:foodibizz/src/features/dashboard/view/dashboard_tab.dart'

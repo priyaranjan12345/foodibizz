@@ -373,10 +373,10 @@ packages:
     dependency: transitive
     description:
       name: file_selector_macos
-      sha256: "182c3f8350cee659f7b115e956047ee3dc672a96665883a545e81581b9a82c72"
+      sha256: b15c3da8bd4908b9918111fa486903f5808e388b8d1c559949f584725a6594d6
       url: "https://pub.dev"
     source: hosted
-    version: "0.9.3+2"
+    version: "0.9.3+3"
   file_selector_platform_interface:
     dependency: transitive
     description:
@@ -574,7 +574,7 @@ packages:
     source: hosted
     version: "5.3.3"
   hive:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: hive
       sha256: "8dcf6db979d7933da8217edcec84e9df1bdb4e4edc7fc77dbd5aa74356d6d941"
@@ -589,6 +589,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.0"
+  hive_generator:
+    dependency: "direct dev"
+    description:
+      name: hive_generator
+      sha256: "06cb8f58ace74de61f63500564931f9505368f45f98958bd7a6c35ba24159db4"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.1"
   hotreloader:
     dependency: transitive
     description:
@@ -657,10 +665,10 @@ packages:
     dependency: transitive
     description:
       name: image_picker_android
-      sha256: d32a997bcc4ee135aebca8e272b7c517927aa65a74b9c60a81a2764ef1a0462d
+      sha256: "47da2161c2e9f8f8a9cbbd89d466d174333fbdd769aeed848912e0b16d9cb369"
       url: "https://pub.dev"
     source: hosted
-    version: "0.8.7+5"
+    version: "0.8.8"
   image_picker_for_web:
     dependency: transitive
     description:
@@ -969,10 +977,10 @@ packages:
     dependency: "direct main"
     description:
       name: responsive_framework
-      sha256: "97d4a8b9468c0ecaafe8566645d70cc59480e4b03704a1b936396e68775e2c34"
+      sha256: "23aa7be5d5136922df708f6ddccb5ec4e0eb8bc576c3f105f5093f31d6b68e50"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.0"
+    version: "1.1.1"
   riverpod:
     dependency: transitive
     description:
@@ -1130,6 +1138,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.4.0"
+  source_helper:
+    dependency: transitive
+    description:
+      name: source_helper
+      sha256: "6adebc0006c37dd63fe05bca0a929b99f06402fc95aa35bf36d67f5c06de01fd"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.3.4"
   source_map_stack_trace:
     dependency: transitive
     description:
@@ -1222,10 +1238,10 @@ packages:
     dependency: transitive
     description:
       name: talker
-      sha256: "3b72fc94f996fe6169b38452a690208ae09da4a5821b140a1fb0c013dd9ac632"
+      sha256: e0cb07e0bcab6045b86761593ff6f1878b335bfc1978ba48415d0968af68d81e
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.1"
+    version: "3.1.3"
   talker_dio_logger:
     dependency: "direct main"
     description:
@@ -1238,10 +1254,10 @@ packages:
     dependency: "direct main"
     description:
       name: talker_flutter
-      sha256: "789c13a4ebd0891e2beed85eb66abe6d048a07a9efeb80eca69127ee041ec818"
+      sha256: ade0e6eea6a6303b0f80a5d6e7b1c44ab268de434e18da540f06059b8ffe143b
       url: "https://pub.dev"
     source: hosted
-    version: "3.2.10"
+    version: "3.3.1"
   talker_logger:
     dependency: transitive
     description:
@@ -1390,10 +1406,10 @@ packages:
     dependency: transitive
     description:
       name: win32
-      sha256: "9e82a402b7f3d518fb9c02d0e9ae45952df31b9bf34d77baf19da2de03fc2aaa"
+      sha256: c97defd418eef4ec88c0d1652cdce84b9f7b63dd7198e266d06ac1710d527067
       url: "https://pub.dev"
     source: hosted
-    version: "5.0.7"
+    version: "5.0.8"
   xdg_directories:
     dependency: transitive
     description:

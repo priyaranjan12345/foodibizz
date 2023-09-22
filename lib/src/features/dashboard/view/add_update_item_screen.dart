@@ -209,7 +209,8 @@ class _AddUpdateItemScreenConsumerState
                   if (widget.item == null) {
                     addItem(ref);
                   } else {
-                    updateItem();
+                    
+                    updateItem(); 
                   }
                 },
               ),
