@@ -22,7 +22,6 @@ class CartRecipesScreen extends ConsumerWidget {
       body: ValueListenableBuilder(
         valueListenable: ref.watch(cartBoxProvider).listenable(),
         builder: (context, box, __) {
-          
           return ListView.separated(
             itemCount: box.values.toList().length,
             separatorBuilder: (_, __) => const Divider(),
