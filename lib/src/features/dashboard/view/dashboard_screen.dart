@@ -73,61 +73,59 @@ class DashboardScreen extends ConsumerWidget {
     /// listen deleteItemProvider
     ref.listen(
       deleteItemProvider,
-      (previous, next) {
-        next.when(
-          data: (_) {
-            /// on success hide loading dialog
-            /// need to complete the flow
-            if (context.router.current.name == "LoadingDialogRoute") {
-              context.back();
-            }
+      (previous, next) async {
+        if (next is AsyncLoading) {
+          /// show loading dialog
+          await context.router.navigate(const LoadingDialogRoute());
+        } else if (previous is AsyncLoading &&
+            next is AsyncData &&
+            next.value != null) {
+          /// on success hide loading dialog
+          /// need to complete the flow
+          if (context.router.current.name ==
+              const LoadingDialogRoute().routeName) {
+            context.popRoute();
+          }
 
-            /// on success refresh list
-            /// to get updated items list
-            ref.invalidate(dashboardProvider);
+          /// on success refresh list
+          /// to get updated items list
+          ref.invalidate(dashboardProvider);
 
-            final snackBar = SnackBar(
-              content: const Text("Item deleted"),
-              action: SnackBarAction(
-                label: "Cancel",
-                onPressed: () {
-                  context.hideSnackBar();
-                },
-              ),
-            );
+          final snackBar = SnackBar(
+            content: const Text("Item deleted"),
+            action: SnackBarAction(
+              label: "Cancel",
+              onPressed: () {
+                context.hideSnackBar();
+              },
+            ),
+          );
 
-            /// show snackbar
-            context.showSnackBar(snackBar);
-          },
-          error: (e, _) {
-            /// on error hide loading dialog
-            /// need to complete the flow
-            if (context.router.current.name == "LoadingDialogRoute") {
-              context.back();
-            }
+          /// show snackbar
+          context.showSnackBar(snackBar);
+        } else if (previous is AsyncLoading && next is AsyncError) {
+          if (context.router.current.name ==
+              const LoadingDialogRoute().routeName) {
+            context.popRoute();
+          }
 
-            /// clear all previous snackbars
-            context.clearSnackBar();
+          /// clear all previous snackbars
+          context.clearSnackBar();
 
-            /// error snackbar
-            final snackBar = SnackBar(
-              content: const Text("Failed to delete item"),
-              action: SnackBarAction(
-                label: "Cancel",
-                onPressed: () {
-                  context.hideSnackBar();
-                },
-              ),
-            );
+          /// error snackbar
+          final snackBar = SnackBar(
+            content: const Text("Failed to delete item"),
+            action: SnackBarAction(
+              label: "Cancel",
+              onPressed: () {
+                context.hideSnackBar();
+              },
+            ),
+          );
 
-            /// show error snackbar
-            context.showSnackBar(snackBar);
-          },
-          loading: () {
-            /// show loading dialog
-            context.router.navigate(const LoadingDialogRoute());
-          },
-        );
+          /// show error snackbar
+          context.showSnackBar(snackBar);
+        }
       },
     );
 
