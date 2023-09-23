@@ -8,17 +8,18 @@ class CartStorage {
 
   /// for getting value as String for a
   /// given key from the box
-  List<CartFoodItemModel>? get({required String key}) {
-    return appBox.get(key) as List<CartFoodItemModel>?;
+  List<CartFoodItemModel> get({required String key}) {
+    final data = appBox.get(key) as List<CartFoodItemModel>?;
+    return data ?? <CartFoodItemModel>[];
   }
 
   /// for storing value on defined key
   /// on the box
   Future<void> put({
     required String key,
-    required CartFoodItemModel value,
+    required List<CartFoodItemModel> values,
   }) async {
-    await appBox.add(value);
+    await appBox.put(key, values);
   }
 
   /// for clearing all data in box

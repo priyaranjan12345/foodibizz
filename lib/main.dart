@@ -13,7 +13,7 @@ Future<void> main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(CartFoodItemModelAdapter());
   final appBox = await Hive.openBox('appBox');
-  final cartBox = await Hive.openBox<CartFoodItemModel>('cartBox');
+  final cartBox = await Hive.openBox<List<CartFoodItemModel>>('cartBox');
 
   runApp(
     ProviderScope(

@@ -10,8 +10,10 @@ class ImagePickerNotifier extends StateNotifier<File?> {
     final picker = ImagePicker();
     final pickedImage = await picker.pickImage(source: source);
     if (pickedImage != null) {
-      final croppedImage =
-          await ImageCropper().cropImage(sourcePath: pickedImage.path);
+      final croppedImage = await ImageCropper().cropImage(
+        sourcePath: pickedImage.path,
+        aspectRatio: const CropAspectRatio(ratioX: 16, ratioY: 9),
+      );
       if (croppedImage != null && state != File(croppedImage.path)) {
         state = File(croppedImage.path);
       }
