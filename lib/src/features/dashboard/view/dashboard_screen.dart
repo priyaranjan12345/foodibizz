@@ -17,6 +17,54 @@ import 'Widgets/app_search_bar.dart';
 class DashboardScreen extends ConsumerWidget {
   const DashboardScreen({super.key});
 
+  void onTapAddItem(FoodItem cartItem, WidgetRef ref) {
+    List<CartFoodItemModel> items = [];
+    List<CartFoodItemModel> allItems =
+        ref.read(cartStorageProvider).get(key: "cart");
+
+    var foodItemIndex = allItems.indexWhere(
+      (element) => element.id == cartItem.id,
+    );
+
+    if (foodItemIndex == -1) {
+      final cartItemModel = CartFoodItemModel(
+        id: cartItem.id,
+        name: cartItem.name,
+        desc: cartItem.desc,
+        image: cartItem.image,
+        price: cartItem.price,
+        creationDate: cartItem.creationDate,
+        lastModifiedDate: cartItem.lastModifiedDate,
+        qty: 1,
+      );
+      items = [...allItems, cartItemModel];
+    } else {
+      final cartItemModel = CartFoodItemModel(
+        id: cartItem.id,
+        name: cartItem.name,
+        desc: cartItem.desc,
+        image: cartItem.image,
+        price: cartItem.price,
+        creationDate: cartItem.creationDate,
+        lastModifiedDate: cartItem.lastModifiedDate,
+        qty: 1,
+      );
+
+      items = [
+        for (final item in allItems)
+          if (item.id == cartItemModel.id)
+            item.copyWith(qty: allItems[foodItemIndex].qty + 1)
+          else
+            item,
+      ];
+    }
+
+    ref.read(cartStorageProvider).put(
+          key: "cart",
+          values: items,
+        );
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
@@ -25,61 +73,59 @@ class DashboardScreen extends ConsumerWidget {
     /// listen deleteItemProvider
     ref.listen(
       deleteItemProvider,
-      (previous, next) {
-        next.when(
-          data: (_) {
-            /// on success hide loading dialog
-            /// need to complete the flow
-            if (context.router.current.name == "LoadingDialogRoute") {
-              context.back();
-            }
+      (previous, next) async {
+        if (next is AsyncLoading) {
+          /// show loading dialog
+          await context.router.navigate(const LoadingDialogRoute());
+        } else if (previous is AsyncLoading &&
+            next is AsyncData &&
+            next.value != null) {
+          /// on success hide loading dialog
+          /// need to complete the flow
+          if (context.router.current.name ==
+              const LoadingDialogRoute().routeName) {
+            context.popRoute();
+          }
 
-            /// on success refresh list
-            /// to get updated items list
-            ref.invalidate(dashboardProvider);
+          /// on success refresh list
+          /// to get updated items list
+          ref.invalidate(dashboardProvider);
 
-            final snackBar = SnackBar(
-              content: const Text("Item deleted"),
-              action: SnackBarAction(
-                label: "Cancel",
-                onPressed: () {
-                  context.hideSnackBar();
-                },
-              ),
-            );
+          final snackBar = SnackBar(
+            content: const Text("Item deleted"),
+            action: SnackBarAction(
+              label: "Cancel",
+              onPressed: () {
+                context.hideSnackBar();
+              },
+            ),
+          );
 
-            /// show snackbar
-            context.showSnackBar(snackBar);
-          },
-          error: (e, _) {
-            /// on error hide loading dialog
-            /// need to complete the flow
-            if (context.router.current.name == "LoadingDialogRoute") {
-              context.back();
-            }
+          /// show snackbar
+          context.showSnackBar(snackBar);
+        } else if (previous is AsyncLoading && next is AsyncError) {
+          if (context.router.current.name ==
+              const LoadingDialogRoute().routeName) {
+            context.popRoute();
+          }
 
-            /// clear all previous snackbars
-            context.clearSnackBar();
+          /// clear all previous snackbars
+          context.clearSnackBar();
 
-            /// error snackbar
-            final snackBar = SnackBar(
-              content: const Text("Failed to delete item"),
-              action: SnackBarAction(
-                label: "Cancel",
-                onPressed: () {
-                  context.hideSnackBar();
-                },
-              ),
-            );
+          /// error snackbar
+          final snackBar = SnackBar(
+            content: const Text("Failed to delete item"),
+            action: SnackBarAction(
+              label: "Cancel",
+              onPressed: () {
+                context.hideSnackBar();
+              },
+            ),
+          );
 
-            /// show error snackbar
-            context.showSnackBar(snackBar);
-          },
-          loading: () {
-            /// show loading dialog
-            context.router.navigate(const LoadingDialogRoute());
-          },
-        );
+          /// show error snackbar
+          context.showSnackBar(snackBar);
+        }
       },
     );
 
@@ -229,21 +275,7 @@ class DashboardScreen extends ConsumerWidget {
                         ListTile(
                           leading: ElevatedButton(
                             style: ElevatedButton.styleFrom(elevation: 5.0),
-                            onPressed: () {
-                              final cartItem = CartFoodItemModel()
-                                ..id = item.id
-                                ..name = item.name
-                                ..desc = item.desc
-                                ..image = item.image
-                                ..price = item.price
-                                ..creationDate = item.creationDate
-                                ..lastModifiedDate = item.lastModifiedDate;
-
-                              ref.read(cartStorageProvider).put(
-                                    key: "cart",
-                                    value: cartItem,
-                                  );
-                            },
+                            onPressed: () => onTapAddItem(item, ref),
                             child: Text(l10n.buy),
                           ),
                           trailing: Text(

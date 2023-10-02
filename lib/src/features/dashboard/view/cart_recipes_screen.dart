@@ -15,31 +15,40 @@ class CartRecipesScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final items = ref.watch(cartBoxProvider).listenable();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Billing Items"),
       ),
+      //TODO
       body: ValueListenableBuilder(
-        valueListenable: ref.watch(cartBoxProvider).listenable(),
+        valueListenable: items,
         builder: (context, box, __) {
           return ListView.separated(
-            itemCount: box.values.toList().length,
+            itemCount: box.values.toList()[0].length,
             separatorBuilder: (_, __) => const Divider(),
-            itemBuilder: (_, index) => CartItemTile(
-              item: box.values.toList()[index],
-            ),
+            itemBuilder: (_, index) {
+              final item = box.values.toList()[0][index];
+              return CartItemTile(
+                item: item,
+              );
+            },
           );
         },
       ),
-      bottomNavigationBar: const ListTile(
-        title: Text("Grand Total"),
-        subtitle: Text("GST: 0 \t Discount: 0"),
-        trailing: Text(
-          "\u{20B9} 100",
+      bottomNavigationBar: ListTile(
+        title: const Text(
+          "Grand Total:  \u{20B9} 100",
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,
           ),
+        ),
+        subtitle: const Text("GST: 0 \t Discount: 0"),
+        trailing: ElevatedButton(
+          onPressed: () {},
+          child: const Text("Generate Bill"),
         ),
       ),
     );
@@ -98,9 +107,9 @@ class CartItemTile extends StatelessWidget {
                   ),
                 ),
                 gapW8,
-                const Text(
-                  "0",
-                  style: TextStyle(
+                Text(
+                  item.qty.toString(),
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 15,
                   ),
@@ -121,7 +130,7 @@ class CartItemTile extends StatelessWidget {
               ],
             ),
             Text(
-              "\u{20B9} ${item.price}",
+              "\u{20B9} ${item.qty * item.price}",
               style: const TextStyle(fontSize: 18),
             ),
           ],
