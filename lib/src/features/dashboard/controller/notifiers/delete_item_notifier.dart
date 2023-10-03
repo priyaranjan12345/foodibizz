@@ -8,6 +8,7 @@ import '../../data/repository/dashboard/dashboard_repository_pod.dart';
 class DeleteItemNotifier extends AutoDisposeAsyncNotifier<void> {
   @override
   FutureOr build() {
+    state = const AsyncData(null);
     return future;
   }
 
