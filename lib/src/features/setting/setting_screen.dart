@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:foodibizz/global/extensions/is_dark_ext.dart';
 import 'package:foodibizz/src/core/localization/locale_pod.dart';
 import 'package:foodibizz/src/core/theme/app_them_pod.dart';
 import 'package:foodibizz/src/core/localization/l10n.dart';
@@ -26,7 +27,9 @@ class SettingScreen extends ConsumerWidget {
               leading: const Icon(Icons.light_mode_outlined),
               title: Text(l10n.dark),
               trailing: Switch(
-                value: themeController == ThemeMode.dark,
+                value: context.isDarkMode
+                    ? themeController != ThemeMode.dark
+                    : themeController == ThemeMode.dark,
                 onChanged: (value) {
                   final newTheme = value ? ThemeMode.dark : ThemeMode.light;
                   ref
