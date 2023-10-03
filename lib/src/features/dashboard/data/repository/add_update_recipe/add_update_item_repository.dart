@@ -6,7 +6,7 @@ import 'package:foodibizz/src/features/dashboard/model/all_food_items_response.d
 import 'package:multiple_result/multiple_result.dart';
 
 import '../../../../../../global/exceptions/no_internet_exception.dart';
-import '../../services/add_update_recipe/i_add_update_item_api.dart';
+import '../../apis/add_update_recipe/i_add_update_item_api.dart';
 import 'i_add_update_item_repository.dart';
 
 class AddUpdateItemRepository implements IAddUpdateItemRepository {
@@ -54,7 +54,7 @@ class AddUpdateItemRepository implements IAddUpdateItemRepository {
     required String desc,
     required double price,
     required String dateTime,
-    required File? image,
+     File? image,
     CancelToken? cancelToken,
   }) async {
     var response = await iAddUpdateItemApi.addItem(

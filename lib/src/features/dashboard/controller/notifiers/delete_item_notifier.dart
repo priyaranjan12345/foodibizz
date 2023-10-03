@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:foodibizz/global/riverpod_ext/cache_ext.dart';
 import 'package:foodibizz/global/riverpod_ext/cancel_ext.dart';
 
 import '../../data/repository/dashboard/dashboard_repository_pod.dart';
@@ -9,16 +8,18 @@ import '../../data/repository/dashboard/dashboard_repository_pod.dart';
 class DeleteItemNotifier extends AutoDisposeAsyncNotifier<void> {
   @override
   FutureOr build() {
+    state = const AsyncData(null);
     return future;
   }
 
   Future<void> onTapDelete(String id) async {
     state = const AsyncLoading();
-    final token = ref.cancelToken();
-    final link = ref.cacheFor();
+
+    Future.delayed(const Duration(seconds: 3));
+
     final result = await ref.watch(dashboardRepositoryProvider).deleteItems(
           id: id,
-          cancelToken: token,
+          cancelToken: ref.cancelToken(),
         );
 
     result.when(
@@ -26,7 +27,6 @@ class DeleteItemNotifier extends AutoDisposeAsyncNotifier<void> {
         state = const AsyncData(null);
       },
       (error) {
-        link.close();
         state = AsyncError(error.message, StackTrace.current);
       },
     );

@@ -8,12 +8,13 @@ import 'package:talker_dio_logger/talker_dio_logger.dart';
 
 import '../helper/app_talker.dart';
 import 'dio_interceptor.dart';
+import 'base_url_pod.dart';
 
 final dioProvider = Provider(
   (ref) {
     final Dio dio = Dio();
 
-    dio.options.baseUrl = 'http://3.27.90.34:8000/';
+    dio.options.baseUrl = ref.watch(baseUrlProvider);
     dio.options.connectTimeout = const Duration(seconds: 10);
     dio.options.receiveTimeout = const Duration(seconds: 10);
 

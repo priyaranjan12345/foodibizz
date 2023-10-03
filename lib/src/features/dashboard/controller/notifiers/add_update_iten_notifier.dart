@@ -40,7 +40,7 @@ class AddUpdateItemNotifier
   }
 
   Future<void> updateRecipe({
-    required File img,
+    File? img,
     required String name,
     required String desc,
     required double price,

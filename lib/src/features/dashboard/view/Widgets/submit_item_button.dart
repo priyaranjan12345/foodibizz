@@ -11,7 +11,7 @@ class SubmitItemButton extends ConsumerWidget {
     super.key,
     required this.onSubmit,
   });
-
+  
   final VoidCallback onSubmit;
 
   @override
