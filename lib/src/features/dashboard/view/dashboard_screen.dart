@@ -39,20 +39,9 @@ class DashboardScreen extends ConsumerWidget {
       );
       items = [...allItems, cartItemModel];
     } else {
-      final cartItemModel = CartFoodItemModel(
-        id: cartItem.id,
-        name: cartItem.name,
-        desc: cartItem.desc,
-        image: cartItem.image,
-        price: cartItem.price,
-        creationDate: cartItem.creationDate,
-        lastModifiedDate: cartItem.lastModifiedDate,
-        qty: 1,
-      );
-
       items = [
         for (final item in allItems)
-          if (item.id == cartItemModel.id)
+          if (item.id == cartItem.id)
             item.copyWith(qty: allItems[foodItemIndex].qty + 1)
           else
             item,
@@ -77,9 +66,7 @@ class DashboardScreen extends ConsumerWidget {
         if (next is AsyncLoading) {
           /// show loading dialog
           await context.router.navigate(const LoadingDialogRoute());
-        } else if (previous is AsyncLoading &&
-            next is AsyncData &&
-            next.value != null) {
+        } else if (previous is AsyncLoading && next is AsyncData) {
           /// on success hide loading dialog
           /// need to complete the flow
           if (context.router.current.name ==
@@ -211,7 +198,7 @@ class DashboardScreen extends ConsumerWidget {
                             CachedNetworkImage(
                               imageUrl: "http://3.27.90.34:8000/${item.image}",
                               errorWidget: (context, url, error) =>
-                                  Image.asset('nope-not-here.webp'),
+                                  Image.asset('assets/no-image.jpg'),
                               placeholder: (context, url) =>
                                   Image.asset('assets/no-image.jpg'),
                               fit: BoxFit.cover,
@@ -275,7 +262,19 @@ class DashboardScreen extends ConsumerWidget {
                         ListTile(
                           leading: ElevatedButton(
                             style: ElevatedButton.styleFrom(elevation: 5.0),
-                            onPressed: () => onTapAddItem(item, ref),
+                            onPressed: () {
+                              onTapAddItem(item, ref);
+                              final snackBar = SnackBar(
+                                content: Text("${item.name} Item added"),
+                                action: SnackBarAction(
+                                    label: "Close",
+                                    onPressed: () {
+                                      context.hideSnackBar();
+                                    }),
+                              );
+                              context.clearSnackBar();
+                              context.showSnackBar(snackBar);
+                            },
                             child: Text(l10n.buy),
                           ),
                           trailing: Text(
