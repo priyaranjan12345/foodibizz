@@ -20,7 +20,7 @@ class CartFoodItemModel extends HiveObject {
   final String name;
 
   @HiveField(5)
-  final int price;
+  final double price;
 
   @HiveField(6)
   final String lastModifiedDate;
@@ -45,7 +45,7 @@ class CartFoodItemModel extends HiveObject {
     String? image,
     String? creationDate,
     String? name,
-    int? price,
+    double? price,
     String? lastModifiedDate,
     int? qty,
   }) {

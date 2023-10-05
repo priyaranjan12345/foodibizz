@@ -24,15 +24,13 @@ class AllFoodItemResponse {
 
   factory AllFoodItemResponse.fromMap(Map<String, dynamic> map) {
     return AllFoodItemResponse(
-      foodItems: List<FoodItem>.from(
-          map['foodItems']?.map((x) => FoodItem.fromMap(x))),
+      foodItems: List<FoodItem>.from(map['foodItems']?.map((x) => FoodItem.fromMap(x))),
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory AllFoodItemResponse.fromJson(String source) =>
-      AllFoodItemResponse.fromMap(json.decode(source));
+  factory AllFoodItemResponse.fromJson(String source) => AllFoodItemResponse.fromMap(json.decode(source));
 
   @override
   String toString() => 'AllFoodItemResponse(foodItems: $foodItems)';
@@ -40,9 +38,9 @@ class AllFoodItemResponse {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-
+  
     return other is AllFoodItemResponse &&
-        listEquals(other.foodItems, foodItems);
+      listEquals(other.foodItems, foodItems);
   }
 
   @override
@@ -55,7 +53,7 @@ class FoodItem {
   final String image;
   final String creationDate;
   final String name;
-  final int price;
+  final double price;
   final String lastModifiedDate;
   FoodItem({
     required this.desc,
@@ -73,7 +71,7 @@ class FoodItem {
     String? image,
     String? creationDate,
     String? name,
-    int? price,
+    double? price,
     String? lastModifiedDate,
   }) {
     return FoodItem(
@@ -106,15 +104,14 @@ class FoodItem {
       image: map['image'] ?? '',
       creationDate: map['creationDate'] ?? '',
       name: map['name'] ?? '',
-      price: map['price']?.toInt() ?? 0,
+      price: map['price']?.toDouble() ?? 0.0,
       lastModifiedDate: map['lastModifiedDate'] ?? '',
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory FoodItem.fromJson(String source) =>
-      FoodItem.fromMap(json.decode(source));
+  factory FoodItem.fromJson(String source) => FoodItem.fromMap(json.decode(source));
 
   @override
   String toString() {
@@ -124,25 +121,25 @@ class FoodItem {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-
+  
     return other is FoodItem &&
-        other.desc == desc &&
-        other.id == id &&
-        other.image == image &&
-        other.creationDate == creationDate &&
-        other.name == name &&
-        other.price == price &&
-        other.lastModifiedDate == lastModifiedDate;
+      other.desc == desc &&
+      other.id == id &&
+      other.image == image &&
+      other.creationDate == creationDate &&
+      other.name == name &&
+      other.price == price &&
+      other.lastModifiedDate == lastModifiedDate;
   }
 
   @override
   int get hashCode {
     return desc.hashCode ^
-        id.hashCode ^
-        image.hashCode ^
-        creationDate.hashCode ^
-        name.hashCode ^
-        price.hashCode ^
-        lastModifiedDate.hashCode;
+      id.hashCode ^
+      image.hashCode ^
+      creationDate.hashCode ^
+      name.hashCode ^
+      price.hashCode ^
+      lastModifiedDate.hashCode;
   }
 }

@@ -3,10 +3,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:foodibizz/src/core/constants/gaps.dart';
-import 'package:foodibizz/src/features/dashboard/controller/providers/cart_provider.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
+import '../../../core/constants/gaps.dart';
+import '../controller/providers/cart_provider.dart';
 import '../model/cart_food_item_model.dart';
 
 @RoutePage(deferredLoading: true, name: "CartRecipesRoute")
@@ -15,32 +14,26 @@ class CartRecipesScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final items = ref.watch(cartBoxProvider).listenable();
+    final items = ref.watch(cartProvider);
 
     return Scaffold(
       appBar: AppBar(
         title: const Text("Billing Items"),
       ),
-      //TODO
-      body: ValueListenableBuilder(
-        valueListenable: items,
-        builder: (context, box, __) {
-          return ListView.separated(
-            itemCount: box.values.toList()[0].length,
-            separatorBuilder: (_, __) => const Divider(),
-            itemBuilder: (_, index) {
-              final item = box.values.toList()[0][index];
-              return CartItemTile(
-                item: item,
-              );
-            },
+      body: ListView.separated(
+        itemCount: items.length,
+        separatorBuilder: (_, __) => const Divider(),
+        itemBuilder: (_, index) {
+          final item = items[index];
+          return CartItemTile(
+            item: item,
           );
         },
       ),
       bottomNavigationBar: ListTile(
-        title: const Text(
-          "Grand Total:  \u{20B9} 100",
-          style: TextStyle(
+        title: Text(
+          "Grand Total:  \u{20B9} ${items.fold(0.0, (previousValue, element) => double.parse(previousValue.toString()) + (element.price * element.qty))}",
+          style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,
           ),
@@ -55,7 +48,7 @@ class CartRecipesScreen extends ConsumerWidget {
   }
 }
 
-class CartItemTile extends StatelessWidget {
+class CartItemTile extends ConsumerWidget {
   const CartItemTile({
     super.key,
     required this.item,
@@ -64,7 +57,7 @@ class CartItemTile extends StatelessWidget {
   final CartFoodItemModel item;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Slidable(
       key: const ValueKey(1),
       startActionPane: ActionPane(
@@ -99,7 +92,9 @@ class CartItemTile extends StatelessWidget {
                   child: IconButton(
                     padding: EdgeInsets.zero,
                     constraints: const BoxConstraints(),
-                    onPressed: () {},
+                    onPressed: () {
+                      ref.read(cartProvider.notifier).decItemQty(item.id);
+                    },
                     icon: const Icon(
                       Icons.remove,
                       size: 15,
@@ -120,7 +115,9 @@ class CartItemTile extends StatelessWidget {
                   child: IconButton(
                     padding: EdgeInsets.zero,
                     constraints: const BoxConstraints(),
-                    onPressed: () {},
+                    onPressed: () {
+                      ref.read(cartProvider.notifier).incItemQty(item.id);
+                    },
                     icon: const Icon(
                       Icons.add,
                       size: 15,
