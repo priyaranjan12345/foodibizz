@@ -51,6 +51,7 @@ class MySearchBar extends StatelessWidget {
                   backgroundColor: Theme.of(context).cardColor,
                   child: IconButton(
                     onPressed: onTapCart,
+                    
                     icon: const Icon(Icons.shopping_cart_outlined),
                   ),
                 ),

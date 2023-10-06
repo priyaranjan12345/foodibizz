@@ -2,20 +2,35 @@ import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:foodibizz/src/features/dashboard/controller/providers/cart_provider.dart';
-import 'package:foodibizz/src/features/dashboard/model/cart_food_item_model.dart';
 
+import '../controller/providers/cart_provider.dart';
 import '../controller/providers/dashboard_provider.dart';
 import '../../../core/routes/app_routes.gr.dart';
 import '../../../core/localization/l10n.dart';
 import '../../../../global/extensions/snackbar_ext.dart';
 import '../../../../global/riverpod_ext/asyncvalue_easy_when.dart';
 import '../model/all_food_items_response.dart';
+import '../model/cart_food_item_model.dart';
 import 'Widgets/app_search_bar.dart';
 
 @RoutePage(deferredLoading: true, name: "DashboardRoute")
 class DashboardScreen extends ConsumerWidget {
   const DashboardScreen({super.key});
+
+  void onTapAddItem(FoodItem cartItem, WidgetRef ref) {
+    ref.read(cartStorageProvider).addItem(
+          item: CartFoodItemModel(
+            id: cartItem.id,
+            name: cartItem.name,
+            desc: cartItem.desc,
+            image: cartItem.image,
+            price: cartItem.price,
+            creationDate: cartItem.creationDate,
+            lastModifiedDate: cartItem.lastModifiedDate,
+            qty: 1,
+          ),
+        );
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -25,61 +40,57 @@ class DashboardScreen extends ConsumerWidget {
     /// listen deleteItemProvider
     ref.listen(
       deleteItemProvider,
-      (previous, next) {
-        next.when(
-          data: (_) {
-            /// on success hide loading dialog
-            /// need to complete the flow
-            if (context.router.current.name == "LoadingDialogRoute") {
-              context.back();
-            }
+      (previous, next) async {
+        if (next is AsyncLoading) {
+          /// show loading dialog
+          await context.router.navigate(const LoadingDialogRoute());
+        } else if (previous is AsyncLoading && next is AsyncData) {
+          /// on success hide loading dialog
+          /// need to complete the flow
+          if (context.router.current.name ==
+              const LoadingDialogRoute().routeName) {
+            context.popRoute();
+          }
 
-            /// on success refresh list
-            /// to get updated items list
-            ref.invalidate(dashboardProvider);
+          /// on success refresh list
+          /// to get updated items list
+          ref.invalidate(dashboardProvider);
 
-            final snackBar = SnackBar(
-              content: const Text("Item deleted"),
-              action: SnackBarAction(
-                label: "Cancel",
-                onPressed: () {
-                  context.hideSnackBar();
-                },
-              ),
-            );
+          final snackBar = SnackBar(
+            content: const Text("Item deleted"),
+            action: SnackBarAction(
+              label: "Cancel",
+              onPressed: () {
+                context.hideSnackBar();
+              },
+            ),
+          );
 
-            /// show snackbar
-            context.showSnackBar(snackBar);
-          },
-          error: (e, _) {
-            /// on error hide loading dialog
-            /// need to complete the flow
-            if (context.router.current.name == "LoadingDialogRoute") {
-              context.back();
-            }
+          /// show snackbar
+          context.showSnackBar(snackBar);
+        } else if (previous is AsyncLoading && next is AsyncError) {
+          if (context.router.current.name ==
+              const LoadingDialogRoute().routeName) {
+            context.popRoute();
+          }
 
-            /// clear all previous snackbars
-            context.clearSnackBar();
+          /// clear all previous snackbars
+          context.clearSnackBar();
 
-            /// error snackbar
-            final snackBar = SnackBar(
-              content: const Text("Failed to delete item"),
-              action: SnackBarAction(
-                label: "Cancel",
-                onPressed: () {
-                  context.hideSnackBar();
-                },
-              ),
-            );
+          /// error snackbar
+          final snackBar = SnackBar(
+            content: const Text("Failed to delete item"),
+            action: SnackBarAction(
+              label: "Cancel",
+              onPressed: () {
+                context.hideSnackBar();
+              },
+            ),
+          );
 
-            /// show error snackbar
-            context.showSnackBar(snackBar);
-          },
-          loading: () {
-            /// show loading dialog
-            context.router.navigate(const LoadingDialogRoute());
-          },
-        );
+          /// show error snackbar
+          context.showSnackBar(snackBar);
+        }
       },
     );
 
@@ -92,7 +103,7 @@ class DashboardScreen extends ConsumerWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: 10,
-                vertical: 4,
+                vertical: 6,
               ),
               child: MySearchBar(
                 onTapSearch: () {
@@ -165,7 +176,7 @@ class DashboardScreen extends ConsumerWidget {
                             CachedNetworkImage(
                               imageUrl: "http://3.27.90.34:8000/${item.image}",
                               errorWidget: (context, url, error) =>
-                                  Image.asset('nope-not-here.webp'),
+                                  Image.asset('assets/no-image.jpg'),
                               placeholder: (context, url) =>
                                   Image.asset('assets/no-image.jpg'),
                               fit: BoxFit.cover,
@@ -230,19 +241,17 @@ class DashboardScreen extends ConsumerWidget {
                           leading: ElevatedButton(
                             style: ElevatedButton.styleFrom(elevation: 5.0),
                             onPressed: () {
-                              final cartItem = CartFoodItemModel()
-                                ..id = item.id
-                                ..name = item.name
-                                ..desc = item.desc
-                                ..image = item.image
-                                ..price = item.price
-                                ..creationDate = item.creationDate
-                                ..lastModifiedDate = item.lastModifiedDate;
-
-                              ref.read(cartStorageProvider).put(
-                                    key: "cart",
-                                    value: cartItem,
-                                  );
+                              onTapAddItem(item, ref);
+                              final snackBar = SnackBar(
+                                content: Text("${item.name} Item added"),
+                                action: SnackBarAction(
+                                    label: "Close",
+                                    onPressed: () {
+                                      context.hideSnackBar();
+                                    }),
+                              );
+                              context.clearSnackBar();
+                              context.showSnackBar(snackBar);
                             },
                             child: Text(l10n.buy),
                           ),

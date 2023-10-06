@@ -16,20 +16,22 @@ class CartFoodItemModelAdapter extends TypeAdapter<CartFoodItemModel> {
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return CartFoodItemModel()
-      ..desc = fields[0] as String
-      ..id = fields[1] as int
-      ..image = fields[2] as String
-      ..creationDate = fields[3] as String
-      ..name = fields[4] as String
-      ..price = fields[5] as int
-      ..lastModifiedDate = fields[6] as String;
+    return CartFoodItemModel(
+      desc: fields[0] as String,
+      id: fields[1] as int,
+      image: fields[2] as String,
+      creationDate: fields[3] as String,
+      name: fields[4] as String,
+      price: fields[5] as double,
+      lastModifiedDate: fields[6] as String,
+      qty: fields[7] as int,
+    );
   }
 
   @override
   void write(BinaryWriter writer, CartFoodItemModel obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.desc)
       ..writeByte(1)
@@ -43,7 +45,9 @@ class CartFoodItemModelAdapter extends TypeAdapter<CartFoodItemModel> {
       ..writeByte(5)
       ..write(obj.price)
       ..writeByte(6)
-      ..write(obj.lastModifiedDate);
+      ..write(obj.lastModifiedDate)
+      ..writeByte(7)
+      ..write(obj.qty);
   }
 
   @override
