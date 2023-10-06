@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:foodibizz/src/features/dashboard/controller/providers/cart_provider.dart';
-import 'package:foodibizz/src/features/dashboard/model/cart_food_item_model.dart';
 
+import '../controller/providers/cart_provider.dart';
 import '../controller/providers/dashboard_provider.dart';
 import '../../../core/routes/app_routes.gr.dart';
 import '../../../core/localization/l10n.dart';
 import '../../../../global/extensions/snackbar_ext.dart';
 import '../../../../global/riverpod_ext/asyncvalue_easy_when.dart';
 import '../model/all_food_items_response.dart';
+import '../model/cart_food_item_model.dart';
 import 'Widgets/app_search_bar.dart';
 
 @RoutePage(deferredLoading: true, name: "DashboardRoute")
@@ -18,39 +18,17 @@ class DashboardScreen extends ConsumerWidget {
   const DashboardScreen({super.key});
 
   void onTapAddItem(FoodItem cartItem, WidgetRef ref) {
-    List<CartFoodItemModel> items = [];
-    List<CartFoodItemModel> allItems =
-        ref.read(cartStorageProvider).get(key: "cart");
-
-    var foodItemIndex = allItems.indexWhere(
-      (element) => element.id == cartItem.id,
-    );
-
-    if (foodItemIndex == -1) {
-      final cartItemModel = CartFoodItemModel(
-        id: cartItem.id,
-        name: cartItem.name,
-        desc: cartItem.desc,
-        image: cartItem.image,
-        price: cartItem.price,
-        creationDate: cartItem.creationDate,
-        lastModifiedDate: cartItem.lastModifiedDate,
-        qty: 1,
-      );
-      items = [...allItems, cartItemModel];
-    } else {
-      items = [
-        for (final item in allItems)
-          if (item.id == cartItem.id)
-            item.copyWith(qty: allItems[foodItemIndex].qty + 1)
-          else
-            item,
-      ];
-    }
-
-    ref.read(cartStorageProvider).put(
-          key: "cart",
-          values: items,
+    ref.read(cartStorageProvider).addItem(
+          item: CartFoodItemModel(
+            id: cartItem.id,
+            name: cartItem.name,
+            desc: cartItem.desc,
+            image: cartItem.image,
+            price: cartItem.price,
+            creationDate: cartItem.creationDate,
+            lastModifiedDate: cartItem.lastModifiedDate,
+            qty: 1,
+          ),
         );
   }
 
@@ -125,7 +103,7 @@ class DashboardScreen extends ConsumerWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: 10,
-                vertical: 4,
+                vertical: 6,
               ),
               child: MySearchBar(
                 onTapSearch: () {

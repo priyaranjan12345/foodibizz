@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
 
-import '../../data/service/card_storage.dart';
+import '../../data/service/cart_storage.dart';
 import '../../model/cart_food_item_model.dart';
 
 /// This provider used for App Storage Service class which
@@ -13,7 +13,7 @@ final cartStorageProvider = Provider.autoDispose<CartStorage>(
 
 /// This provider used for Storing Hive Box which you can override on
 /// bootstrap function on start of the app
-final cartBoxProvider = Provider.autoDispose<Box<List<CartFoodItemModel>>>(
-  (ref) => Hive.box<List<CartFoodItemModel>>("cartBox"),
+final cartBoxProvider = Provider.autoDispose<Box<CartFoodItemModel>>(
+  (ref) => Hive.box("cartBox"),
   name: 'cartBoxProvider',
 );

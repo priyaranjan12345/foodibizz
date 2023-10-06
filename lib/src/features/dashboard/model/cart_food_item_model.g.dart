@@ -22,7 +22,7 @@ class CartFoodItemModelAdapter extends TypeAdapter<CartFoodItemModel> {
       image: fields[2] as String,
       creationDate: fields[3] as String,
       name: fields[4] as String,
-      price: fields[5] as int,
+      price: fields[5] as double,
       lastModifiedDate: fields[6] as String,
       qty: fields[7] as int,
     );
