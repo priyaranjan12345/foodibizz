@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../../core/constants/gaps.dart';
 import '../controller/providers/cart_provider.dart';
@@ -14,30 +15,41 @@ class CartRecipesScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final items = ref.watch(cartProvider);
-
+    final itemsListener = ref.watch(cartBoxProvider).listenable();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Billing Items"),
       ),
-      body: ListView.separated(
-        itemCount: items.length,
-        separatorBuilder: (_, __) => const Divider(),
-        itemBuilder: (_, index) {
-          final item = items[index];
-          return CartItemTile(
-            item: item,
+      body: ValueListenableBuilder(
+        valueListenable: itemsListener,
+        builder: (context, box, __) {
+          final items = box.values.toList();
+
+          return ListView.separated(
+            itemCount: items.length,
+            separatorBuilder: (_, __) => const Divider(),
+            itemBuilder: (_, index) {
+              final item = items[index];
+              return CartItemTile(
+                item: item,
+              );
+            },
           );
         },
       ),
       bottomNavigationBar: ListTile(
-        title: Text(
-          "Grand Total:  \u{20B9} ${items.fold(0.0, (previousValue, element) => double.parse(previousValue.toString()) + (element.price * element.qty))}",
-          style: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
+        title: ValueListenableBuilder(
+            valueListenable: itemsListener,
+            builder: (_, box, __) {
+              final items = box.values.toList();
+              return Text(
+                "Grand Total:  \u{20B9} ${items.fold(0.0, (previousValue, element) => double.parse(previousValue.toString()) + (element.price * element.qty))}",
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
+              );
+            }),
         subtitle: const Text("GST: 0 \t Discount: 0"),
         trailing: ElevatedButton(
           onPressed: () {},
@@ -60,14 +72,23 @@ class CartItemTile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Slidable(
       key: const ValueKey(1),
-      startActionPane: ActionPane(
+      endActionPane: ActionPane(
         motion: const ScrollMotion(),
         children: [
           SlidableAction(
-            onPressed: (context) {},
-            backgroundColor: const Color(0xFFFE4A49),
-            foregroundColor: Colors.white,
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+            onPressed: (context) {
+              ref.read(cartStorageProvider).deleteItem(item.id);
+            },
+            backgroundColor: Theme.of(context).indicatorColor,
             icon: Icons.delete,
+            spacing: 10,
+          ),
+          SlidableAction(
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+            onPressed: (context) {},
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            icon: Icons.close,
           ),
         ],
       ),
@@ -93,7 +114,7 @@ class CartItemTile extends ConsumerWidget {
                     padding: EdgeInsets.zero,
                     constraints: const BoxConstraints(),
                     onPressed: () {
-                      ref.read(cartProvider.notifier).decItemQty(item.id);
+                      ref.read(cartStorageProvider).decItemQty(item.id);
                     },
                     icon: const Icon(
                       Icons.remove,
@@ -116,7 +137,7 @@ class CartItemTile extends ConsumerWidget {
                     padding: EdgeInsets.zero,
                     constraints: const BoxConstraints(),
                     onPressed: () {
-                      ref.read(cartProvider.notifier).incItemQty(item.id);
+                      ref.read(cartStorageProvider).incItemQty(item.id);
                     },
                     icon: const Icon(
                       Icons.add,

@@ -10,6 +10,7 @@ import '../../../core/localization/l10n.dart';
 import '../../../../global/extensions/snackbar_ext.dart';
 import '../../../../global/riverpod_ext/asyncvalue_easy_when.dart';
 import '../model/all_food_items_response.dart';
+import '../model/cart_food_item_model.dart';
 import 'Widgets/app_search_bar.dart';
 
 @RoutePage(deferredLoading: true, name: "DashboardRoute")
@@ -17,7 +18,18 @@ class DashboardScreen extends ConsumerWidget {
   const DashboardScreen({super.key});
 
   void onTapAddItem(FoodItem cartItem, WidgetRef ref) {
-    ref.read(cartProvider.notifier).addItem(cartItem);
+    ref.read(cartStorageProvider).addItem(
+          item: CartFoodItemModel(
+            id: cartItem.id,
+            name: cartItem.name,
+            desc: cartItem.desc,
+            image: cartItem.image,
+            price: cartItem.price,
+            creationDate: cartItem.creationDate,
+            lastModifiedDate: cartItem.lastModifiedDate,
+            qty: 1,
+          ),
+        );
   }
 
   @override
@@ -85,13 +97,13 @@ class DashboardScreen extends ConsumerWidget {
     return SafeArea(
       child: Scaffold(
         appBar: PreferredSize(
-          preferredSize: const Size(double.infinity, kToolbarHeight),
+          preferredSize: const Size(double.infinity, kToolbarHeight + 10),
           child: Container(
             color: Colors.transparent,
             child: Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: 10,
-                vertical: 4,
+                vertical: 6,
               ),
               child: MySearchBar(
                 onTapSearch: () {
