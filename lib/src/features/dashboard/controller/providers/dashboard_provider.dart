@@ -28,7 +28,8 @@ final dashboardProvider = FutureProvider.autoDispose<AllFoodItemResponse>(
   name: "dashboardProvider",
 );
 
-final deleteItemProvider = AutoDisposeAsyncNotifierProvider<DeleteItemNotifier, void>(
+final deleteItemProvider =
+    AutoDisposeAsyncNotifierProvider<DeleteItemNotifier, void>(
   () => DeleteItemNotifier(),
   name: "deleteItemProvider",
 );
