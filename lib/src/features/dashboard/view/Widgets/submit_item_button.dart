@@ -25,7 +25,7 @@ class SubmitItemButton extends ConsumerWidget {
           data: (data) => switch (data) {
             AddUpdateItemInitial() => null,
             AddUpdateItemLoading() => null,
-            AddUpdateItemLoaded() => context.back(),
+            AddUpdateItemLoaded() => context.popRoute(1),
           },
           error: (e, _) {
             /// show error snackbar

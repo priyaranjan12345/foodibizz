@@ -109,7 +109,11 @@ class DashboardScreen extends ConsumerWidget {
                 onTapSearch: () {
                   showSearch(
                     context: context,
-                    delegate: CustomSearch(items: []),
+                    delegate: itemsState.when(
+                      data: (data) => CustomSearch(items: data.foodItems),
+                      error: (_, __) => CustomSearch(items: []),
+                      loading: () => CustomSearch(items: []),
+                    ),
                   );
                 },
                 onTapCart: () {
@@ -120,10 +124,11 @@ class DashboardScreen extends ConsumerWidget {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            context.navigateTo(
+          onPressed: () async {
+            final status = await context.pushRoute(
               AddUpdateItemRoute(),
             );
+            if (status == 1) ref.invalidate(dashboardProvider);
           },
           child: const Icon(Icons.add),
         ),
@@ -149,8 +154,8 @@ class DashboardScreen extends ConsumerWidget {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             Text(
-                              "Items",
-                              style: Theme.of(context).textTheme.displayMedium,
+                              "FoodiBizz",
+                              style: Theme.of(context).textTheme.displaySmall,
                             ),
                             const SizedBox(height: 10),
                             const Text(
@@ -168,7 +173,7 @@ class DashboardScreen extends ConsumerWidget {
                   }
                   final item = value.foodItems[index - 1];
                   return Card(
-                    elevation: 5.0,
+                    
                     child: Column(
                       children: [
                         Stack(
@@ -239,7 +244,6 @@ class DashboardScreen extends ConsumerWidget {
                         ),
                         ListTile(
                           leading: ElevatedButton(
-                            style: ElevatedButton.styleFrom(elevation: 5.0),
                             onPressed: () {
                               onTapAddItem(item, ref);
                               final snackBar = SnackBar(
@@ -280,6 +284,35 @@ class CustomSearch extends SearchDelegate {
   CustomSearch({required this.items});
   final List<FoodItem> items;
 
+  void onTapAdd(
+      {required FoodItem cartItem,
+      required WidgetRef ref,
+      required BuildContext context}) {
+    ref.read(cartStorageProvider).addItem(
+          item: CartFoodItemModel(
+            id: cartItem.id,
+            name: cartItem.name,
+            desc: cartItem.desc,
+            image: cartItem.image,
+            price: cartItem.price,
+            creationDate: cartItem.creationDate,
+            lastModifiedDate: cartItem.lastModifiedDate,
+            qty: 1,
+          ),
+        );
+
+    final snackBar = SnackBar(
+      content: Text("${cartItem.name} Item added"),
+      action: SnackBarAction(
+          label: "Close",
+          onPressed: () {
+            context.hideSnackBar();
+          }),
+    );
+    context.clearSnackBar();
+    context.showSnackBar(snackBar);
+  }
+
   @override
   List<Widget>? buildActions(BuildContext context) {
     return [
@@ -304,11 +337,11 @@ class CustomSearch extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    List<String> matchQuery = [];
+    List<FoodItem> matchQuery = [];
 
     for (var item in items) {
       if (item.name.toLowerCase().contains(query.toLowerCase())) {
-        matchQuery.add(item.name);
+        matchQuery.add(item);
       }
     }
 
@@ -316,10 +349,28 @@ class CustomSearch extends SearchDelegate {
       itemCount: matchQuery.length,
       separatorBuilder: (_, __) => const Divider(),
       itemBuilder: (context, index) {
-        return Card(
-          child: ListTile(
-            title: Text(matchQuery[index]),
+        final item = matchQuery[index];
+        return ListTile(
+          leading: ClipRRect(
+            borderRadius: const BorderRadius.all(
+              Radius.circular(10),
+            ),
+            child: CachedNetworkImage(
+              imageUrl: "http://3.27.90.34:8000/${item.image}",
+            ),
           ),
+          title: Text(item.name),
+          subtitle: Text("Unit Price: ${item.price.toString()}"),
+          trailing: Consumer(builder: (_, ref, __) {
+            return FilledButton.tonal(
+              onPressed: () => onTapAdd(
+                cartItem: item,
+                ref: ref,
+                context: context,
+              ),
+              child: const Text("Add to cart"),
+            );
+          }),
         );
       },
     );
@@ -327,11 +378,11 @@ class CustomSearch extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    List<String> matchQuery = [];
+    List<FoodItem> matchQuery = [];
 
     for (var item in items) {
       if (item.name.toLowerCase().contains(query.toLowerCase())) {
-        matchQuery.add(item.name);
+        matchQuery.add(item);
       }
     }
 
@@ -339,10 +390,28 @@ class CustomSearch extends SearchDelegate {
       itemCount: matchQuery.length,
       separatorBuilder: (_, __) => const Divider(),
       itemBuilder: (context, index) {
-        return Card(
-          child: ListTile(
-            title: Text(matchQuery[index]),
+        final item = matchQuery[index];
+        return ListTile(
+          leading: ClipRRect(
+            borderRadius: const BorderRadius.all(
+              Radius.circular(10),
+            ),
+            child: CachedNetworkImage(
+              imageUrl: "http://3.27.90.34:8000/${item.image}",
+            ),
           ),
+          title: Text(item.name),
+          subtitle: Text("Unit Price: ${item.price.toString()}"),
+          trailing: Consumer(builder: (_, ref, __) {
+            return FilledButton.tonal(
+              onPressed: () => onTapAdd(
+                cartItem: item,
+                ref: ref,
+                context: context,
+              ),
+              child: const Text("Add to cart"),
+            );
+          }),
         );
       },
     );
