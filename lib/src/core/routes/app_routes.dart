@@ -71,6 +71,19 @@ class AppRouter extends $AppRouter {
         AutoRoute(
           page: SettingsRoute.page,
           path: 'settingsRoute',
+          children: [
+            CustomRoute(
+              page: AboutDialogRoute.page,
+              path: 'aboutDialogRoute',
+              customRouteBuilder: <T>(context, child, AutoRoutePage<T> page) {
+                return DialogRoute(
+                  context: context,
+                  settings: page,
+                  builder: (_) => child,
+                );
+              },
+            ),
+          ],
         ),
       ],
     ),
