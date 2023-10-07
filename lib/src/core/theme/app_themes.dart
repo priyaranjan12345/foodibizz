@@ -30,7 +30,7 @@ class AppThemes {
         visualDensity: FlexColorScheme.comfortablePlatformDensity,
         useMaterial3: true,
         swapLegacyOnMaterial3: true,
-        fontFamily: GoogleFonts.robotoSerif().fontFamily,
+        // fontFamily: GoogleFonts.robotoSerif().fontFamily,
       );
   static ThemeData get darkTheme => FlexThemeData.dark(
         colors: const FlexSchemeColor(
@@ -56,6 +56,6 @@ class AppThemes {
         visualDensity: FlexColorScheme.comfortablePlatformDensity,
         useMaterial3: true,
         swapLegacyOnMaterial3: true,
-        fontFamily: GoogleFonts.robotoSerif().fontFamily,
+        // fontFamily: GoogleFonts.robotoSerif().fontFamily,
       );
 }
