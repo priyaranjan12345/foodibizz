@@ -76,7 +76,26 @@ class _AddUpdateItemScreenConsumerState
     }
   }
 
-  void updateItem() {}
+  void updateItem(WidgetRef ref, int id) {
+    if (!formKey.currentState!.validate()) return;
+    final imageXFile = ref.read(imagePickerProvider);
+    if (imageXFile != null) {
+      ref.read(addUpdateItemProvider.notifier).updateRecipe(
+            id: id,
+            img: File(imageXFile.path),
+            name: nameController.text,
+            desc: descController.text,
+            price: double.parse(priceController.text),
+          );
+    } else {
+      ref.read(addUpdateItemProvider.notifier).updateRecipe(
+            id: id,
+            name: nameController.text,
+            desc: descController.text,
+            price: double.parse(priceController.text),
+          );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -172,7 +191,7 @@ class _AddUpdateItemScreenConsumerState
                   if (widget.item == null) {
                     addItem(ref);
                   } else {
-                    updateItem();
+                    updateItem(ref, widget.item!.id);
                   }
                 },
               ),

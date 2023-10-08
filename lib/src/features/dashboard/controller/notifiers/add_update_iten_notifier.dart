@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../../data/repository/add_update_recipe/add_update_item_repository_pod.dart';
 import '../states/add_update_item_state.dart';
 
@@ -40,6 +38,7 @@ class AddUpdateItemNotifier
   }
 
   Future<void> updateRecipe({
+    required int id,
     File? img,
     required String name,
     required String desc,
@@ -47,6 +46,7 @@ class AddUpdateItemNotifier
   }) async {
     state = const AsyncLoading();
     final result = await ref.watch(addUpdateItemRepositoryProvider).updateItem(
+          id: id,
           name: name,
           desc: desc,
           price: price,
