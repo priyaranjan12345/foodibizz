@@ -16,6 +16,7 @@ abstract class IAddUpdateItemRepository {
   });
 
   Future<Result<String, BaseException>> updateItem({
+    required int id,
     required String name,
     required String desc,
     required double price,
