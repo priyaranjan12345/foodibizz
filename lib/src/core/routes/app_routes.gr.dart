@@ -25,11 +25,11 @@ import 'package:foodibizz/src/features/dashboard/view/dashboard_tab.dart'
     deferred as _i8;
 import 'package:foodibizz/src/features/dashboard/view/file_picker_bottomsheet.dart'
     deferred as _i9;
-import 'package:foodibizz/src/features/history/screen/all_orders_screen.dart'
+import 'package:foodibizz/src/features/history/view/all_orders_screen.dart'
     deferred as _i2;
-import 'package:foodibizz/src/features/history/screen/history_tab.dart'
+import 'package:foodibizz/src/features/history/view/history_tab.dart'
     deferred as _i10;
-import 'package:foodibizz/src/features/history/screen/order_details_screen.dart'
+import 'package:foodibizz/src/features/history/view/order_details_screen.dart'
     deferred as _i12;
 import 'package:foodibizz/src/features/home/home_screen.dart' deferred as _i11;
 import 'package:foodibizz/src/features/setting/view/app_about_dialog.dart'
