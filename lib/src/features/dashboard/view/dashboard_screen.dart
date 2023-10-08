@@ -97,13 +97,14 @@ class DashboardScreen extends ConsumerWidget {
     return SafeArea(
       child: Scaffold(
         appBar: PreferredSize(
-          preferredSize: const Size(double.infinity, kToolbarHeight + 10),
+          preferredSize: const Size(double.infinity, kToolbarHeight),
           child: Container(
             color: Colors.transparent,
+            padding: const EdgeInsets.only(bottom: 2),
             child: Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: 10,
-                vertical: 6,
+                vertical: 2,
               ),
               child: MySearchBar(
                 onTapSearch: () {
@@ -257,7 +258,7 @@ class DashboardScreen extends ConsumerWidget {
                               context.clearSnackBar();
                               context.showSnackBar(snackBar);
                             },
-                            child: Text(l10n.buy),
+                            child: Text(l10n.addToCart),
                           ),
                           trailing: Text(
                             "\u{20B9} ${item.price}",

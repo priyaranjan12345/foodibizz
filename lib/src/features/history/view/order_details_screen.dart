@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foodibizz/global/riverpod_ext/asyncvalue_easy_when.dart';
@@ -26,9 +27,21 @@ class OrderDetailsScreen extends ConsumerWidget {
           return ListView.separated(
             separatorBuilder: (_, __) => const Divider(),
             itemCount: orderItems.length,
-            itemBuilder: (_, index) => Text(
-              orderItems[index].name,
-            ),
+            itemBuilder: (_, index) {
+              final orderItem = orderItems[index];
+              return ListTile(
+                leading: ClipRRect(
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(10),
+                  ),
+                  child: CachedNetworkImage(
+                    imageUrl: "http://3.27.90.34:8000/${orderItem.image}",
+                  ),
+                ),
+                title: Text(orderItem.name),
+                subtitle: Text("Unit Price: ${orderItem.price.toString()}"),
+              );
+            },
           );
         },
       ),

@@ -35,7 +35,10 @@ class App extends ConsumerWidget {
       builder: (context, child) {
         child = DevicePreview.appBuilder(context, child);
         child = ResponsiveBreakPointWrapper(child: child);
-        return child;
+        return GestureDetector(
+          onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+          child: child,
+        );
       },
     );
   }
