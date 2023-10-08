@@ -50,21 +50,22 @@ class AddUpdateItemRepository implements IAddUpdateItemRepository {
 
   @override
   Future<Result<String, BaseException>> updateItem({
+    required int id,
     required String name,
     required String desc,
     required double price,
     required String dateTime,
-     File? image,
+    File? image,
     CancelToken? cancelToken,
   }) async {
-    var response = await iAddUpdateItemApi.addItem(
+    var response = await iAddUpdateItemApi.updateItem(
+      id: id,
       name: name,
       desc: desc,
       price: price,
       dateTime: dateTime,
       image: image,
     );
-
     if (response.statusCode == 202) {
       try {
         return const Success("Item updated successfully");

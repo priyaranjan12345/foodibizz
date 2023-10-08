@@ -32,7 +32,7 @@ class AddUpdateItemApi extends IAddUpdateItemApi {
 
   @override
   Future<Response> updateItem({
-    required String id,
+    required int id,
     required String name,
     required String desc,
     required double price,
@@ -44,11 +44,11 @@ class AddUpdateItemApi extends IAddUpdateItemApi {
       'name': name,
       'desc': desc,
       'price': price,
-      'creationDate': dateTime,
+      'lastModifiedDate': dateTime,
       if (image != null) 'foodImage': await MultipartFile.fromFile(image.path)
     });
 
-    return await dio.post(
+    return await dio.put(
       '/item/update-fooditem/$id',
       data: formData,
     );
