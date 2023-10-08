@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foodibizz/global/riverpod_ext/cache_ext.dart';
 import 'package:foodibizz/global/riverpod_ext/cancel_ext.dart';
-import 'package:foodibizz/src/features/history/data/repo/orders_repo/orders_repo_pod.dart';
+import 'package:foodibizz/src/features/history/data/repository/orders_repository/orders_repository_pod.dart';
 import 'package:foodibizz/src/features/history/model/all_orders_reponse.dart';
 
-final allOrdersProvider = FutureProvider.autoDispose<AllOrdersResponse>(
+final allOrdersProvider = FutureProvider.autoDispose<AllOrders>(
   (ref) async {
     final token = ref.cancelToken();
     final link = ref.cacheFor();

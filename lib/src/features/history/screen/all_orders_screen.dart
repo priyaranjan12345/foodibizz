@@ -13,45 +13,47 @@ class AllOrdersScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final ordersState = ref.watch(allOrdersProvider);
-    // print("length ofthe list${ordersState.value!.allOrders.length}");
+
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("History"),
-          centerTitle: true,
-        ),
-        body: ordersState.easyWhen(
-            errorWidget: (error, stackTrace) =>
-                Text((error as BaseException).message.toString()),
-            data: (value) {
-              return RefreshIndicator(
-                  onRefresh: () async {
-                    ref.invalidate(allOrdersProvider);
+      appBar: AppBar(
+        title: const Text("History"),
+        centerTitle: true,
+      ),
+      body: ordersState.easyWhen(
+        errorWidget: (error, stackTrace) =>
+            Text((error as BaseException).message.toString()),
+        data: (value) {
+          return RefreshIndicator(
+            onRefresh: () async {
+              ref.invalidate(allOrdersProvider);
+            },
+            child: ListView.separated(
+              separatorBuilder: (_, __) => const Divider(),
+              itemCount: value.allOrders.length,
+              itemBuilder: (_, index) {
+                final order = value.allOrders[index];
+
+                return ListTile(
+                  onTap: () {
+                    context.navigateTo(OrderDetailsRoute(orderId: order.id));
                   },
-                  child: ListView.separated(
-                      separatorBuilder: (_, __) => const Divider(),
-                      itemCount: value.allOrders.length,
-                      itemBuilder: (_, index) {
-                        final data = value.allOrders[index];
-
-                        return ListTile(
-                          onTap: () {
-                            context.navigateTo(const OrderDetailsRoute());
-                          },
-                          leading:
-                              CircleAvatar(child: Text(data.id.toString())),
-                          trailing: const Icon(Icons.chevron_right),
-                          title: Text(data.invNum.toString()),
-                          subtitle: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(data.billingDate.toString()),
-                              Text("\u{20B9} ${data.discount}")
-                            ],
-                          ),
-                        );
-                      }));
-            }));
-
+                  leading: CircleAvatar(child: Text((index + 1).toString())),
+                  trailing: const Icon(Icons.chevron_right),
+                  title: Text(order.invNum.toString()),
+                  subtitle: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(order.billingDate.split('T')[0]),
+                      Text("\u{20B9} ${order.grandTotal}")
+                    ],
+                  ),
+                );
+              },
+            ),
+          );
+        },
+      ),
+    );
   }
 }

@@ -1,10 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:foodibizz/global/extensions/is_dark_ext.dart';
 import 'package:foodibizz/src/core/localization/locale_pod.dart';
 import 'package:foodibizz/src/core/theme/app_them_pod.dart';
 import 'package:foodibizz/src/core/localization/l10n.dart';
+import 'package:foodibizz/src/features/setting/view/widgets/theme_mode_switch.dart';
 
 @RoutePage(deferredLoading: true, name: "SettingsRoute")
 class SettingScreen extends ConsumerWidget {
@@ -26,15 +26,12 @@ class SettingScreen extends ConsumerWidget {
             ListTile(
               leading: const Icon(Icons.light_mode_outlined),
               title: Text(l10n.dark),
-              trailing: Switch(
-                value: context.isDarkMode
-                    ? themeController != ThemeMode.dark
-                    : themeController == ThemeMode.dark,
+              trailing: ThemeModeSwitch(
+                themeMode: themeController,
                 onChanged: (value) {
-                  final newTheme = value ? ThemeMode.dark : ThemeMode.light;
                   ref
                       .read(themecontrollerProvider.notifier)
-                      .changeTheme(theme: newTheme);
+                      .changeTheme(theme: value);
                 },
               ),
             ),
@@ -63,9 +60,29 @@ class SettingScreen extends ConsumerWidget {
             const Divider(),
             const ListTile(
               leading: Icon(Icons.support_agent),
-              title: Text("Help"),
+              title: Text("Help and support"),
             ),
             const Divider(),
+            ListTile(
+              leading: const Icon(Icons.info),
+              title: const Text("About"),
+              onTap: () {
+                // showAboutDialog(context: context, );
+                // context.navigateTo(AboutDialogRoute());
+              },
+            ),
+            const Divider(),
+            const SizedBox(height: 40),
+            Text(
+              "FoodiBizz",
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+            Text(
+              "Version 1.0",
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.labelLarge,
+            ),
           ],
         ),
       ),

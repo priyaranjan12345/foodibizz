@@ -4,7 +4,7 @@ import 'package:foodibizz/src/features/history/model/all_orders_reponse.dart';
 import 'package:multiple_result/multiple_result.dart';
 
 abstract class IOrdersRepo {
-  Future<Result<AllOrdersResponse, BaseException>> getAllOrders({
+  Future<Result<AllOrders, BaseException>> getAllOrders({
     CancelToken? cancelToken,
   });
 }

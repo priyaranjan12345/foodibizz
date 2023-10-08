@@ -116,58 +116,21 @@ class _AddUpdateItemScreenConsumerState
               radius: const Radius.circular(12),
               padding: const EdgeInsets.all(6),
               dashPattern: const <double>[3, 3],
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(12)),
-                    child: Consumer(
-                      builder: (context, ref, _) {
-                        final imagePickerState = ref.watch(imagePickerProvider);
-                        return imagePickerState == null
-                            ? widget.item == null
-                                ? Container(
-                                    height: 250,
-                                    color: Theme.of(context).focusColor,
-                                    child: const Center(
-                                      child: Icon(
-                                        Icons.image,
-                                        size: 60,
-                                      ),
-                                    ),
-                                  )
-                                : CachedNetworkImage(
-                                    imageUrl:
-                                        "http://3.27.90.34:8000/${widget.item?.image}",
-                                    errorWidget: (context, url, error) =>
-                                        Image.asset('nope-not-here.webp'),
-                                    placeholder: (context, url) =>
-                                        Image.asset('assets/no-image.jpg'),
-                                    fit: BoxFit.cover,
-                                  )
-                            : SizedBox(
-                                height: 250,
-                                width: double.infinity,
-                                child: Image.file(
-                                  imagePickerState,
-                                  fit: BoxFit.cover,
-                                ),
-                              );
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        context.navigateTo(
-                          const FilePickerBottomSheetRoute(),
-                        );
-                      },
-                      child: const Text("Choose Image"),
-                    ),
-                  ),
-                ],
+              child: ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(12)),
+                child: Consumer(
+                  builder: (context, ref, _) {
+                    final imagePickerState = ref.watch(imagePickerProvider);
+                    return widget.item == null
+                        ? AddImageContainer(
+                            file: imagePickerState,
+                          )
+                        : EditImageContainer(
+                            imageEndpoint: widget.item?.image ?? "",
+                            file: imagePickerState,
+                          );
+                  },
+                ),
               ),
             ),
             gapH20,
@@ -249,5 +212,139 @@ class _AddUpdateItemScreenConsumerState
     descFocusNode.dispose();
     priceFocusNode.dispose();
     super.dispose();
+  }
+}
+
+class EditImageContainer extends StatelessWidget {
+  const EditImageContainer({super.key, required this.imageEndpoint, this.file});
+
+  final String imageEndpoint;
+  final File? file;
+
+  @override
+  Widget build(BuildContext context) {
+    return file == null
+        ? Stack(
+            children: [
+              CachedNetworkImage(
+                imageUrl: "http://3.27.90.34:8000/$imageEndpoint",
+                errorWidget: (context, url, error) =>
+                    Image.asset('nope-not-here.webp'),
+                placeholder: (context, url) =>
+                    Image.asset('assets/no-image.jpg'),
+                fit: BoxFit.cover,
+              ),
+              Align(
+                alignment: Alignment.topRight,
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: CircleAvatar(
+                    backgroundColor: Theme.of(context).cardColor,
+                    child: IconButton(
+                      onPressed: () {
+                        context.navigateTo(
+                          const FilePickerBottomSheetRoute(),
+                        );
+                      },
+                      icon: const Icon(Icons.edit_outlined),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          )
+        : Stack(
+            children: [
+              SizedBox(
+                height: 250,
+                width: double.infinity,
+                child: Image.file(
+                  file!,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Align(
+                alignment: Alignment.topRight,
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: CircleAvatar(
+                    backgroundColor: Theme.of(context).cardColor,
+                    child: IconButton(
+                      onPressed: () {
+                        context.navigateTo(
+                          const FilePickerBottomSheetRoute(),
+                        );
+                      },
+                      icon: const Icon(Icons.edit_outlined),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          );
+  }
+}
+
+class AddImageContainer extends StatelessWidget {
+  const AddImageContainer({super.key, required this.file});
+
+  final File? file;
+
+  @override
+  Widget build(BuildContext context) {
+    return file == null
+        ? Container(
+            height: 250,
+            color: Theme.of(context).focusColor,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const Icon(
+                  Icons.image,
+                  size: 60,
+                ),
+                Center(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      context.navigateTo(
+                        const FilePickerBottomSheetRoute(),
+                      );
+                    },
+                    child: const Text("Select Image"),
+                  ),
+                ),
+              ],
+            ),
+          )
+        : Stack(
+            children: [
+              SizedBox(
+                height: 250,
+                width: double.infinity,
+                child: Image.file(
+                  file!,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Align(
+                alignment: Alignment.topRight,
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: CircleAvatar(
+                    backgroundColor: Theme.of(context).cardColor,
+                    child: IconButton(
+                      onPressed: () {
+                        context.navigateTo(
+                          const FilePickerBottomSheetRoute(),
+                        );
+                      },
+                      icon: const Icon(Icons.edit_outlined),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          );
   }
 }
