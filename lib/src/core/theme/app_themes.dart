@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 ///This class defines light theme and dark theme
 ///Here we used flex color scheme
