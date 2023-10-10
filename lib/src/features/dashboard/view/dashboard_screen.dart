@@ -174,7 +174,6 @@ class DashboardScreen extends ConsumerWidget {
                   }
                   final item = value.foodItems[index - 1];
                   return Card(
-                    
                     child: Column(
                       children: [
                         Stack(
