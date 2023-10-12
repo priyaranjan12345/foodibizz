@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:foodibizz/global/exceptions/base_exception.dart';
 import 'package:foodibizz/global/riverpod_ext/asyncvalue_easy_when.dart';
 import 'package:foodibizz/src/core/routes/app_routes.gr.dart';
 import 'package:foodibizz/src/features/history/controller/providers/all_orders_provider.dart';
@@ -20,8 +19,6 @@ class AllOrdersScreen extends ConsumerWidget {
         centerTitle: true,
       ),
       body: ordersState.easyWhen(
-        errorWidget: (error, stackTrace) =>
-            Text((error as BaseException).message.toString()),
         data: (value) {
           return RefreshIndicator(
             onRefresh: () async {

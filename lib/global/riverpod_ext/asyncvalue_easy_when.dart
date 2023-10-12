@@ -104,14 +104,19 @@ class DefaultErrorWidget extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 const Icon(
-                  Icons.close,
+                  Icons.info_outline,
                   color: Colors.red,
+                  size: 40,
                 ),
-                const Text("Something went wrong!"),
-                ErrorTextWidget(
-                  error: error,
-                  includedefaultDioErrorMessage: includedefaultDioErrorMessage,
+                Text(
+                  "Something went wrong!",
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
+                const SizedBox(height: 10),
+                // ErrorTextWidget(
+                //   error: error,
+                //   includedefaultDioErrorMessage: includedefaultDioErrorMessage,
+                // ),
                 if (onRetry != null)
                   ElevatedButton(
                     onPressed: onRetry,
