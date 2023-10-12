@@ -133,16 +133,16 @@ class DashboardScreen extends ConsumerWidget {
           },
           child: const Icon(Icons.add),
         ),
-        body: itemsState.easyWhen(
-          onRetry: () {
-            ref.invalidate(dashboardProvider);
-          },
-          data: (value) {
-            return RefreshIndicator(
-              onRefresh: () async {
-                ref.invalidate(dashboardProvider);
-              },
-              child: ListView.builder(
+        body: RefreshIndicator(
+          onRefresh: () => ref.refresh(dashboardProvider.future),
+          child: itemsState.easyWhen(
+            // skipLoadingOnRefresh: false,
+            // skipLoadingOnReload: false,
+            onRetry: () {
+              ref.invalidate(dashboardProvider);
+            },
+            data: (value) {
+              return ListView.builder(
                 padding: const EdgeInsets.all(10),
                 itemCount: value.foodItems.length + 1,
                 itemBuilder: (_, index) {
@@ -271,9 +271,9 @@ class DashboardScreen extends ConsumerWidget {
                     ),
                   );
                 },
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );
