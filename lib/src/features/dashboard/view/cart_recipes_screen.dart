@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:foodibizz/src/features/dashboard/view/bill_screen.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../../core/constants/gaps.dart';
@@ -52,7 +53,12 @@ class CartRecipesScreen extends ConsumerWidget {
             }),
         subtitle: const Text("GST: 0 \t Discount: 0"),
         trailing: ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            final items = ref.read(cartBoxProvider).values.toList();
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => BillScreen(cbl: items),
+            ));
+          },
           child: const Text("Generate Bill"),
         ),
       ),
