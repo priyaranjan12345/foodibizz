@@ -77,9 +77,15 @@ class GenerateBillNotifier extends AutoDisposeAsyncNotifier<GenerateBillState> {
 // class SaveBillItemNotifier extends AutoDisposeAsyncNotifier {
 //   @override
 //   FutureOr build() {
-//     ref.watch(provider)
 //     return future;
 //   }
 
-
+//   Future<void> addSoldItems() async {
+//     final createOrderState = ref.watch(createOrderProvider);
+//     createOrderState.when(
+//       data: (p0) {},
+//       error: (_, __) {},
+//       loading: () {},
+//     );
+//   }
 // }

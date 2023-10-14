@@ -46,6 +46,13 @@ class PrintingBill {
                   fontSize: 20,
                 ),
               ),
+              pw.Text(
+                "Date: ${DateTime.now().toString()}",
+                textAlign: pw.TextAlign.center,
+                style: const pw.TextStyle(
+                  fontSize: 20,
+                ),
+              ),
               pw.SizedBox(height: 30),
               pw.Text(
                 '-' * 70,
@@ -141,6 +148,16 @@ class PrintingBill {
                 style:
                     pw.TextStyle(fontSize: 26, fontWeight: pw.FontWeight.bold),
               ),
+              pw.Spacer(),
+              pw.Divider(),
+              pw.Text(
+                "Thank You. Visit Again.",
+                textAlign: pw.TextAlign.center,
+                style: const pw.TextStyle(
+                  fontSize: 20,
+                ),
+              ),
+              pw.Divider(),
             ],
           );
         },
