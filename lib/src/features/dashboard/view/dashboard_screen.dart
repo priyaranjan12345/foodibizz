@@ -243,7 +243,7 @@ class DashboardScreen extends ConsumerWidget {
                           subtitle: Text(item.desc),
                         ),
                         ListTile(
-                          leading: ElevatedButton(
+                          leading: FilledButton(
                             onPressed: () {
                               onTapAddItem(item, ref);
                               final snackBar = SnackBar(
