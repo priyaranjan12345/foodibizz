@@ -1,14 +1,56 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:foodibizz/src/core/localization/locale_pod.dart';
-import 'package:foodibizz/src/core/theme/app_them_pod.dart';
-import 'package:foodibizz/src/core/localization/l10n.dart';
-import 'package:foodibizz/src/features/setting/view/widgets/theme_mode_switch.dart';
+
+import '../../../core/localization/locale_pod.dart';
+import '../../../core/theme/app_them_pod.dart';
+import '../../../core/localization/l10n.dart';
+import '../../../features/setting/view/widgets/theme_mode_switch.dart';
 
 @RoutePage(deferredLoading: true, name: "SettingsRoute")
 class SettingScreen extends ConsumerWidget {
   const SettingScreen({super.key});
+
+  void showAppAboutDialog(
+    BuildContext context, {
+    String appName = "FoodiBizz",
+    String appVersion = '1.0',
+    Icon appIcon = const Icon(
+      Icons.local_florist_outlined,
+      size: 50,
+    ),
+    String appAuther = '© 2023 Images by Priyaranjan Mantri',
+  }) {
+    showAboutDialog(
+      context: context,
+      applicationName: appName,
+      applicationVersion: appVersion,
+      applicationIcon: appIcon,
+      applicationLegalese: appAuther,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 24),
+          child: RichText(
+            textAlign: TextAlign.left,
+            text: TextSpan(
+              children: <TextSpan>[
+                TextSpan(
+                  style: Theme.of(context).textTheme.bodyLarge,
+                  text:
+                      'FoodiBizz empowers users to efficiently track order details, '
+                      'streamlining their operations for rapid business growth while seamlessly generating bills',
+                ),
+                TextSpan(
+                  style: Theme.of(context).textTheme.bodyLarge,
+                  text: '.\n\n',
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -67,16 +109,21 @@ class SettingScreen extends ConsumerWidget {
               leading: const Icon(Icons.info),
               title: const Text("About"),
               onTap: () {
-                // showAboutDialog(context: context, );
-                // context.navigateTo(AboutDialogRoute());
+                showAppAboutDialog(context);
               },
             ),
             const Divider(),
             const SizedBox(height: 40),
+            Image.asset(
+              "assets/app-icon.png",
+              height: 60,
+              width: 60,
+            ),
+            const SizedBox(height: 10),
             Text(
               "FoodiBizz",
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyLarge,
+              style: Theme.of(context).textTheme.titleLarge,
             ),
             Text(
               "Version 1.0",
