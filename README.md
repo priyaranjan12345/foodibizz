@@ -17,4 +17,5 @@ samples, guidance on mobile development, and a full API reference.
 
 ### screenshot
 
-![image-removebg-preview](https://github.com/priyaranjan12345/foodibizz/assets/47207977/eff9d3c8-b3fe-470c-a381-ae314d02a5e3)
+![image-removebg-preview](https://github.com/priyaranjan12345/foodibizz/assets/47207977/eff9d3c8-b3fe-470c-a381-ae314d02a5e3) ![image-removebg-preview (1)](https://github.com/priyaranjan12345/foodibizz/assets/47207977/274cb4c0-9ffa-456e-8244-8c716f8ff85e)
+
