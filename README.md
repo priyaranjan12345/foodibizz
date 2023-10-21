@@ -28,7 +28,7 @@ samples, guidance on mobile development, and a full API reference.
   - settings (about, theme, support, language)
 
 ## App Features
-  - Nestled Navigation using Auto Route(Nav 2.0)
+  - Navigation and Nested Navigation using Auto Route(Nav 2.0)
   - Rest APIs Integration using dio
   - language (l10n)
   - staging
