@@ -3,12 +3,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:foodibizz/src/features/dashboard/view/bill_screen.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../../core/constants/gaps.dart';
 import '../controller/providers/cart_provider.dart';
 import '../model/cart_food_item_model.dart';
+import 'Widgets/save_order_button.dart';
 
 @RoutePage(deferredLoading: true, name: "CartRecipesRoute")
 class CartRecipesScreen extends ConsumerWidget {
@@ -52,14 +52,8 @@ class CartRecipesScreen extends ConsumerWidget {
               );
             }),
         subtitle: const Text("GST: 0 \t Discount: 0"),
-        trailing: ElevatedButton(
-          onPressed: () {
-            final items = ref.read(cartBoxProvider).values.toList();
-            Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => BillScreen(cbl: items),
-            ));
-          },
-          child: const Text("Generate Bill"),
+        trailing: SaveOrderButton(
+          cartItems: ref.read(cartBoxProvider).values.toList(),
         ),
       ),
     );

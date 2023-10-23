@@ -14,6 +14,6 @@ final cartStorageProvider = Provider.autoDispose<CartStorage>(
 /// This provider used for Storing Hive Box which you can override on
 /// bootstrap function on start of the app
 final cartBoxProvider = Provider.autoDispose<Box<CartFoodItemModel>>(
-  (ref) => Hive.box("cartBox"),
+  (ref) => throw UnimplementedError("appBoxProvider is not overriden"),
   name: 'cartBoxProvider',
 );

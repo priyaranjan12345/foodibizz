@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -94,187 +96,196 @@ class DashboardScreen extends ConsumerWidget {
       },
     );
 
-    return SafeArea(
-      child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: const Size(double.infinity, kToolbarHeight),
-          child: Container(
-            color: Colors.transparent,
-            padding: const EdgeInsets.only(bottom: 2),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 10,
-                vertical: 2,
+    return Scaffold(
+      body: SafeArea(
+        child: NestedScrollView(
+          floatHeaderSlivers: true,
+          headerSliverBuilder: (context, innerBoxIsScrolled) => [
+            SliverAppBar(
+              floating: true,
+              flexibleSpace: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 4,
+                ),
+                child: MySearchBar(
+                  onTapSearch: () {
+                    showSearch(
+                      context: context,
+                      delegate: itemsState.when(
+                        data: (data) => CustomSearch(items: data.foodItems),
+                        error: (_, __) => CustomSearch(items: []),
+                        loading: () => CustomSearch(items: []),
+                      ),
+                    );
+                  },
+                  onTapCart: () {
+                    context.navigateTo(const CartRecipesRoute());
+                  },
+                ),
               ),
-              child: MySearchBar(
-                onTapSearch: () {
-                  showSearch(
-                    context: context,
-                    delegate: itemsState.when(
-                      data: (data) => CustomSearch(items: data.foodItems),
-                      error: (_, __) => CustomSearch(items: []),
-                      loading: () => CustomSearch(items: []),
-                    ),
-                  );
-                },
-                onTapCart: () {
-                  context.navigateTo(const CartRecipesRoute());
-                },
-              ),
+            ),
+          ],
+          body: RefreshIndicator(
+            onRefresh: () => ref.refresh(dashboardProvider.future),
+            child: itemsState.easyWhen(
+              // skipLoadingOnRefresh: false,
+              // skipLoadingOnReload: false,
+              onRetry: () {
+                ref.invalidate(dashboardProvider);
+              },
+              data: (value) {
+                return ListView.builder(
+                  padding: const EdgeInsets.only(
+                    top: 10,
+                    left: 10,
+                    right: 10,
+                    bottom: 100,
+                  ),
+                  itemCount: value.foodItems.length + 1,
+                  itemBuilder: (_, index) {
+                    if (index == 0) {
+                      return Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Text(
+                                "FoodiBizz",
+                                style: Theme.of(context).textTheme.displaySmall,
+                              ),
+                              const SizedBox(height: 10),
+                              const Text(
+                                "The display showcases all items the user can see, "
+                                "arranged in an organized and visually appealing manner.",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    }
+                    final item = value.foodItems[index - 1];
+                    return Card(
+                      child: Column(
+                        children: [
+                          Stack(
+                            children: [
+                              CachedNetworkImage(
+                                imageUrl:
+                                    "http://3.27.90.34:8000/${item.image}",
+                                errorWidget: (context, url, error) =>
+                                    Image.asset('assets/no-image.jpg'),
+                                placeholder: (context, url) =>
+                                    Image.asset('assets/no-image.jpg'),
+                                fit: BoxFit.cover,
+                              ),
+                              Align(
+                                alignment: Alignment.topRight,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: CircleAvatar(
+                                    radius: 15,
+                                    backgroundColor: Theme.of(context)
+                                        .cardColor
+                                        .withOpacity(0.6),
+                                    child: PopupMenuButton<String>(
+                                      padding: EdgeInsets.zero,
+                                      elevation: 5.0,
+                                      constraints: const BoxConstraints(),
+                                      itemBuilder: (BuildContext ctx) =>
+                                          <PopupMenuEntry<String>>[
+                                        PopupMenuItem<String>(
+                                          child: ListTile(
+                                            contentPadding: EdgeInsets.zero,
+                                            onTap: () {
+                                              Navigator.pop(ctx);
+                                              context.navigateTo(
+                                                  AddUpdateItemRoute(
+                                                      item: item));
+                                            },
+                                            leading: const Icon(Icons.edit),
+                                            title: Text(l10n.edit),
+                                          ),
+                                        ),
+                                        PopupMenuItem<String>(
+                                          child: ListTile(
+                                            contentPadding: EdgeInsets.zero,
+                                            onTap: () {
+                                              Navigator.pop(ctx);
+                                              final id = item.id.toString();
+                                              ref
+                                                  .read(deleteItemProvider
+                                                      .notifier)
+                                                  .onTapDelete(id);
+                                            },
+                                            leading: const Icon(Icons.delete),
+                                            title: Text(l10n.delete),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                          ListTile(
+                            title: Text(
+                              item.name,
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            subtitle: Text(item.desc),
+                          ),
+                          ListTile(
+                            leading: FilledButton(
+                              onPressed: () {
+                                onTapAddItem(item, ref);
+                                final snackBar = SnackBar(
+                                  content: Text("${item.name} Item added"),
+                                  action: SnackBarAction(
+                                      label: "Close",
+                                      onPressed: () {
+                                        context.hideSnackBar();
+                                      }),
+                                );
+                                context.clearSnackBar();
+                                context.showSnackBar(snackBar);
+                              },
+                              child: Text(l10n.addToCart),
+                            ),
+                            trailing: Text(
+                              "\u{20B9} ${item.price}",
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    );
+                  },
+                );
+              },
             ),
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () async {
-            final status = await context.pushRoute(
-              AddUpdateItemRoute(),
-            );
-            if (status == 1) ref.invalidate(dashboardProvider);
-          },
-          child: const Icon(Icons.add),
-        ),
-        body: RefreshIndicator(
-          onRefresh: () => ref.refresh(dashboardProvider.future),
-          child: itemsState.easyWhen(
-            // skipLoadingOnRefresh: false,
-            // skipLoadingOnReload: false,
-            onRetry: () {
-              ref.invalidate(dashboardProvider);
-            },
-            data: (value) {
-              return ListView.builder(
-                padding: const EdgeInsets.all(10),
-                itemCount: value.foodItems.length + 1,
-                itemBuilder: (_, index) {
-                  if (index == 0) {
-                    return Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Text(
-                              "FoodiBizz",
-                              style: Theme.of(context).textTheme.displaySmall,
-                            ),
-                            const SizedBox(height: 10),
-                            const Text(
-                              "The display showcases all items the user can see, "
-                              "arranged in an organized and visually appealing manner.",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  }
-                  final item = value.foodItems[index - 1];
-                  return Card(
-                    child: Column(
-                      children: [
-                        Stack(
-                          children: [
-                            CachedNetworkImage(
-                              imageUrl: "http://3.27.90.34:8000/${item.image}",
-                              errorWidget: (context, url, error) =>
-                                  Image.asset('assets/no-image.jpg'),
-                              placeholder: (context, url) =>
-                                  Image.asset('assets/no-image.jpg'),
-                              fit: BoxFit.cover,
-                            ),
-                            Align(
-                              alignment: Alignment.topRight,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: CircleAvatar(
-                                  radius: 15,
-                                  backgroundColor: Theme.of(context)
-                                      .cardColor
-                                      .withOpacity(0.6),
-                                  child: PopupMenuButton<String>(
-                                    padding: EdgeInsets.zero,
-                                    elevation: 5.0,
-                                    constraints: const BoxConstraints(),
-                                    itemBuilder: (BuildContext ctx) =>
-                                        <PopupMenuEntry<String>>[
-                                      PopupMenuItem<String>(
-                                        child: ListTile(
-                                          contentPadding: EdgeInsets.zero,
-                                          onTap: () {
-                                            Navigator.pop(ctx);
-                                            context.navigateTo(
-                                                AddUpdateItemRoute(item: item));
-                                          },
-                                          leading: const Icon(Icons.edit),
-                                          title: Text(l10n.edit),
-                                        ),
-                                      ),
-                                      PopupMenuItem<String>(
-                                        child: ListTile(
-                                          contentPadding: EdgeInsets.zero,
-                                          onTap: () {
-                                            Navigator.pop(ctx);
-                                            final id = item.id.toString();
-                                            ref
-                                                .read(
-                                                    deleteItemProvider.notifier)
-                                                .onTapDelete(id);
-                                          },
-                                          leading: const Icon(Icons.delete),
-                                          title: Text(l10n.delete),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                        ListTile(
-                          title: Text(
-                            item.name,
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          subtitle: Text(item.desc),
-                        ),
-                        ListTile(
-                          leading: FilledButton(
-                            onPressed: () {
-                              onTapAddItem(item, ref);
-                              final snackBar = SnackBar(
-                                content: Text("${item.name} Item added"),
-                                action: SnackBarAction(
-                                    label: "Close",
-                                    onPressed: () {
-                                      context.hideSnackBar();
-                                    }),
-                              );
-                              context.clearSnackBar();
-                              context.showSnackBar(snackBar);
-                            },
-                            child: Text(l10n.addToCart),
-                          ),
-                          trailing: Text(
-                            "\u{20B9} ${item.price}",
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  );
-                },
-              );
-            },
-          ),
-        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          final status = await context.pushRoute(
+            AddUpdateItemRoute(),
+          );
+          if (status == 1) ref.invalidate(dashboardProvider);
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }
@@ -417,3 +428,47 @@ class CustomSearch extends SearchDelegate {
     );
   }
 }
+
+// class MyDynamicHeader extends SliverPersistentHeaderDelegate {
+//   int index = 0;
+//   double maxExt = 0;
+//   double minExt = 0;
+
+//   @override
+//   Widget build(
+//       BuildContext context, double shrinkOffset, bool overlapsContent) {
+//     return LayoutBuilder(
+//       builder: (context, constraints) {
+//         final double percentage =
+//             (constraints.maxHeight - minExtent) / (maxExtent - minExtent);
+
+//         if (++index > Colors.primaries.length - 1) index = 0;
+
+//         return Container(
+//           decoration: const BoxDecoration(
+//             boxShadow: [BoxShadow(blurRadius: 4.0, color: Colors.black45)],
+//             color: Colors.red,
+//           ),
+//           height: constraints.maxHeight,
+//           child: SafeArea(
+//             child: Center(
+//               child: CircularProgressIndicator(
+//                 value: percentage,
+//                 valueColor: const AlwaysStoppedAnimation<Color>(Colors.white),
+//               ),
+//             ),
+//           ),
+//         );
+//       },
+//     );
+//   }
+
+//   @override
+//   bool shouldRebuild(SliverPersistentHeaderDelegate _) => true;
+
+//   @override
+//   double get maxExtent => maxExt;
+
+//   @override
+//   double get minExtent => minExt;
+// }

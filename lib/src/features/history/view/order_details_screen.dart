@@ -40,6 +40,10 @@ class OrderDetailsScreen extends ConsumerWidget {
                 ),
                 title: Text(orderItem.name),
                 subtitle: Text("Unit Price: ${orderItem.price.toString()}"),
+                trailing: Text(
+                  "Qty: ${orderItem.itemQty}",
+                  style: const TextStyle(fontSize: 15),
+                ),
               );
             },
           );
