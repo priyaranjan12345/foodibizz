@@ -4,18 +4,19 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../data/repository/generate_bill_repository/generate_bill_repository_pod.dart';
-import '../../model/add_sold_item_model.dart';
 import '../../model/cart_food_item_model.dart';
 import '../states/generate_bill_state.dart';
 
-class GenerateBillNotifier extends AutoDisposeAsyncNotifier<GenerateBillState> {
+class SaveOrderNotifier extends AutoDisposeAsyncNotifier<SaveOrderState> {
   @override
-  FutureOr<GenerateBillState> build() {
-    state = const AsyncData(GenerateBillInitial());
+  FutureOr<SaveOrderState> build() {
+    state = const AsyncData(SaveOrderInitial());
     return future;
   }
 
   Future<void> createOrder(List<CartFoodItemModel> cartItems) async {
+    state = const AsyncLoading();
+
     int noOfItems = cartItems.length;
     double total = cartItems.isNotEmpty
         ? cartItems
@@ -34,22 +35,7 @@ class GenerateBillNotifier extends AutoDisposeAsyncNotifier<GenerateBillState> {
 
     result.when(
       (addOrderModel) async {
-        int orderId = addOrderModel.id;
-        List<SoldItemModel> soldItemModels = [];
-        for (var billItem in cartItems) {
-          SoldItemModel soldItemModel = SoldItemModel(
-            id: 0,
-            itemQty: billItem.qty,
-            orderId: orderId,
-            itemId: billItem.id,
-            itemUnitPrice: billItem.price,
-          );
-          soldItemModels.add(soldItemModel);
-        }
-        AddSoldItemModel addSoldItemModel =
-            AddSoldItemModel(soldItemModels: soldItemModels);
-        await addSoldItems(addSoldItemModel);
-        state = const AsyncData(GeneratedBill());
+        state = AsyncData(SaveOrderLoaded(addOrderModel: addOrderModel));
       },
       (error) async {
         Fluttertoast.showToast(msg: error.message);
@@ -57,29 +43,4 @@ class GenerateBillNotifier extends AutoDisposeAsyncNotifier<GenerateBillState> {
       },
     );
   }
-
-  Future<void> addSoldItems(AddSoldItemModel addSoldItemModel) async {
-    final result = await ref.watch(generateBillRepoPod).saveBillItems(
-          addSoldItemModel: addSoldItemModel,
-        );
-
-    result.when(
-      (addSoldItemModel) {
-        Fluttertoast.showToast(msg: "items saved");
-      },
-      (error) {
-        Fluttertoast.showToast(msg: error.message);
-      },
-    );
-  }
 }
-
-// class SaveBillItemNotifier extends AutoDisposeAsyncNotifier {
-//   @override
-//   FutureOr build() {
-//     ref.watch(provider)
-//     return future;
-//   }
-
-
-// }

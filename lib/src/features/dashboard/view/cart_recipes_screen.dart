@@ -8,6 +8,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import '../../../core/constants/gaps.dart';
 import '../controller/providers/cart_provider.dart';
 import '../model/cart_food_item_model.dart';
+import 'Widgets/save_order_button.dart';
 
 @RoutePage(deferredLoading: true, name: "CartRecipesRoute")
 class CartRecipesScreen extends ConsumerWidget {
@@ -51,9 +52,8 @@ class CartRecipesScreen extends ConsumerWidget {
               );
             }),
         subtitle: const Text("GST: 0 \t Discount: 0"),
-        trailing: ElevatedButton(
-          onPressed: () {},
-          child: const Text("Generate Bill"),
+        trailing: SaveOrderButton(
+          cartItems: ref.read(cartBoxProvider).values.toList(),
         ),
       ),
     );

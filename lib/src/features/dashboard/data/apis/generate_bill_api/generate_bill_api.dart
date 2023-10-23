@@ -36,7 +36,7 @@ class GenerateBillApi extends IGenerateBillApi {
   Future<Response> saveBillItems({
     required AddSoldItemModel addSoldItemModel,
   }) async {
-    var payload = addSoldItemModel.toJson();
+    var payload = addSoldItemModel.toMap();
 
     return await dio.post(
       'sold/add-solditem',

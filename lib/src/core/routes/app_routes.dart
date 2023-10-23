@@ -16,10 +16,14 @@ class AppRouter extends $AppRouter {
           path: 'dashboardTabRoute',
           initial: true,
           children: [
+            RedirectRoute(
+              path: '',
+              redirectTo: 'dashboardRoute',
+            ),
             AutoRoute(
               page: DashboardRoute.page,
               path: 'dashboardRoute',
-              initial: true,
+              // initial: true,
             ),
             AutoRoute(
               page: AddUpdateItemRoute.page,
@@ -50,6 +54,10 @@ class AppRouter extends $AppRouter {
             AutoRoute(
               page: CartRecipesRoute.page,
               path: 'cartRecipesRoute',
+            ),
+            AutoRoute(
+              page: BillingRoute.page,
+              path: 'billingRoute',
             )
           ],
         ),
@@ -57,10 +65,14 @@ class AppRouter extends $AppRouter {
           page: HistoryRoute.page,
           path: 'historyRoute',
           children: [
+            RedirectRoute(
+              path: '',
+              redirectTo: 'allOrdersRoute',
+            ),
             AutoRoute(
               page: AllOrdersRoute.page,
               path: 'allOrdersRoute',
-              initial: true,
+              // initial: true,
             ),
             AutoRoute(
               page: OrderDetailsRoute.page,
@@ -71,19 +83,6 @@ class AppRouter extends $AppRouter {
         AutoRoute(
           page: SettingsRoute.page,
           path: 'settingsRoute',
-          children: [
-            CustomRoute(
-              page: AboutDialogRoute.page,
-              path: 'aboutDialogRoute',
-              customRouteBuilder: <T>(context, child, AutoRoutePage<T> page) {
-                return DialogRoute(
-                  context: context,
-                  settings: page,
-                  builder: (_) => child,
-                );
-              },
-            ),
-          ],
         ),
       ],
     ),

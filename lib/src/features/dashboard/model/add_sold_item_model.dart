@@ -93,7 +93,7 @@ class SoldItemModel {
       itemQty: map['itemQty']?.toInt() ?? 0,
       orderId: map['orderId']?.toInt() ?? 0,
       itemId: map['itemId']?.toInt() ?? 0,
-      itemUnitPrice: map['itemUnitPrice']?.toInt() ?? 0,
+      itemUnitPrice: map['itemUnitPrice']?.toDouble() ?? 0.0,
     );
   }
 
