@@ -13,7 +13,7 @@ class SaveOrderButton extends ConsumerWidget {
     required this.cartItems,
   });
 
-  final List<CartFoodItemModel> cartItems;
+  final List<CartItem> cartItems;
 
   void onSubmit(WidgetRef ref) {
     ref.read(saveOrderProvider.notifier).createOrder(cartItems);

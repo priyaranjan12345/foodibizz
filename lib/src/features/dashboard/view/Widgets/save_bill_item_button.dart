@@ -16,14 +16,12 @@ class SaveBillItemButton extends ConsumerWidget {
   });
 
   final AddOrderModel addOrderModel;
-  final List<CartFoodItemModel> cartItems;
+  final List<CartItem> cartItems;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final ({
-      AddOrderModel addOrderModel,
-      List<CartFoodItemModel> cartItems
-    }) recod = (addOrderModel: addOrderModel, cartItems: cartItems);
+    final ({AddOrderModel addOrderModel, List<CartItem> cartItems}) recod =
+        (addOrderModel: addOrderModel, cartItems: cartItems);
 
     final saveOrderAsync = ref.watch(saveOrderItemsProvider(recod));
 

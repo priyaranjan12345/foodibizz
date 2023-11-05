@@ -57,6 +57,7 @@ class _AddUpdateItemScreenConsumerState
     if (!formKey.currentState!.validate()) return;
 
     final imageXFile = ref.read(imagePickerProvider);
+
     if (imageXFile != null) {
       ref.read(addUpdateItemProvider.notifier).addRecipe(
             img: File(imageXFile.path),
@@ -78,23 +79,16 @@ class _AddUpdateItemScreenConsumerState
 
   void updateItem(WidgetRef ref, int id) {
     if (!formKey.currentState!.validate()) return;
+
     final imageXFile = ref.read(imagePickerProvider);
-    if (imageXFile != null) {
-      ref.read(addUpdateItemProvider.notifier).updateRecipe(
-            id: id,
-            img: File(imageXFile.path),
-            name: nameController.text,
-            desc: descController.text,
-            price: double.parse(priceController.text),
-          );
-    } else {
-      ref.read(addUpdateItemProvider.notifier).updateRecipe(
-            id: id,
-            name: nameController.text,
-            desc: descController.text,
-            price: double.parse(priceController.text),
-          );
-    }
+
+    ref.read(addUpdateItemProvider.notifier).updateRecipe(
+          id: id,
+          img: imageXFile != null ? File(imageXFile.path) : null,
+          name: nameController.text,
+          desc: descController.text,
+          price: double.parse(priceController.text),
+        );
   }
 
   @override

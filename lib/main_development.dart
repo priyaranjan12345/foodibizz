@@ -12,11 +12,10 @@ import 'src/features/dashboard/model/cart_food_item_model.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final directory = await getApplicationDocumentsDirectory();
+  final directory = await getApplicationCacheDirectory();
   await Hive.initFlutter(directory.path);
-  Hive.registerAdapter(CartFoodItemModelAdapter());
   final appBox = await Hive.openBox('appBox');
-  final cartBox = await Hive.openBox<CartFoodItemModel>('cartBox');
+  final cartBox = await Hive.openBox<CartItem>('cartBox');
 
   runApp(
     ProviderScope(

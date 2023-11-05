@@ -249,7 +249,7 @@ class LoadingDialogRoute extends _i14.PageRouteInfo<void> {
 class BillingRoute extends _i14.PageRouteInfo<BillingRouteArgs> {
   BillingRoute({
     _i15.Key? key,
-    required List<_i17.CartFoodItemModel> cbl,
+    required List<_i17.CartItem> cbl,
     List<_i14.PageRouteInfo>? children,
   }) : super(
           BillingRoute.name,
@@ -274,7 +274,7 @@ class BillingRouteArgs {
 
   final _i15.Key? key;
 
-  final List<_i17.CartFoodItemModel> cbl;
+  final List<_i17.CartItem> cbl;
 
   @override
   String toString() {

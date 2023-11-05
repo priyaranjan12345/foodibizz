@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,7 +19,7 @@ class DashboardScreen extends ConsumerWidget {
 
   void onTapAddItem(FoodItem cartItem, WidgetRef ref) {
     ref.read(cartStorageProvider).addItem(
-          item: CartFoodItemModel(
+          item: CartItem(
             id: cartItem.id,
             name: cartItem.name,
             desc: cartItem.desc,
@@ -97,184 +95,183 @@ class DashboardScreen extends ConsumerWidget {
     );
 
     return Scaffold(
-      body: SafeArea(
-        child: NestedScrollView(
-          floatHeaderSlivers: true,
-          headerSliverBuilder: (context, innerBoxIsScrolled) => [
-            SliverAppBar(
-              floating: true,
-              flexibleSpace: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 4,
-                ),
-                child: MySearchBar(
-                  onTapSearch: () {
-                    showSearch(
-                      context: context,
-                      delegate: itemsState.when(
-                        data: (data) => CustomSearch(items: data.foodItems),
-                        error: (_, __) => CustomSearch(items: []),
-                        loading: () => CustomSearch(items: []),
-                      ),
-                    );
-                  },
-                  onTapCart: () {
-                    context.navigateTo(const CartRecipesRoute());
-                  },
-                ),
+      body: NestedScrollView(
+        floatHeaderSlivers: true,
+        headerSliverBuilder: (context, innerBoxIsScrolled) => [
+          SliverAppBar(
+            backgroundColor: Theme.of(context).colorScheme.background,
+            floating: true,
+            flexibleSpace: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 10,
+                vertical: 4,
+              ),
+              child: MySearchBar(
+                onTapSearch: () {
+                  showSearch(
+                    context: context,
+                    delegate: itemsState.when(
+                      data: (data) => CustomSearch(items: data.foodItems),
+                      error: (_, __) => CustomSearch(items: []),
+                      loading: () => CustomSearch(items: []),
+                    ),
+                  );
+                },
+                onTapCart: () {
+                  context.navigateTo(const CartRecipesRoute());
+                },
               ),
             ),
-          ],
-          body: RefreshIndicator(
-            onRefresh: () => ref.refresh(dashboardProvider.future),
-            child: itemsState.easyWhen(
-              // skipLoadingOnRefresh: false,
-              // skipLoadingOnReload: false,
-              onRetry: () {
-                ref.invalidate(dashboardProvider);
-              },
-              data: (value) {
-                return ListView.builder(
-                  padding: const EdgeInsets.only(
-                    top: 10,
-                    left: 10,
-                    right: 10,
-                    bottom: 100,
-                  ),
-                  itemCount: value.foodItems.length + 1,
-                  itemBuilder: (_, index) {
-                    if (index == 0) {
-                      return Card(
-                        child: Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              Text(
-                                "FoodiBizz",
-                                style: Theme.of(context).textTheme.displaySmall,
-                              ),
-                              const SizedBox(height: 10),
-                              const Text(
-                                "The display showcases all items the user can see, "
-                                "arranged in an organized and visually appealing manner.",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    }
-                    final item = value.foodItems[index - 1];
+          ),
+        ],
+        body: RefreshIndicator(
+          onRefresh: () => ref.refresh(dashboardProvider.future),
+          child: itemsState.easyWhen(
+            // skipLoadingOnRefresh: false,
+            // skipLoadingOnReload: false,
+            onRetry: () {
+              ref.invalidate(dashboardProvider);
+            },
+            data: (value) {
+              return ListView.builder(
+                padding: const EdgeInsets.only(
+                  top: 10,
+                  left: 10,
+                  right: 10,
+                  bottom: 100,
+                ),
+                itemCount: value.foodItems.length + 1,
+                itemBuilder: (_, index) {
+                  if (index == 0) {
                     return Card(
-                      child: Column(
-                        children: [
-                          Stack(
-                            children: [
-                              CachedNetworkImage(
-                                imageUrl:
-                                    "http://3.27.90.34:8000/${item.image}",
-                                errorWidget: (context, url, error) =>
-                                    Image.asset('assets/no-image.jpg'),
-                                placeholder: (context, url) =>
-                                    Image.asset('assets/no-image.jpg'),
-                                fit: BoxFit.cover,
-                              ),
-                              Align(
-                                alignment: Alignment.topRight,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: CircleAvatar(
-                                    radius: 15,
-                                    backgroundColor: Theme.of(context)
-                                        .cardColor
-                                        .withOpacity(0.6),
-                                    child: PopupMenuButton<String>(
-                                      padding: EdgeInsets.zero,
-                                      elevation: 5.0,
-                                      constraints: const BoxConstraints(),
-                                      itemBuilder: (BuildContext ctx) =>
-                                          <PopupMenuEntry<String>>[
-                                        PopupMenuItem<String>(
-                                          child: ListTile(
-                                            contentPadding: EdgeInsets.zero,
-                                            onTap: () {
-                                              Navigator.pop(ctx);
-                                              context.navigateTo(
-                                                  AddUpdateItemRoute(
-                                                      item: item));
-                                            },
-                                            leading: const Icon(Icons.edit),
-                                            title: Text(l10n.edit),
-                                          ),
-                                        ),
-                                        PopupMenuItem<String>(
-                                          child: ListTile(
-                                            contentPadding: EdgeInsets.zero,
-                                            onTap: () {
-                                              Navigator.pop(ctx);
-                                              final id = item.id.toString();
-                                              ref
-                                                  .read(deleteItemProvider
-                                                      .notifier)
-                                                  .onTapDelete(id);
-                                            },
-                                            leading: const Icon(Icons.delete),
-                                            title: Text(l10n.delete),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                          ListTile(
-                            title: Text(
-                              item.name,
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Text(
+                              "FoodiBizz",
+                              style: Theme.of(context).textTheme.displaySmall,
                             ),
-                            subtitle: Text(item.desc),
-                          ),
-                          ListTile(
-                            leading: FilledButton(
-                              onPressed: () {
-                                onTapAddItem(item, ref);
-                                final snackBar = SnackBar(
-                                  content: Text("${item.name} Item added"),
-                                  action: SnackBarAction(
-                                      label: "Close",
-                                      onPressed: () {
-                                        context.hideSnackBar();
-                                      }),
-                                );
-                                context.clearSnackBar();
-                                context.showSnackBar(snackBar);
-                              },
-                              child: Text(l10n.addToCart),
-                            ),
-                            trailing: Text(
-                              "\u{20B9} ${item.price}",
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15,
+                            const SizedBox(height: 10),
+                            const Text(
+                              "The display showcases all items the user can see, "
+                              "arranged in an organized and visually appealing manner.",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
                               ),
                             ),
-                          )
-                        ],
+                          ],
+                        ),
                       ),
                     );
-                  },
-                );
-              },
-            ),
+                  }
+                  final item = value.foodItems[index - 1];
+                  return Card(
+                    child: Column(
+                      children: [
+                        Stack(
+                          children: [
+                            CachedNetworkImage(
+                              imageUrl:
+                                  "http://3.27.90.34:8000/${item.image}",
+                              errorWidget: (context, url, error) =>
+                                  Image.asset('assets/no-image.jpg'),
+                              placeholder: (context, url) =>
+                                  Image.asset('assets/no-image.jpg'),
+                              fit: BoxFit.cover,
+                            ),
+                            Align(
+                              alignment: Alignment.topRight,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: CircleAvatar(
+                                  radius: 15,
+                                  backgroundColor: Theme.of(context)
+                                      .cardColor
+                                      .withOpacity(0.6),
+                                  child: PopupMenuButton<String>(
+                                    padding: EdgeInsets.zero,
+                                    elevation: 5.0,
+                                    constraints: const BoxConstraints(),
+                                    itemBuilder: (BuildContext ctx) =>
+                                        <PopupMenuEntry<String>>[
+                                      PopupMenuItem<String>(
+                                        child: ListTile(
+                                          contentPadding: EdgeInsets.zero,
+                                          onTap: () {
+                                            Navigator.pop(ctx);
+                                            context.navigateTo(
+                                                AddUpdateItemRoute(
+                                                    item: item));
+                                          },
+                                          leading: const Icon(Icons.edit),
+                                          title: Text(l10n.edit),
+                                        ),
+                                      ),
+                                      PopupMenuItem<String>(
+                                        child: ListTile(
+                                          contentPadding: EdgeInsets.zero,
+                                          onTap: () {
+                                            Navigator.pop(ctx);
+                                            final id = item.id.toString();
+                                            ref
+                                                .read(deleteItemProvider
+                                                    .notifier)
+                                                .onTapDelete(id);
+                                          },
+                                          leading: const Icon(Icons.delete),
+                                          title: Text(l10n.delete),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        ListTile(
+                          title: Text(
+                            item.name,
+                            style:
+                                const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: Text(item.desc),
+                        ),
+                        ListTile(
+                          leading: FilledButton(
+                            onPressed: () {
+                              onTapAddItem(item, ref);
+                              final snackBar = SnackBar(
+                                content: Text("${item.name} Item added"),
+                                action: SnackBarAction(
+                                    label: "Close",
+                                    onPressed: () {
+                                      context.hideSnackBar();
+                                    }),
+                              );
+                              context.clearSnackBar();
+                              context.showSnackBar(snackBar);
+                            },
+                            child: Text(l10n.addToCart),
+                          ),
+                          trailing: Text(
+                            "\u{20B9} ${item.price}",
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  );
+                },
+              );
+            },
           ),
         ),
       ),
@@ -300,7 +297,7 @@ class CustomSearch extends SearchDelegate {
       required WidgetRef ref,
       required BuildContext context}) {
     ref.read(cartStorageProvider).addItem(
-          item: CartFoodItemModel(
+          item: CartItem(
             id: cartItem.id,
             name: cartItem.name,
             desc: cartItem.desc,

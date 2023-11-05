@@ -9,7 +9,7 @@ import '../data/service/printing_bill.dart';
 class BillingScreen extends StatelessWidget {
   const BillingScreen({super.key, required this.cbl});
 
-  final List<CartFoodItemModel> cbl;
+  final List<CartItem> cbl;
 
   @override
   Widget build(BuildContext context) {
