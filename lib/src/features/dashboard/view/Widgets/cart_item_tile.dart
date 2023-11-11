@@ -25,7 +25,7 @@ class CartItemTile extends ConsumerWidget {
           SlidableAction(
             borderRadius: const BorderRadius.all(Radius.circular(10)),
             onPressed: (context) {
-              ref.read(cartStorageProvider).deleteItem(item.id);
+              ref.read(cartItemProvide.notifier).deleteItem(itemId: item.id);
             },
             backgroundColor: Theme.of(context).colorScheme.secondary,
             icon: Icons.delete,
@@ -60,7 +60,9 @@ class CartItemTile extends ConsumerWidget {
                   child: IconButton(
                     constraints: const BoxConstraints(),
                     onPressed: () {
-                      ref.read(cartStorageProvider).decItemQty(item.id);
+                      ref
+                          .read(cartItemProvide.notifier)
+                          .decItemQty(itemId: item.id);
                     },
                     icon: const Icon(
                       Icons.remove,
@@ -82,7 +84,9 @@ class CartItemTile extends ConsumerWidget {
                   child: IconButton(
                     constraints: const BoxConstraints(),
                     onPressed: () {
-                      ref.read(cartStorageProvider).incItemQty(item.id);
+                      ref
+                          .read(cartItemProvide.notifier)
+                          .incItemQty(itemId: item.id);
                     },
                     icon: const Icon(
                       Icons.add,

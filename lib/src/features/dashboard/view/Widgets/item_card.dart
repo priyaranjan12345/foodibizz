@@ -20,8 +20,8 @@ class ItemCard extends ConsumerWidget {
   final FoodItem foodItem;
 
   void onTapAddItem(FoodItem cartItem, WidgetRef ref) {
-    ref.read(cartStorageProvider).addItem(
-          item: CartItem(
+    ref.read(cartItemProvide.notifier).addItem(
+          cartItem: CartItem(
             id: cartItem.id,
             name: cartItem.name,
             desc: cartItem.desc,
@@ -111,7 +111,14 @@ class ItemCard extends ConsumerWidget {
             subtitle: Text(foodItem.desc),
           ),
           ListTile(
-            leading: FilledButton(
+            leading: Text(
+              "Price: \u{20B9} ${foodItem.price}",
+              style: const TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 18,
+              ),
+            ),
+            trailing: FilledButton(
               onPressed: () {
                 onTapAddItem(foodItem, ref);
                 final snackBar = SnackBar(
@@ -126,13 +133,6 @@ class ItemCard extends ConsumerWidget {
                 context.showSnackBar(snackBar);
               },
               child: Text(l10n.addToCart),
-            ),
-            trailing: Text(
-              "\u{20B9} ${foodItem.price}",
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 15,
-              ),
             ),
           )
         ],

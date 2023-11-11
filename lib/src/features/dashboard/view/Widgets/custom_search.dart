@@ -15,8 +15,8 @@ class CustomSearch extends SearchDelegate {
       {required FoodItem cartItem,
       required WidgetRef ref,
       required BuildContext context}) {
-    ref.read(cartStorageProvider).addItem(
-          item: CartItem(
+    ref.read(cartItemProvide.notifier).addItem(
+          cartItem: CartItem(
             id: cartItem.id,
             name: cartItem.name,
             desc: cartItem.desc,
