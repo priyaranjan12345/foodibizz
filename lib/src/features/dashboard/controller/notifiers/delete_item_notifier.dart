@@ -27,7 +27,10 @@ class DeleteItemNotifier extends AutoDisposeAsyncNotifier<void> {
         state = const AsyncData(null);
       },
       (error) {
-        state = AsyncError(error.message, StackTrace.current);
+        state = AsyncError(
+          error.errorMessage ?? "Error on delete",
+          StackTrace.current,
+        );
       },
     );
   }

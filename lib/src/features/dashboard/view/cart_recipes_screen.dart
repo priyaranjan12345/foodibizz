@@ -5,8 +5,6 @@ import 'package:foodibizz/src/features/dashboard/view/Widgets/empty_cart.dart';
 
 import 'cart.dart';
 
-// loading dialog not working after error delete
-
 @RoutePage(deferredLoading: true, name: "CartRecipesRoute")
 class CartRecipesScreen extends ConsumerWidget {
   const CartRecipesScreen({super.key});
@@ -47,19 +45,21 @@ class CartRecipesScreen extends ConsumerWidget {
                 );
               },
             ),
-      bottomNavigationBar: ListTile(
-        title: Text(
-          "Grand Total:  \u{20B9} ${items.fold(0.0, (previousValue, element) => double.parse(previousValue.toString()) + (element.price * element.qty))}",
-          style: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        subtitle: const Text("GST: 0 \t Discount: 0"),
-        trailing: SaveOrderButton(
-          cartItems: items.toList(),
-        ),
-      ),
+      bottomNavigationBar: (items.isNotEmpty)
+          ? ListTile(
+              title: Text(
+                "Grand Total:  \u{20B9} ${items.fold(0.0, (previousValue, element) => double.parse(previousValue.toString()) + (element.price * element.qty))}",
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              subtitle: const Text("GST: 0 \t Discount: 0"),
+              trailing: SaveOrderButton(
+                cartItems: items.toList(),
+              ),
+            )
+          : const SizedBox.shrink(),
     );
   }
 }

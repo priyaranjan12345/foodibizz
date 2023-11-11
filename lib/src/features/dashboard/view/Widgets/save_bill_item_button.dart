@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:foodibizz/src/features/dashboard/controller/providers/cart_provider.dart';
 
 import '../../../../core/routes/app_routes.gr.dart';
 import '../../controller/providers/generate_bill_provider.dart';
@@ -33,6 +34,8 @@ class SaveBillItemButton extends ConsumerWidget {
             context.navigateTo(
               BillingRoute(cbl: data),
             );
+            // clear all item
+            ref.read(cartItemProvide.notifier).deleteAllItems();
           },
           error: (_, __) {
             Fluttertoast.showToast(msg: "Unable to save bill items");
