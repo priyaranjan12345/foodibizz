@@ -30,6 +30,6 @@ class SaveOrderItemsInitial implements SaveOrderItemsState {
 }
 
 class SaveOrderItemsLoaded implements SaveOrderItemsState {
-  final List<CartFoodItemModel> cartItems;
+  final List<CartItem> cartItems;
   const SaveOrderItemsLoaded({required this.cartItems}) : super();
 }

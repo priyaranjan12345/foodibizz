@@ -7,7 +7,7 @@ import '../../model/cart_food_item_model.dart';
 class PrintingBill {
   Future<Uint8List> generateBill(
     PdfPageFormat format,
-    List<CartFoodItemModel> cbl,
+    List<CartItem> cbl,
   ) async {
     final doc = pw.Document();
 

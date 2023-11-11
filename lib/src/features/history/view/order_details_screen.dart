@@ -20,6 +20,20 @@ class OrderDetailsScreen extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('Bill Items'),
         centerTitle: true,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: CircleAvatar(
+              backgroundColor: Theme.of(context).cardColor,
+              child: IconButton(
+                onPressed: () {
+                   // BillingRoute(cbl: data),
+                },
+                icon: const Icon(Icons.receipt_sharp),
+              ),
+            ),
+          ),
+        ],
       ),
       body: orderItemsState.easyWhen(
         data: (data) {

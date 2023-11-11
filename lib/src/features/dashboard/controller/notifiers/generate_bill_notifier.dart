@@ -14,7 +14,7 @@ class SaveOrderNotifier extends AutoDisposeAsyncNotifier<SaveOrderState> {
     return future;
   }
 
-  Future<void> createOrder(List<CartFoodItemModel> cartItems) async {
+  Future<void> createOrder(List<CartItem> cartItems) async {
     state = const AsyncLoading();
 
     int noOfItems = cartItems.length;

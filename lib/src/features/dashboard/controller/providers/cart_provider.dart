@@ -1,19 +1,20 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:foodibizz/src/features/dashboard/controller/notifiers/cart_notifier.dart';
+import 'package:foodibizz/src/features/dashboard/model/cart_food_item_model.dart';
 import 'package:hive/hive.dart';
 
-import '../../data/service/cart_storage.dart';
-import '../../model/cart_food_item_model.dart';
 
-/// This provider used for App Storage Service class which
-/// depends on appBoxProvider for getting intial Hive Box
-final cartStorageProvider = Provider.autoDispose<CartStorage>(
-  (ref) => CartStorage(ref.watch(cartBoxProvider)),
-  name: 'cartStorageProvider',
-);
 
 /// This provider used for Storing Hive Box which you can override on
 /// bootstrap function on start of the app
-final cartBoxProvider = Provider.autoDispose<Box<CartFoodItemModel>>(
+final cartBoxProvider = Provider.autoDispose<Box>(
   (ref) => throw UnimplementedError("appBoxProvider is not overriden"),
   name: 'cartBoxProvider',
+);
+
+/// cart notifier
+final cartItemProvide =
+    AutoDisposeNotifierProvider<CartNotifier, List<CartItem>>(
+  () => CartNotifier(),
+  name: "cartItemProvide",
 );

@@ -50,6 +50,8 @@ class AppThemes {
           alignedDropdown: true,
           useInputDecoratorThemeInDialogs: true,
         ),
+        appBarBackground: const Color(0xff212121),
+        scaffoldBackground: const Color(0xff212121),
         visualDensity: FlexColorScheme.comfortablePlatformDensity,
         useMaterial3: true,
         swapLegacyOnMaterial3: true,

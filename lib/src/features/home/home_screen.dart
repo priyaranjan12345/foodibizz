@@ -30,6 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final l10n = context.l10n;
 
     return AutoTabsRouter.pageView(
+    physics: const NeverScrollableScrollPhysics(),
       routes: const [
         DashboardRoute(),
         HistoryRoute(),

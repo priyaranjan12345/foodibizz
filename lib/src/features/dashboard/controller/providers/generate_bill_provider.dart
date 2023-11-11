@@ -14,10 +14,10 @@ final saveOrderProvider =
 );
 
 final saveOrderItemsProvider = AutoDisposeFutureProvider.family<
-    List<CartFoodItemModel>,
+    List<CartItem>,
     ({
       AddOrderModel addOrderModel,
-      List<CartFoodItemModel> cartItems,
+      List<CartItem> cartItems,
     })>((ref, args) async {
   int orderId = args.addOrderModel.id;
   List<SoldItemModel> soldItemModels = [];

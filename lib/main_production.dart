@@ -11,9 +11,9 @@ import 'src/features/dashboard/controller/providers/cart_provider.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-  Hive.registerAdapter(CartFoodItemModelAdapter());
+  // Hive.registerAdapter(CartFoodItemModelAdapter());
   final appBox = await Hive.openBox('appBox');
-  final cartBox = await Hive.openBox<CartFoodItemModel>('cartBox');
+  final cartBox = await Hive.openBox<CartItem>('cartBox');
 
   runApp(
     ProviderScope(
