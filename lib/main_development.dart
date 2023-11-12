@@ -8,14 +8,13 @@ import 'global/api_client/base_url_pod.dart';
 import 'app.dart';
 import 'src/core/locale_storage/app_storage_pod.dart';
 import 'src/features/dashboard/controller/providers/cart_provider.dart';
-import 'src/features/dashboard/model/cart_food_item_model.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final directory = await getApplicationCacheDirectory();
   await Hive.initFlutter(directory.path);
   final appBox = await Hive.openBox('appBox');
-  final cartBox = await Hive.openBox<CartItem>('cartBox');
+  final cartBox = await Hive.openBox('cartBox');
 
   runApp(
     ProviderScope(
