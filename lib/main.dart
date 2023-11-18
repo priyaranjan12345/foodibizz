@@ -20,7 +20,7 @@ Future<void> main() async {
   runApp(
     ProviderScope(
       overrides: [
-        baseUrlProvider.overrideWith((ref) => "http://3.27.90.34:8000/"),
+        baseUrlProvider.overrideWith((ref) => 'http://3.27.90.34:8000/'),
         appBoxProvider.overrideWithValue(appBox),
         cartBoxProvider.overrideWithValue(cartBox),
       ],

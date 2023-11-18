@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:flutter_displaymode/flutter_displaymode.dart';
 
 import 'global/api_client/base_url_pod.dart';
 import 'app.dart';
@@ -11,7 +10,6 @@ import 'src/features/dashboard/controller/providers/cart_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await FlutterDisplayMode.setHighRefreshRate();
   final directory = await getApplicationCacheDirectory();
   await Hive.initFlutter(directory.path);
   final appBox = await Hive.openBox('appBox');
