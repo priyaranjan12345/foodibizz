@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:foodibizz/src/features/dashboard/view/Widgets/empty_cart.dart';
+import 'package:foodibizz/src/features/dashboard/view/widgets/cart_widgets/empty_cart.dart';
 
-import 'cart.dart';
+import 'widgets/cart_widgets/cart.dart';
 
 @RoutePage(deferredLoading: true, name: "CartRecipesRoute")
 class CartRecipesScreen extends ConsumerWidget {

@@ -15,7 +15,7 @@ import '../../../../global/extensions/focus_node_ext.dart';
 import '../../../../global/extensions/snackbar_ext.dart';
 import '../../../../global/widgets/text_field_widget.dart';
 import '../controller/providers/add_update_item_provider.dart';
-import 'Widgets/submit_item_button.dart';
+import 'widgets/submit_item_button.dart';
 
 @RoutePage(deferredLoading: true, name: "AddUpdateItemRoute")
 class AddUpdateItemScreen extends ConsumerStatefulWidget {

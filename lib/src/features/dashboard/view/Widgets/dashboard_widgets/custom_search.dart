@@ -2,10 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../../global/extensions/snackbar_ext.dart';
-import '../../controller/providers/cart_provider.dart';
-import '../../model/all_food_items_response.dart';
-import '../../model/cart_food_item_model.dart';
+import '../../../../../../global/extensions/snackbar_ext.dart';
+import '../../../controller/providers/cart_provider.dart';
+import '../../../model/all_food_items_response.dart';
+import '../../../model/cart_food_item_model.dart';
 
 class CustomSearch extends SearchDelegate {
   CustomSearch({required this.items});

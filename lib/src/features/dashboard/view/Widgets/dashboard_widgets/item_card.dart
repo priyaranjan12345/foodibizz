@@ -1,15 +1,18 @@
+import 'dart:io';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:foodibizz/global/extensions/snackbar_ext.dart';
 import 'package:foodibizz/src/core/localization/l10n.dart';
 import 'package:foodibizz/src/core/routes/app_routes.gr.dart';
 
-import '../../controller/providers/cart_provider.dart';
-import '../../controller/providers/dashboard_provider.dart';
-import '../../model/all_food_items_response.dart';
-import '../../model/cart_food_item_model.dart';
+import '../../../controller/providers/cart_provider.dart';
+import '../../../controller/providers/dashboard_provider.dart';
+import '../../../model/all_food_items_response.dart';
+import '../../../model/cart_food_item_model.dart';
 
 class ItemCard extends ConsumerWidget {
   const ItemCard({
@@ -19,7 +22,11 @@ class ItemCard extends ConsumerWidget {
 
   final FoodItem foodItem;
 
-  void onTapAddItem(FoodItem cartItem, WidgetRef ref) {
+  void onTapAddItem({
+    required FoodItem cartItem,
+    required WidgetRef ref,
+    required BuildContext context,
+  }) {
     ref.read(cartItemProvide.notifier).addItem(
           cartItem: CartItem(
             id: cartItem.id,
@@ -32,6 +39,20 @@ class ItemCard extends ConsumerWidget {
             qty: 1,
           ),
         );
+    if (Platform.isAndroid || Platform.isIOS) {
+      Fluttertoast.showToast(msg: "${foodItem.name} Item added");
+    } else {
+      final snackBar = SnackBar(
+        content: const Text("Item deleted"),
+        action: SnackBarAction(
+          label: "Close",
+          onPressed: () {
+            context.hideSnackBar();
+          },
+        ),
+      );
+      context.showSnackBar(snackBar);
+    }
   }
 
   @override
@@ -119,19 +140,11 @@ class ItemCard extends ConsumerWidget {
               ),
             ),
             trailing: FilledButton(
-              onPressed: () {
-                onTapAddItem(foodItem, ref);
-                final snackBar = SnackBar(
-                  content: Text("${foodItem.name} Item added"),
-                  action: SnackBarAction(
-                      label: "Close",
-                      onPressed: () {
-                        context.hideSnackBar();
-                      }),
-                );
-                context.clearSnackBar();
-                context.showSnackBar(snackBar);
-              },
+              onPressed: () => onTapAddItem(
+                cartItem: foodItem,
+                ref: ref,
+                context: context,
+              ),
               child: Text(l10n.addToCart),
             ),
           )
