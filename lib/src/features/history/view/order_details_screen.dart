@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foodibizz/global/riverpod_ext/asyncvalue_easy_when.dart';
 
+import '../../../../global/api_client/base_url_pod.dart';
 import '../controller/providers/order_details_provider.dart';
 
 @RoutePage(deferredLoading: true, name: "OrderDetailsRoute")
@@ -26,9 +27,7 @@ class OrderDetailsScreen extends ConsumerWidget {
             child: CircleAvatar(
               backgroundColor: Theme.of(context).cardColor,
               child: IconButton(
-                onPressed: () {
-                   // BillingRoute(cbl: data),
-                },
+                onPressed: () {},
                 icon: const Icon(Icons.receipt_sharp),
               ),
             ),
@@ -49,7 +48,7 @@ class OrderDetailsScreen extends ConsumerWidget {
                     Radius.circular(10),
                   ),
                   child: CachedNetworkImage(
-                    imageUrl: "http://3.27.90.34:8000/${orderItem.image}",
+                    imageUrl: "${ref.read(baseUrlProvider)}${orderItem.image}",
                   ),
                 ),
                 title: Text(orderItem.name),

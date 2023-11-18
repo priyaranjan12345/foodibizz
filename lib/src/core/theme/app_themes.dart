@@ -30,6 +30,7 @@ class AppThemes {
         swapLegacyOnMaterial3: true,
         // fontFamily: GoogleFonts.robotoSerif().fontFamily,
       );
+      
   static ThemeData get darkTheme => FlexThemeData.dark(
         colors: const FlexSchemeColor(
           primary: Color(0xff9fc9ff),
@@ -50,8 +51,8 @@ class AppThemes {
           alignedDropdown: true,
           useInputDecoratorThemeInDialogs: true,
         ),
-        appBarBackground: const Color(0xff212121),
-        scaffoldBackground: const Color(0xff212121),
+        appBarBackground: const Color(0xFF212738),
+        scaffoldBackground: const Color(0xFF212738),
         visualDensity: FlexColorScheme.comfortablePlatformDensity,
         useMaterial3: true,
         swapLegacyOnMaterial3: true,

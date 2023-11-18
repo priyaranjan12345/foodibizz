@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'dashboard.dart';
+
+import 'widgets/dashboard_widgets/dashboard.dart';
 
 @RoutePage(deferredLoading: true, name: "DashboardRoute")
 class DashboardScreen extends ConsumerWidget {
@@ -30,7 +31,7 @@ class DashboardScreen extends ConsumerWidget {
           final snackBar = SnackBar(
             content: const Text("Item deleted"),
             action: SnackBarAction(
-              label: "Cancel",
+              label: "Close",
               onPressed: () {
                 context.hideSnackBar();
               },
@@ -52,7 +53,7 @@ class DashboardScreen extends ConsumerWidget {
           final snackBar = SnackBar(
             content: const Text("Failed to delete item"),
             action: SnackBarAction(
-              label: "Cancel",
+              label: "Close",
               onPressed: () {
                 context.hideSnackBar();
               },
@@ -85,7 +86,7 @@ class DashboardScreen extends ConsumerWidget {
               flexibleSpace: SafeArea(
                 child: Padding(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                      const EdgeInsets.only(left: 10, right: 10, bottom: 6),
                   child: MySearchBar(
                     onTapSearch: () {
                       showSearch(

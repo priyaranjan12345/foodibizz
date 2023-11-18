@@ -46,12 +46,11 @@ class MySearchBar extends StatelessWidget {
               ),
               const Spacer(),
               Padding(
-                padding: const EdgeInsets.only(right: 10),
+                padding: const EdgeInsets.only(right: 6),
                 child: CircleAvatar(
                   backgroundColor: Theme.of(context).cardColor,
                   child: IconButton(
                     onPressed: onTapCart,
-                    
                     icon: const Icon(Icons.shopping_cart_outlined),
                   ),
                 ),

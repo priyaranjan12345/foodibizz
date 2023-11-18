@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
-import '../../../../core/constants/gaps.dart';
-import '../../controller/providers/cart_provider.dart';
-import '../../model/cart_food_item_model.dart';
+import '../../../../../core/constants/gaps.dart';
+import '../../../controller/providers/cart_provider.dart';
+import '../../../model/cart_food_item_model.dart';
 
 class CartItemTile extends ConsumerWidget {
   const CartItemTile({
@@ -40,12 +40,15 @@ class CartItemTile extends ConsumerWidget {
         ],
       ),
       child: ListTile(
-        leading: ClipRRect(
-          borderRadius: const BorderRadius.all(
-            Radius.circular(10),
-          ),
-          child: CachedNetworkImage(
-            imageUrl: "http://3.27.90.34:8000/${item.image}",
+        leading: SizedBox(
+          width: 100,
+          child: ClipRRect(
+            borderRadius: const BorderRadius.all(
+              Radius.circular(10),
+            ),
+            child: CachedNetworkImage(
+              imageUrl: "http://3.27.90.34:8000/${item.image}",
+            ),
           ),
         ),
         title: Text(item.name),

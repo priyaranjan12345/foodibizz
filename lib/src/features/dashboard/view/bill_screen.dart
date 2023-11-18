@@ -15,7 +15,8 @@ class BillingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Billing"),
+        title: const Text("Receipt"),
+        centerTitle: true,
       ),
       body: Theme(
         data: ThemeData.dark(),

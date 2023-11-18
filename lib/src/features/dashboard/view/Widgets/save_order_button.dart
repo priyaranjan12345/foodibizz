@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foodibizz/global/extensions/snackbar_ext.dart';
-import 'package:foodibizz/src/features/dashboard/view/Widgets/save_bill_item_button.dart';
+import 'package:foodibizz/src/features/dashboard/view/widgets/save_bill_item_button.dart';
 
 import '../../controller/providers/generate_bill_provider.dart';
 import '../../controller/states/generate_bill_state.dart';
