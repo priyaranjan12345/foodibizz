@@ -15,7 +15,7 @@ class CartRecipesScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Cart"),
+        title: const Text("My Cart"),
         centerTitle: true,
         actions: [
           if (items.isNotEmpty)

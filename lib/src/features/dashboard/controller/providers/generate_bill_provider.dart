@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../data/repository/generate_bill_repository/generate_bill_repository_pod.dart';
@@ -21,9 +23,10 @@ final saveOrderItemsProvider = AutoDisposeFutureProvider.family<
     })>((ref, args) async {
   int orderId = args.addOrderModel.id;
   List<SoldItemModel> soldItemModels = [];
+  final random = Random();
   for (var billItem in args.cartItems) {
     SoldItemModel soldItemModel = SoldItemModel(
-      id: DateTime.now().microsecondsSinceEpoch,
+      id: DateTime.now().microsecondsSinceEpoch + random.nextInt(1000),
       itemQty: billItem.qty,
       orderId: orderId,
       itemId: billItem.id,

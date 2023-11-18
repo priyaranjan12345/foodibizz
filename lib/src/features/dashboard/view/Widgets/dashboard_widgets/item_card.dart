@@ -129,9 +129,14 @@ class ItemCard extends ConsumerWidget {
               foodItem.name,
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
-            subtitle: Text(foodItem.desc),
+            subtitle: Text(
+              '${foodItem.desc}\n',
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
           ListTile(
+            
             leading: Text(
               "Price: \u{20B9} ${foodItem.price}",
               style: const TextStyle(

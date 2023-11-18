@@ -38,8 +38,8 @@ class _HomeScreenState extends State<HomeScreen> {
       ],
       builder: (ctx, child, pageController) {
         final tabsRouter = AutoTabsRouter.of(ctx);
-        return WillPopScope(
-          onWillPop: () => _onWillPop(tabsRouter),
+        return PopScope(
+          onPopInvoked: (v) => _onWillPop(tabsRouter),
           child: Scaffold(
             body: child,
             bottomNavigationBar: NavigationBar(

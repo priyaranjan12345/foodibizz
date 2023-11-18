@@ -78,12 +78,15 @@ class CustomSearch extends SearchDelegate {
       itemBuilder: (context, index) {
         final item = matchQuery[index];
         return ListTile(
-          leading: ClipRRect(
-            borderRadius: const BorderRadius.all(
-              Radius.circular(10),
-            ),
-            child: CachedNetworkImage(
-              imageUrl: "http://3.27.90.34:8000/${item.image}",
+          leading: SizedBox(
+            width: 100,
+            child: ClipRRect(
+              borderRadius: const BorderRadius.all(
+                Radius.circular(10),
+              ),
+              child: CachedNetworkImage(
+                imageUrl: "http://3.27.90.34:8000/${item.image}",
+              ),
             ),
           ),
           title: Text(item.name),
@@ -119,12 +122,15 @@ class CustomSearch extends SearchDelegate {
       itemBuilder: (context, index) {
         final item = matchQuery[index];
         return ListTile(
-          leading: ClipRRect(
-            borderRadius: const BorderRadius.all(
-              Radius.circular(10),
-            ),
-            child: CachedNetworkImage(
-              imageUrl: "http://3.27.90.34:8000/${item.image}",
+          leading: SizedBox(
+            width: 100,
+            child: ClipRRect(
+              borderRadius: const BorderRadius.all(
+                Radius.circular(10),
+              ),
+              child: CachedNetworkImage(
+                imageUrl: "http://3.27.90.34:8000/${item.image}",
+              ),
             ),
           ),
           title: Text(item.name),

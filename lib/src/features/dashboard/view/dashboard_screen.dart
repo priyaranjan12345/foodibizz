@@ -86,7 +86,7 @@ class DashboardScreen extends ConsumerWidget {
               flexibleSpace: SafeArea(
                 child: Padding(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                      const EdgeInsets.only(left: 10, right: 10, bottom: 6),
                   child: MySearchBar(
                     onTapSearch: () {
                       showSearch(

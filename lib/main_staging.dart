@@ -5,6 +5,8 @@ import 'package:path_provider/path_provider.dart';
 
 import 'global/api_client/base_url_pod.dart';
 import 'app.dart';
+import 'global/helper/app_talker.dart';
+import 'global/riverpod_ext/riverpod_observer.dart';
 import 'src/core/locale_storage/app_storage_pod.dart';
 import 'src/features/dashboard/controller/providers/cart_provider.dart';
 
@@ -22,6 +24,7 @@ Future<void> main() async {
         appBoxProvider.overrideWithValue(appBox),
         cartBoxProvider.overrideWithValue(cartBox),
       ],
+      observers: [RiverpodObserverLogger(talker: talker)],
       child: const App(),
     ),
   );
