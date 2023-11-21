@@ -15,7 +15,7 @@ class TextFieldWidget extends StatelessWidget {
   final int? maxLines;
 
   const TextFieldWidget({
-    Key? key,
+    super.key,
     this.label,
     this.hint,
     this.validator,
@@ -27,7 +27,7 @@ class TextFieldWidget extends StatelessWidget {
     this.onChanged,
     this.onFieldSubmitted,
     this.maxLines,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

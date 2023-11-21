@@ -32,7 +32,10 @@ class AddUpdateItemNotifier
         state = const AsyncData(AddUpdateItemLoaded());
       },
       (error) {
-        state = AsyncError(error.message, StackTrace.current);
+        state = AsyncError(
+          error.errorMessage ?? "Error on adding item",
+          StackTrace.current,
+        );
       },
     );
   }

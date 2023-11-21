@@ -30,12 +30,21 @@ extension ResponseHandler on Response {
         }
       }
     } else {
-      APIException errorData = errorMapper?.call(data) ??
-          APIException.fromMap(data).copyWith(
+      late APIException errorData;
+      if (errorMapper != null) {
+        errorData = errorMapper(data);
+      } else {
+        try {
+          errorData = APIException.fromMap(data);
+        } catch (e) {
+          errorData = APIException(
             statusCode: statusCode,
             statusMessage: statusMessage,
             errorMessage: "Failed to get data $data",
           );
+        }
+      }
+
       return Result<T, APIException>.error(errorData);
     }
   }
