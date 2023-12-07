@@ -129,6 +129,7 @@ class _AddUpdateItemScreenConsumerState
             ),
             gapH20,
             TextFieldWidget(
+              textInputAction: TextInputAction.next,
               controller: nameController,
               focusNode: nameFocusNode,
               label: "Name",
@@ -150,6 +151,7 @@ class _AddUpdateItemScreenConsumerState
               label: "Description",
               hint: "Enter recipe description",
               maxLines: 4,
+              maxLength: 100,
               onFieldSubmitted: (value) {
                 context.changeFocus(descFocusNode, priceFocusNode);
               },
@@ -160,7 +162,7 @@ class _AddUpdateItemScreenConsumerState
                 return "Description required";
               },
             ),
-            gapH20,
+            const SizedBox(height: 10),
             TextFieldWidget(
               controller: priceController,
               focusNode: priceFocusNode,
@@ -176,19 +178,36 @@ class _AddUpdateItemScreenConsumerState
               inputFormatters: <TextInputFormatter>[
                 // FilteringTextInputFormatter.digitsOnly,
                 FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
+                LengthLimitingTextInputFormatter(6),
               ],
             ),
             gapH20,
             Center(
-              child: SubmitItemButton(
-                onSubmit: () {
-                  if (widget.item == null) {
-                    addItem(ref);
-                  } else {
-                    updateItem(ref, widget.item!.id);
-                  }
-                },
-              ),
+              child: ListenableBuilder(
+                  listenable: Listenable.merge(
+                    [
+                      nameController,
+                      descController,
+                      priceController,
+                      ValueNotifier(ref.watch(imagePickerProvider)),
+                    ],
+                  ),
+                  builder: (_, __) {
+                    final enable = nameController.text.isNotEmpty &&
+                        descController.text.isNotEmpty &&
+                        priceController.text.isNotEmpty &&
+                        ref.read(imagePickerProvider) != null;
+                    return SubmitItemButton(
+                      buttonDisabled: !enable,
+                      onSubmit: () {
+                        if (widget.item == null) {
+                          addItem(ref);
+                        } else {
+                          updateItem(ref, widget.item!.id);
+                        }
+                      },
+                    );
+                  }),
             )
           ],
         ),
