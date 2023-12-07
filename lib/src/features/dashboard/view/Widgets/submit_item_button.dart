@@ -9,10 +9,12 @@ import '../../controller/states/add_update_item_state.dart';
 class SubmitItemButton extends ConsumerWidget {
   const SubmitItemButton({
     super.key,
+    this.buttonDisabled = false,
     required this.onSubmit,
   });
-  
+
   final VoidCallback onSubmit;
+  final bool buttonDisabled;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -43,7 +45,7 @@ class SubmitItemButton extends ConsumerWidget {
       data: (data) {
         return switch (data) {
           AddUpdateItemInitial() => ElevatedButton(
-              onPressed: onSubmit,
+              onPressed: buttonDisabled ? null : onSubmit,
               child: const Text("Submit"),
             ),
           AddUpdateItemLoading() => const ElevatedButton(
@@ -57,7 +59,7 @@ class SubmitItemButton extends ConsumerWidget {
         };
       },
       errorWidget: (error, stackTrace) => ElevatedButton(
-        onPressed: onSubmit,
+        onPressed: buttonDisabled ? null : onSubmit,
         child: const Text("Retry"),
       ),
       loadingWidget: () => const ElevatedButton(
