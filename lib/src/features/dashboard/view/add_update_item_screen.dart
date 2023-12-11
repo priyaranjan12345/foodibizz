@@ -196,7 +196,8 @@ class _AddUpdateItemScreenConsumerState
                     final enable = nameController.text.isNotEmpty &&
                         descController.text.isNotEmpty &&
                         priceController.text.isNotEmpty &&
-                        ref.read(imagePickerProvider) != null;
+                        (ref.read(imagePickerProvider) != null ||
+                            widget.item?.image != "");
                     return SubmitItemButton(
                       buttonDisabled: !enable,
                       onSubmit: () {
