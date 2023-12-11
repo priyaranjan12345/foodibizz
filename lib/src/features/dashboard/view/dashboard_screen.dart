@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-
 import 'widgets/dashboard_widgets/dashboard.dart';
 
 @RoutePage(deferredLoading: true, name: "DashboardRoute")
@@ -85,8 +84,7 @@ class DashboardScreen extends ConsumerWidget {
               pinned: false,
               snap: false,
               flexibleSpace: Padding(
-                padding:
-                    const EdgeInsets.only(left: 10, right: 10, bottom: 6),
+                padding: const EdgeInsets.only(left: 10, right: 10, bottom: 6),
                 child: MySearchBar(
                   onTapSearch: () {
                     showSearch(
