@@ -5,10 +5,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foodibizz/global/extensions/snackbar_ext.dart';
 import 'package:foodibizz/src/core/routes/app_routes.gr.dart';
 import 'package:foodibizz/src/features/dashboard/controller/providers/dashboard_provider.dart';
-import 'package:foodibizz/src/features/dashboard/view/widgets/dashboard_widgets/app_search_bar.dart';
-import 'package:foodibizz/src/features/dashboard/view/widgets/dashboard_widgets/custom_search.dart';
-import 'package:foodibizz/src/features/dashboard/view/widgets/dashboard_widgets/foodibizz_card.dart';
-import 'package:foodibizz/src/features/dashboard/view/widgets/dashboard_widgets/item_card.dart';
+import 'package:foodibizz/src/features/dashboard/view/widgets/app_search_bar.dart';
+import 'package:foodibizz/src/features/dashboard/view/widgets/custom_search.dart';
+import 'package:foodibizz/src/features/dashboard/view/widgets/foodibizz_card.dart';
+import 'package:foodibizz/src/features/dashboard/view/widgets/item_card.dart';
+
 
 @RoutePage(deferredLoading: true, name: "DashboardRoute")
 class DashboardScreen extends ConsumerWidget {
