@@ -31,7 +31,7 @@ dependencies:
   intl: ^0.18.1
   multiple_result: ^5.1.0
   path_provider: ^2.1.1
-  pdf: ^3.10.6
+  pdf: ^3.10.7
   printing: ^5.11.1
   responsive_framework: ^1.1.1
   talker_dio_logger: ^2.3.1
