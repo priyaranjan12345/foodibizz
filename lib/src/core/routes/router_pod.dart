@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:foodibizz/src/core/routes/app_routes.dart';
 
-import 'app_routes.dart';
+
 
 /// This global variable used for global working on ui elements where
 /// may be context is not present

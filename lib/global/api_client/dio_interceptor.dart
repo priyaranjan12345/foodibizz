@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
-import 'dio_error_handler.dart';
+import 'package:foodibizz/global/api_client/dio_error_handler.dart';
+
 
 class DioInterceptor extends Interceptor {
   late Dio dio;
