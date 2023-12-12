@@ -17,23 +17,23 @@
 #       labels:
 #         - "*"
 
-changelog:
-  exclude:
-    labels:
-      - ignore-for-release
-    authors:
-      - admin
-  categories:
-    - title: Breaking Changes 🛠
-      labels:
-        - Semver-Major
-        - breaking-change
-    - title: 🏕 Features
-      labels:
-        - "*"
-      exclude:
-        labels:
-          - dependencies
-    - title: 👒 Dependencies
-      labels:
-        - dependencies
+# changelog:
+#   exclude:
+#     labels:
+#       - ignore-for-release
+#     authors:
+#       - admin
+#   categories:
+#     - title: Breaking Changes 🛠
+#       labels:
+#         - Semver-Major
+#         - breaking-change
+#     - title: 🏕 Features
+#       labels:
+#         - "*"
+#       exclude:
+#         labels:
+#           - dependencies
+#     - title: 👒 Dependencies
+#       labels:
+#         - dependencies
