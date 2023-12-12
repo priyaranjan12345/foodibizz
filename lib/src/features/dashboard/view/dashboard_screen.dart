@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:foodibizz/global/extensions/snackbar_ext.dart';
 import 'package:foodibizz/global/riverpod_ext/asyncvalue_easy_when.dart';
 import 'package:foodibizz/src/core/routes/app_routes.gr.dart';

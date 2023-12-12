@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:foodibizz/src/features/dashboard/data/apis/generate_bill_api/i_generate_bill_api.dart';
+import 'package:foodibizz/src/features/dashboard/model/add_sold_item_model.dart';
 
-import '../../../model/add_sold_item_model.dart';
-import 'i_generate_bill_api.dart';
+
 
 class GenerateBillApi extends IGenerateBillApi {
   final Dio dio;

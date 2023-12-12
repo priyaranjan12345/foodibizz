@@ -6,16 +6,16 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:foodibizz/src/features/dashboard/model/all_food_items_response.dart';
 
-import '../controller/providers/image_picker_provider.dart';
-import '../../../core/constants/gaps.dart';
-import '../../../core/routes/app_routes.gr.dart';
-import '../../../../global/extensions/focus_node_ext.dart';
-import '../../../../global/extensions/snackbar_ext.dart';
-import '../../../../global/widgets/text_field_widget.dart';
-import '../controller/providers/add_update_item_provider.dart';
-import 'widgets/submit_item_button.dart';
+import 'package:foodibizz/global/extensions/focus_node_ext.dart';
+import 'package:foodibizz/global/extensions/snackbar_ext.dart';
+import 'package:foodibizz/global/widgets/text_field_widget.dart';
+import 'package:foodibizz/src/core/constants/gaps.dart';
+import 'package:foodibizz/src/core/routes/app_routes.gr.dart';
+import 'package:foodibizz/src/features/dashboard/controller/providers/add_update_item_provider.dart';
+import 'package:foodibizz/src/features/dashboard/controller/providers/image_picker_provider.dart';
+import 'package:foodibizz/src/features/dashboard/model/all_food_items_response.dart';
+import 'package:foodibizz/src/features/dashboard/view/widgets/submit_item_button.dart';
 
 @RoutePage(deferredLoading: true, name: "AddUpdateItemRoute")
 class AddUpdateItemScreen extends ConsumerStatefulWidget {

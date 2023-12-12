@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:foodibizz/src/features/dashboard/model/add_sold_item_model.dart';
 
-import '../../../model/add_sold_item_model.dart';
 
 abstract class IGenerateBillApi {
   Future<Response> createOrder({

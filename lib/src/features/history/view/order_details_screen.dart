@@ -2,10 +2,11 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:foodibizz/global/api_client/base_url_pod.dart';
 import 'package:foodibizz/global/riverpod_ext/asyncvalue_easy_when.dart';
+import 'package:foodibizz/src/features/history/controller/providers/order_details_provider.dart';
 
-import '../../../../global/api_client/base_url_pod.dart';
-import '../controller/providers/order_details_provider.dart';
+
 
 @RoutePage(deferredLoading: true, name: "OrderDetailsRoute")
 class OrderDetailsScreen extends ConsumerWidget {

@@ -2,12 +2,14 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:foodibizz/src/features/dashboard/controller/providers/cart_provider.dart';
 
-import '../../../../core/routes/app_routes.gr.dart';
-import '../../controller/providers/generate_bill_provider.dart';
-import '../../model/add_order_model.dart';
-import '../../model/cart_food_item_model.dart';
+import 'package:foodibizz/src/core/routes/app_routes.gr.dart';
+import 'package:foodibizz/src/features/dashboard/controller/providers/cart_provider.dart';
+import 'package:foodibizz/src/features/dashboard/controller/providers/generate_bill_provider.dart';
+import 'package:foodibizz/src/features/dashboard/model/add_order_model.dart';
+import 'package:foodibizz/src/features/dashboard/model/cart_food_item_model.dart';
+
+
 
 class SaveBillItemButton extends ConsumerWidget {
   const SaveBillItemButton({

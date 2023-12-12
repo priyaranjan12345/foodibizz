@@ -4,11 +4,12 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dio_smart_retry/dio_smart_retry.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:foodibizz/global/api_client/base_url_pod.dart';
+import 'package:foodibizz/global/api_client/dio_interceptor.dart';
+import 'package:foodibizz/global/helper/app_talker.dart';
 import 'package:talker_dio_logger/talker_dio_logger.dart';
 
-import '../helper/app_talker.dart';
-import 'dio_interceptor.dart';
-import 'base_url_pod.dart';
+
 
 final dioProvider = Provider(
   (ref) {

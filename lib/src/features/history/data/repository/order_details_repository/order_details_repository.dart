@@ -1,11 +1,12 @@
 import 'package:dio/dio.dart';
+import 'package:foodibizz/global/exceptions/base_exception.dart';
+import 'package:foodibizz/global/exceptions/no_internet_exception.dart';
+import 'package:foodibizz/src/features/history/data/apis/order_details_api/i_order_details_api.dart';
+import 'package:foodibizz/src/features/history/data/repository/order_details_repository/i_order_details_repository.dart';
+import 'package:foodibizz/src/features/history/model/order_details_reponse.dart';
 import 'package:multiple_result/multiple_result.dart';
 
-import '../../../../../../global/exceptions/base_exception.dart';
-import '../../../../../../global/exceptions/no_internet_exception.dart';
-import '../../../model/order_details_reponse.dart';
-import '../../apis/order_details_api/i_order_details_api.dart';
-import 'i_order_details_repository.dart';
+
 
 class OrderDetailsRepository implements IOrderDetailsRepository {
   final IOrderDetailsApi iOrderDetailsApi;

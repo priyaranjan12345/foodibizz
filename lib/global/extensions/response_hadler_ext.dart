@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:foodibizz/global/exceptions/api_exception.dart';
 import 'package:multiple_result/multiple_result.dart';
 
-import '../exceptions/api_exception.dart';
 
 typedef Mapper<T> = T Function(dynamic data);
 

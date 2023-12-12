@@ -2,10 +2,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/localization/locale_pod.dart';
-import '../../../core/theme/app_them_pod.dart';
-import '../../../core/localization/l10n.dart';
-import '../../../features/setting/view/widgets/theme_mode_switch.dart';
+import 'package:foodibizz/src/core/localization/l10n.dart';
+import 'package:foodibizz/src/core/localization/locale_pod.dart';
+import 'package:foodibizz/src/core/theme/app_them_pod.dart';
+import 'package:foodibizz/src/features/setting/view/widgets/theme_mode_switch.dart';
 
 @RoutePage(deferredLoading: true, name: "SettingsRoute")
 class SettingScreen extends ConsumerWidget {

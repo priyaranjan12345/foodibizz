@@ -1,9 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:foodibizz/global/riverpod_ext/cache_ext.dart';
 import 'package:foodibizz/global/riverpod_ext/cancel_ext.dart';
+import 'package:foodibizz/src/features/history/data/repository/order_details_repository/order_details_repository_pod.dart';
+import 'package:foodibizz/src/features/history/model/order_details_reponse.dart';
 
-import '../../data/repository/order_details_repository/order_details_repository_pod.dart';
-import '../../model/order_details_reponse.dart';
+
 
 final orderDetailsProvider =
     FutureProvider.family.autoDispose<OrderDetailsResponse, int>(
