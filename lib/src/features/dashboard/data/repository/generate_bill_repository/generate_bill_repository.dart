@@ -1,11 +1,12 @@
+import 'package:foodibizz/global/exceptions/base_exception.dart';
+import 'package:foodibizz/global/exceptions/no_internet_exception.dart';
+import 'package:foodibizz/src/features/dashboard/data/apis/generate_bill_api/i_generate_bill_api.dart';
+import 'package:foodibizz/src/features/dashboard/data/repository/generate_bill_repository/i_generate_bill_repository.dart';
+import 'package:foodibizz/src/features/dashboard/model/add_order_model.dart';
+import 'package:foodibizz/src/features/dashboard/model/add_sold_item_model.dart';
 import 'package:multiple_result/multiple_result.dart';
 
-import '../../../../../../global/exceptions/base_exception.dart';
-import '../../../../../../global/exceptions/no_internet_exception.dart';
-import '../../../model/add_order_model.dart';
-import '../../../model/add_sold_item_model.dart';
-import '../../apis/generate_bill_api/i_generate_bill_api.dart';
-import 'i_generate_bill_repository.dart';
+
 
 class GenerateBillRepository implements IGenerateBillRepository {
   final IGenerateBillApi iGenerateBillApi;

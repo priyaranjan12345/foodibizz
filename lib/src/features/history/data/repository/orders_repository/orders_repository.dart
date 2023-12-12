@@ -1,10 +1,10 @@
 import 'package:foodibizz/global/exceptions/base_exception.dart';
+import 'package:foodibizz/global/exceptions/no_internet_exception.dart';
 import 'package:foodibizz/src/features/history/data/apis/orders_api/i_orders_api.dart';
 import 'package:foodibizz/src/features/history/data/repository/orders_repository/i_orders_repository.dart';
 import 'package:foodibizz/src/features/history/model/all_orders_reponse.dart';
 import 'package:multiple_result/multiple_result.dart';
 import 'package:dio/dio.dart';
-import '../../../../../../global/exceptions/no_internet_exception.dart';
 
 class OrdersRepo extends IOrdersRepo {
   final IOrdersApi iOrdersApi;

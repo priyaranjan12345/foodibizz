@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../../model/add_order_model.dart';
-import '../../model/cart_food_item_model.dart';
+import 'package:foodibizz/src/features/dashboard/model/add_order_model.dart';
+import 'package:foodibizz/src/features/dashboard/model/cart_food_item_model.dart';
 
 // save order states
 @immutable

@@ -2,10 +2,9 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
-import '../../data/repository/generate_bill_repository/generate_bill_repository_pod.dart';
-import '../../model/cart_food_item_model.dart';
-import '../states/generate_bill_state.dart';
+import 'package:foodibizz/src/features/dashboard/controller/states/generate_bill_state.dart';
+import 'package:foodibizz/src/features/dashboard/data/repository/generate_bill_repository/generate_bill_repository_pod.dart';
+import 'package:foodibizz/src/features/dashboard/model/cart_food_item_model.dart';
 
 class SaveOrderNotifier extends AutoDisposeAsyncNotifier<SaveOrderState> {
   @override

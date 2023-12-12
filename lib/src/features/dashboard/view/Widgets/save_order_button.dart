@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:foodibizz/global/extensions/snackbar_ext.dart';
+import 'package:foodibizz/src/features/dashboard/controller/providers/generate_bill_provider.dart';
+import 'package:foodibizz/src/features/dashboard/controller/states/generate_bill_state.dart';
+import 'package:foodibizz/src/features/dashboard/model/cart_food_item_model.dart';
 import 'package:foodibizz/src/features/dashboard/view/widgets/save_bill_item_button.dart';
 
-import '../../controller/providers/generate_bill_provider.dart';
-import '../../controller/states/generate_bill_state.dart';
-import '../../model/cart_food_item_model.dart';
+
 
 class SaveOrderButton extends ConsumerWidget {
   const SaveOrderButton({

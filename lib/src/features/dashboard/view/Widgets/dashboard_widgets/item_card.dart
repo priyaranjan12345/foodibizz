@@ -8,11 +8,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:foodibizz/global/extensions/snackbar_ext.dart';
 import 'package:foodibizz/src/core/localization/l10n.dart';
 import 'package:foodibizz/src/core/routes/app_routes.gr.dart';
+import 'package:foodibizz/src/features/dashboard/controller/providers/cart_provider.dart';
+import 'package:foodibizz/src/features/dashboard/controller/providers/dashboard_provider.dart';
+import 'package:foodibizz/src/features/dashboard/model/all_food_items_response.dart';
+import 'package:foodibizz/src/features/dashboard/model/cart_food_item_model.dart';
 
-import '../../../controller/providers/cart_provider.dart';
-import '../../../controller/providers/dashboard_provider.dart';
-import '../../../model/all_food_items_response.dart';
-import '../../../model/cart_food_item_model.dart';
 
 class ItemCard extends ConsumerWidget {
   const ItemCard({

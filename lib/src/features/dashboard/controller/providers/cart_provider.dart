@@ -3,8 +3,6 @@ import 'package:foodibizz/src/features/dashboard/controller/notifiers/cart_notif
 import 'package:foodibizz/src/features/dashboard/model/cart_food_item_model.dart';
 import 'package:hive/hive.dart';
 
-
-
 /// This provider used for Storing Hive Box which you can override on
 /// bootstrap function on start of the app
 final cartBoxProvider = Provider.autoDispose<Box>(

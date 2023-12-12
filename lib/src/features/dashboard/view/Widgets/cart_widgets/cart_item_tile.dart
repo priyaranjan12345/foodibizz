@@ -2,10 +2,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:foodibizz/src/core/constants/gaps.dart';
+import 'package:foodibizz/src/features/dashboard/controller/providers/cart_provider.dart';
+import 'package:foodibizz/src/features/dashboard/model/cart_food_item_model.dart';
 
-import '../../../../../core/constants/gaps.dart';
-import '../../../controller/providers/cart_provider.dart';
-import '../../../model/cart_food_item_model.dart';
+
 
 class CartItemTile extends ConsumerWidget {
   const CartItemTile({

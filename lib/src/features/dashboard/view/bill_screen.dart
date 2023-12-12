@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:foodibizz/src/features/dashboard/model/cart_food_item_model.dart';
 import 'package:printing/printing.dart';
 
-import '../data/service/printing_bill.dart';
+import 'package:foodibizz/src/features/dashboard/data/service/printing_bill.dart';
+import 'package:foodibizz/src/features/dashboard/model/cart_food_item_model.dart';
 
 @RoutePage(deferredLoading: true, name: "BillingRoute")
 class BillingScreen extends StatelessWidget {
