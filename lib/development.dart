@@ -10,8 +10,6 @@ import 'package:foodibizz/src/features/dashboard/controller/providers/cart_provi
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 
-
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final directory = await getApplicationCacheDirectory();

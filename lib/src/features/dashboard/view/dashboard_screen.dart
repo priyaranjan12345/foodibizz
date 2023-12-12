@@ -3,13 +3,12 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:foodibizz/global/extensions/snackbar_ext.dart';
-import 'package:foodibizz/global/riverpod_ext/asyncvalue_easy_when.dart';
 import 'package:foodibizz/src/core/routes/app_routes.gr.dart';
 import 'package:foodibizz/src/features/dashboard/controller/providers/dashboard_provider.dart';
-import 'package:foodibizz/src/features/dashboard/view/widgets/dashboard_widgets/app_search_bar.dart';
-import 'package:foodibizz/src/features/dashboard/view/widgets/dashboard_widgets/custom_search.dart';
-import 'package:foodibizz/src/features/dashboard/view/widgets/dashboard_widgets/foodibizz_card.dart';
-import 'package:foodibizz/src/features/dashboard/view/widgets/dashboard_widgets/item_card.dart';
+import 'package:foodibizz/src/features/dashboard/view/widgets/app_search_bar.dart';
+import 'package:foodibizz/src/features/dashboard/view/widgets/custom_search.dart';
+import 'package:foodibizz/src/features/dashboard/view/widgets/foodibizz_card.dart';
+import 'package:foodibizz/src/features/dashboard/view/widgets/item_card.dart';
 
 
 @RoutePage(deferredLoading: true, name: "DashboardRoute")
@@ -82,17 +81,16 @@ class DashboardScreen extends ConsumerWidget {
     listenDeleteItem(context, ref);
 
     return Scaffold(
-      body: SafeArea(
-        child: NestedScrollView(
-          floatHeaderSlivers: true,
-          headerSliverBuilder: (context, innerBoxIsScrolled) => [
-            SliverAppBar(
-              centerTitle: true,
-              floating: true,
-              pinned: false,
-              snap: false,
-              flexibleSpace: Padding(
-                padding: const EdgeInsets.only(left: 10, right: 10, bottom: 6),
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            centerTitle: true,
+            floating: true,
+            pinned: false,
+            snap: false,
+            flexibleSpace: Padding(
+              padding: const EdgeInsets.only(left: 10, right: 10, bottom: 6),
+              child: SafeArea(
                 child: MySearchBar(
                   onTapSearch: () {
                     showSearch(
@@ -110,33 +108,54 @@ class DashboardScreen extends ConsumerWidget {
                 ),
               ),
             ),
-          ],
-          body: RefreshIndicator(
-            onRefresh: () => ref.refresh(dashboardProvider.future),
-            child: itemsState.easyWhen(
-              onRetry: () {
-                ref.invalidate(dashboardProvider);
-              },
-              data: (value) {
-                return ListView.builder(
-                  padding: const EdgeInsets.only(
-                    left: 10,
-                    right: 10,
-                    bottom: 100,
-                  ),
-                  itemCount: value.foodItems.length + 1,
-                  itemBuilder: (_, index) {
+          ),
+          itemsState.when(
+            data: (value) => SliverPadding(
+              padding: const EdgeInsets.only(
+                left: 10,
+                right: 10,
+                bottom: 100,
+              ),
+              sliver: SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  childCount: value.foodItems.length + 1,
+                  (BuildContext context, int index) {
                     if (index == 0) {
                       return const FoodibizzCard();
                     }
                     final item = value.foodItems[index - 1];
                     return ItemCard(foodItem: item);
                   },
-                );
-              },
+                ),
+              ),
             ),
-          ),
-        ),
+            error: (error, stackTrace) => SliverToBoxAdapter(
+              child: Column(
+                children: [
+                  const Icon(
+                    Icons.info_outline,
+                    color: Colors.red,
+                    size: 40,
+                  ),
+                  Text(
+                    "Something went wrong!",
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const SizedBox(height: 10),
+                  ElevatedButton(
+                    onPressed: () {
+                      ref.invalidate(dashboardProvider);
+                    },
+                    child: const Text('Try again'),
+                  )
+                ],
+              ),
+            ),
+            loading: () => const SliverToBoxAdapter(
+              child: Center(child: CircularProgressIndicator()),
+            ),
+          )
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
