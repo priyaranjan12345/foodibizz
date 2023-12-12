@@ -1318,18 +1318,18 @@ packages:
     dependency: transitive
     description:
       name: talker
-      sha256: "9c587c0269e194ea5c161b01fa5c4e4120926f4b8fedcf9b3bd2466cb500b880"
+      sha256: "3cb5741a36032c64a16f06e715c7d74a65279f6e7e87b1f939ddfe027cb2fcfe"
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.4"
+    version: "3.1.7"
   talker_dio_logger:
     dependency: "direct main"
     description:
       name: talker_dio_logger
-      sha256: "5b8dd43e8d837b8e1d39d94157193ba691efe03ec009cd6f43c197bde6981ea5"
+      sha256: "734d4fdce0f2a53ebe0599611efd4168d8be1b19277f826d6b85d750199c9891"
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.1"
+    version: "2.3.4"
   talker_flutter:
     dependency: "direct main"
     description:
