@@ -2,9 +2,8 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../model/cart_food_item_model.dart';
-import '../providers/cart_provider.dart';
+import 'package:foodibizz/src/features/dashboard/controller/providers/cart_provider.dart';
+import 'package:foodibizz/src/features/dashboard/model/cart_food_item_model.dart';
 
 class CartNotifier extends AutoDisposeNotifier<List<CartItem>> {
   final cartKey = 'cartItem';

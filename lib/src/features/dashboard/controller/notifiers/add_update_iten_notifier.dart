@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../data/repository/add_update_recipe/add_update_item_repository_pod.dart';
-import '../states/add_update_item_state.dart';
+import 'package:foodibizz/src/features/dashboard/controller/states/add_update_item_state.dart';
+import 'package:foodibizz/src/features/dashboard/data/repository/add_update_recipe/add_update_item_repository_pod.dart';
+
 
 class AddUpdateItemNotifier
     extends AutoDisposeAsyncNotifier<AddUpdateItemState> {

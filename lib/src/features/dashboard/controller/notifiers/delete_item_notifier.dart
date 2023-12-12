@@ -2,8 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foodibizz/global/riverpod_ext/cancel_ext.dart';
-
-import '../../data/repository/dashboard/dashboard_repository_pod.dart';
+import 'package:foodibizz/src/features/dashboard/data/repository/dashboard/dashboard_repository_pod.dart';
 
 class DeleteItemNotifier extends AutoDisposeAsyncNotifier<void> {
   @override

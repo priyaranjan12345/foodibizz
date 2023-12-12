@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:foodibizz/global/extensions/snackbar_ext.dart';
+import 'package:foodibizz/global/riverpod_ext/asyncvalue_easy_when.dart';
+import 'package:foodibizz/src/core/routes/app_routes.gr.dart';
+import 'package:foodibizz/src/features/dashboard/controller/providers/dashboard_provider.dart';
+import 'package:foodibizz/src/features/dashboard/view/widgets/dashboard_widgets/app_search_bar.dart';
+import 'package:foodibizz/src/features/dashboard/view/widgets/dashboard_widgets/custom_search.dart';
+import 'package:foodibizz/src/features/dashboard/view/widgets/dashboard_widgets/foodibizz_card.dart';
+import 'package:foodibizz/src/features/dashboard/view/widgets/dashboard_widgets/item_card.dart';
 
-import 'widgets/dashboard_widgets/dashboard.dart';
 
 @RoutePage(deferredLoading: true, name: "DashboardRoute")
 class DashboardScreen extends ConsumerWidget {
