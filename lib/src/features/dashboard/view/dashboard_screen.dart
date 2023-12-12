@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-
 import 'widgets/dashboard_widgets/dashboard.dart';
 
 @RoutePage(deferredLoading: true, name: "DashboardRoute")
@@ -76,32 +75,30 @@ class DashboardScreen extends ConsumerWidget {
 
     return Scaffold(
       body: SafeArea(
-        minimum: EdgeInsets.zero,
         child: NestedScrollView(
           floatHeaderSlivers: true,
           headerSliverBuilder: (context, innerBoxIsScrolled) => [
             SliverAppBar(
               centerTitle: true,
               floating: true,
-              flexibleSpace: SafeArea(
-                child: Padding(
-                  padding:
-                      const EdgeInsets.only(left: 10, right: 10, bottom: 6),
-                  child: MySearchBar(
-                    onTapSearch: () {
-                      showSearch(
-                        context: context,
-                        delegate: itemsState.when(
-                          data: (data) => CustomSearch(items: data.foodItems),
-                          error: (_, __) => CustomSearch(items: []),
-                          loading: () => CustomSearch(items: []),
-                        ),
-                      );
-                    },
-                    onTapCart: () {
-                      context.navigateTo(const CartRecipesRoute());
-                    },
-                  ),
+              pinned: false,
+              snap: false,
+              flexibleSpace: Padding(
+                padding: const EdgeInsets.only(left: 10, right: 10, bottom: 6),
+                child: MySearchBar(
+                  onTapSearch: () {
+                    showSearch(
+                      context: context,
+                      delegate: itemsState.when(
+                        data: (data) => CustomSearch(items: data.foodItems),
+                        error: (_, __) => CustomSearch(items: []),
+                        loading: () => CustomSearch(items: []),
+                      ),
+                    );
+                  },
+                  onTapCart: () {
+                    context.navigateTo(const CartRecipesRoute());
+                  },
                 ),
               ),
             ),
