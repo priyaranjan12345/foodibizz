@@ -29,8 +29,7 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
       - run: flutter --version
-        
-        
+  
       # - name: Run unit tests
       #   run: flutter test --coverage
 
@@ -41,8 +40,7 @@ jobs:
       #     script: flutter drive --driver=test_driver/main_test.dart --target integration_test/app_test.dart
 
       - run: flutter build apk --release
-
-
+      
       - name: Upload APK
         uses: actions/upload-artifact@v3
         with:
