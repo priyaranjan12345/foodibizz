@@ -1,6 +1,6 @@
 # foodibizz
 - Flutter version: V3.16.3
-- Framework • revision b0366e0a3f (6 days ago) • 2023-12-05 19:46:39 -0800
+- Framework • revision b0366e0a3f
 - Engine • revision 54a7145303
 - Tools • Dart 3.2.3 • DevTools 2.28.4
 
