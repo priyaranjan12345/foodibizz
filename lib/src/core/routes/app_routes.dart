@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'app_routes.gr.dart';
+import 'package:foodibizz/src/core/routes/app_routes.gr.dart';
+
 
 @AutoRouterConfig()
 class AppRouter extends $AppRouter {

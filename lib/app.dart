@@ -1,13 +1,14 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'src/core/localization/l10n.dart';
-import 'src/core/localization/locale_pod.dart';
-import 'src/core/routes/auto_route_observer.dart';
-import 'src/core/routes/router_pod.dart';
-import 'src/core/theme/app_them_pod.dart';
-import 'src/core/theme/app_themes.dart';
-import 'src/core/utils/responsive_break_point_wrapper.dart';
+import 'package:foodibizz/src/core/localization/l10n.dart';
+import 'package:foodibizz/src/core/localization/locale_pod.dart';
+import 'package:foodibizz/src/core/routes/auto_route_observer.dart';
+import 'package:foodibizz/src/core/routes/router_pod.dart';
+import 'package:foodibizz/src/core/theme/app_them_pod.dart';
+import 'package:foodibizz/src/core/theme/app_themes.dart';
+import 'package:foodibizz/src/core/utils/responsive_break_point_wrapper.dart';
+
 
 class App extends ConsumerWidget {
   const App({super.key});
