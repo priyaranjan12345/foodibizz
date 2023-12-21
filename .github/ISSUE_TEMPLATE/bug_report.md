@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Something wrong with API Dash. Report the problem/bug here.
+about: Something wrong with Foodibizz. Report the problem/bug here.
 title: ''
 labels: bug
 assignees: ''
