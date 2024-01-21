@@ -1,5 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:foodibizz/src/core/routes/app_routes.gr.dart';
 import 'package:foodibizz/src/core/localization/l10n.dart';
 
@@ -12,17 +14,36 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  ///add here
+  DateTime backPressTime = DateTime.now();
   List<int> history = [];
-  Future<bool> _onWillPop(TabsRouter tabsRouter) async {
-    //modify
+
+  // bool _onWillPop(TabsRouter tabsRouter) {
+  //   if (history.isNotEmpty) {
+  //     tabsRouter.setActiveIndex(history.last);
+  //     history.removeLast();
+  //     return false;
+  //   } else {
+  //     return true;
+  //   }
+  // }
+
+  bool _onWillPop(TabsRouter tabsRouter) {
     if (history.isNotEmpty) {
       tabsRouter.setActiveIndex(history.last);
       history.removeLast();
       return false;
-    } else {
-      return true;
     }
+
+    final difference = DateTime.now().difference(backPressTime);
+    backPressTime = DateTime.now();
+
+    if (difference >= const Duration(seconds: 2)) {
+      Fluttertoast.showToast(msg: "Press again to close the app");
+      return false;
+    }
+
+    SystemNavigator.pop(animated: true);
+    return true;
   }
 
   @override
@@ -30,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final l10n = context.l10n;
 
     return AutoTabsRouter.pageView(
-    physics: const NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       routes: const [
         DashboardRoute(),
         HistoryRoute(),
@@ -40,6 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
         final tabsRouter = AutoTabsRouter.of(ctx);
         return PopScope(
           onPopInvoked: (v) => _onWillPop(tabsRouter),
+          canPop: false,
           child: Scaffold(
             body: child,
             bottomNavigationBar: NavigationBar(
