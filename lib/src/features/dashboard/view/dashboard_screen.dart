@@ -10,7 +10,6 @@ import 'package:foodibizz/src/features/dashboard/view/widgets/custom_search.dart
 import 'package:foodibizz/src/features/dashboard/view/widgets/foodibizz_card.dart';
 import 'package:foodibizz/src/features/dashboard/view/widgets/item_card.dart';
 
-
 @RoutePage(deferredLoading: true, name: "DashboardRoute")
 class DashboardScreen extends ConsumerWidget {
   const DashboardScreen({super.key});
@@ -81,81 +80,88 @@ class DashboardScreen extends ConsumerWidget {
     listenDeleteItem(context, ref);
 
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            centerTitle: true,
-            floating: true,
-            pinned: false,
-            snap: false,
-            flexibleSpace: Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10, bottom: 6),
-              child: SafeArea(
-                child: MySearchBar(
-                  onTapSearch: () {
-                    showSearch(
-                      context: context,
-                      delegate: itemsState.when(
-                        data: (data) => CustomSearch(items: data.foodItems),
-                        error: (_, __) => CustomSearch(items: []),
-                        loading: () => CustomSearch(items: []),
-                      ),
-                    );
-                  },
-                  onTapCart: () {
-                    context.navigateTo(const CartRecipesRoute());
-                  },
-                ),
-              ),
-            ),
-          ),
-          itemsState.when(
-            data: (value) => SliverPadding(
-              padding: const EdgeInsets.only(
-                left: 10,
-                right: 10,
-                bottom: 100,
-              ),
-              sliver: SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  childCount: value.foodItems.length + 1,
-                  (BuildContext context, int index) {
-                    if (index == 0) {
-                      return const FoodibizzCard();
-                    }
-                    final item = value.foodItems[index - 1];
-                    return ItemCard(foodItem: item);
-                  },
-                ),
-              ),
-            ),
-            error: (error, stackTrace) => SliverToBoxAdapter(
-              child: Column(
-                children: [
-                  const Icon(
-                    Icons.info_outline,
-                    color: Colors.red,
-                    size: 40,
-                  ),
-                  Text(
-                    "Something went wrong!",
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  const SizedBox(height: 10),
-                  ElevatedButton(
-                    onPressed: () {
-                      ref.invalidate(dashboardProvider);
+      body: RefreshIndicator(
+        onRefresh: () => ref.refresh(dashboardProvider.future),
+        edgeOffset: 100,
+        child: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              centerTitle: true,
+              floating: true,
+              pinned: false,
+              snap: false,
+              flexibleSpace: Padding(
+                padding: const EdgeInsets.only(left: 10, right: 10, bottom: 6),
+                child: SafeArea(
+                  child: MySearchBar(
+                    onTapSearch: () {
+                      showSearch(
+                        context: context,
+                        delegate: itemsState.when(
+                          data: (data) => CustomSearch(items: data.foodItems),
+                          error: (_, __) => CustomSearch(items: []),
+                          loading: () => CustomSearch(items: []),
+                        ),
+                      );
                     },
-                    child: const Text('Try again'),
-                  )
-                ],
+                    onTapCart: () {
+                      context.navigateTo(const CartRecipesRoute());
+                    },
+                  ),
+                ),
               ),
             ),
-            loading: () => const SliverToBoxAdapter(
-              child: Center(child: CircularProgressIndicator()),
-            ),
-          )
-        ],
+            itemsState.when(
+              data: (value) => SliverPadding(
+                padding: const EdgeInsets.only(
+                  left: 10,
+                  right: 10,
+                  bottom: 100,
+                ),
+                sliver: SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    childCount: value.foodItems.length + 1,
+                    (BuildContext context, int index) {
+                      if (index == 0) {
+                        return const FoodibizzCard();
+                      }
+                      final item = value.foodItems[index - 1];
+                      return ItemCard(foodItem: item);
+                    },
+                  ),
+                ),
+              ),
+              error: (error, stackTrace) => SliverToBoxAdapter(
+                child: Column(
+                  children: [
+                    const Icon(
+                      Icons.info_outline,
+                      color: Colors.red,
+                      size: 40,
+                    ),
+                    Text(
+                      "Something went wrong!",
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    const SizedBox(height: 10),
+                    ElevatedButton(
+                      onPressed: () {
+                        ref.invalidate(dashboardProvider);
+                      },
+                      child: const Text('Try again'),
+                    )
+                  ],
+                ),
+              ),
+              loading: () => const SliverToBoxAdapter(
+                child: Padding(
+                  padding: EdgeInsets.only(top: 10),
+                  child: Center(child: CircularProgressIndicator()),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
