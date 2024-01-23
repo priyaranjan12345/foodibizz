@@ -9,9 +9,8 @@ import 'package:foodibizz/src/core/theme/app_them_pod.dart';
 import 'package:foodibizz/src/core/theme/app_themes.dart';
 import 'package:foodibizz/src/core/utils/responsive_break_point_wrapper.dart';
 
-
-class App extends ConsumerWidget {
-  const App({super.key});
+class FoodibizzApp extends ConsumerWidget {
+  const FoodibizzApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

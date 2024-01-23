@@ -30,7 +30,7 @@ Future<void> main() async {
         tools: const [
           ...DevicePreview.defaultTools,
         ],
-        builder: (context) => const App(),
+        builder: (context) => const FoodibizzApp(),
       ),
     ),
   );

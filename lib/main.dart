@@ -30,7 +30,7 @@ Future<void> main() async {
         cartBoxProvider.overrideWithValue(cartBox),
       ],
       observers: [RiverpodObserverLogger(talker: talker)],
-      child: const App(),
+      child: const FoodibizzApp(),
     ),
   );
 }
