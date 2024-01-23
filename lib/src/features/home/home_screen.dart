@@ -15,22 +15,13 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   DateTime backPressTime = DateTime.now();
-  List<int> history = [];
-
-  // bool _onWillPop(TabsRouter tabsRouter) {
-  //   if (history.isNotEmpty) {
-  //     tabsRouter.setActiveIndex(history.last);
-  //     history.removeLast();
-  //     return false;
-  //   } else {
-  //     return true;
-  //   }
-  // }
+  // final history = <int>[];
+  final history = <int>{};
 
   bool _onWillPop(TabsRouter tabsRouter) {
     if (history.isNotEmpty) {
       tabsRouter.setActiveIndex(history.last);
-      history.removeLast();
+      history.remove(history.last);
       return false;
     }
 
